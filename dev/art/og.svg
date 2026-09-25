@@ -16,7 +16,7 @@
     <g fill="#fff" transform="translate(9.2 9.2) scale(1.15)"><circle cx="23.8" cy="32.6" r="7.4"/><rect x="33.4" y="19.2" width="11.6" height="20.8" rx="3.2"/><rect x="13.6" y="41.8" width="36.8" height="6" rx="3"/></g>
     <text x="118" y="70" font-family="Roboto, system-ui, sans-serif" font-size="84" font-weight="900" letter-spacing="-5" fill="#6f2817">shelfy</text>
   </g>
-  <text font-family="Roboto, system-ui, sans-serif" font-weight="900" letter-spacing="-3" font-size="76"><tspan x="80" y="296" fill="#2d1d16">Viu no vídeo?</tspan><tspan x="80" y="380" fill="#b9491c">Ache pelo código.</tspan></text>
+  <text font-family="Roboto, system-ui, sans-serif" font-weight="900" letter-spacing="-3" font-size="76"><tspan x="80" y="296" fill="#2d1d16">Viu no post?</tspan><tspan x="80" y="380" fill="#b9491c">Ache pelo código.</tspan></text>
   <g transform="translate(80 438)" filter="url(#soft)">
     <rect width="500" height="92" rx="30" fill="#fffdfa" stroke="#d96226" stroke-width="4"/>
     <circle cx="52" cy="44" r="14" fill="none" stroke="#d96226" stroke-width="5"/><path d="M62 54l12 12" stroke="#d96226" stroke-width="5" stroke-linecap="round"/>

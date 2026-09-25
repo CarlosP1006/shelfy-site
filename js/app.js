@@ -197,11 +197,9 @@ function buildResult(product, compact) {
   slot(card, 'code').textContent = product.code;
 
   const title = slot(card, 'title');
-  title.id = 'produto-' + product.code;
   title.textContent = product.title;
 
   const toggle = slot(card, 'toggle');
-  toggle.setAttribute('aria-controls', title.id);
   toggle.addEventListener('click', () => {
     const expanded = title.classList.toggle('is-expanded');
     toggle.setAttribute('aria-expanded', String(expanded));
@@ -290,22 +288,25 @@ function missingNotice(code) {
   return {
     tone: 'notfound',
     title: 'Não encontramos o ' + code,
-    text: 'Esse código não existe ou o produto saiu do ar. Confira no vídeo se o código é esse mesmo.'
+    text: 'Esse código não existe ou o produto saiu do ar. Confira no post se o código é esse mesmo.'
   };
 }
 
 function view(key, nodes, message) {
   if (key === state.view) return;
+  const reveal = state.revealPending && key !== 'loading';
+  if (reveal) state.revealPending = false;
+  const swap = () => {
+    resultsBody.classList.remove('is-stale');
+    resultsBody.replaceChildren(...nodes);
+    requestAnimationFrame(() => {
+      revealTitleToggles();
+      if (reveal) revealResults();
+    });
+  };
+  if (state.view && document.startViewTransition) document.startViewTransition(swap);
+  else swap();
   state.view = key;
-  resultsBody.classList.remove('is-stale');
-  resultsBody.replaceChildren(...nodes);
-  if (nodes.some((node) => node.classList && node.classList.contains('result'))) {
-    requestAnimationFrame(revealTitleToggles);
-  }
-  if (state.revealPending && key !== 'loading') {
-    state.revealPending = false;
-    requestAnimationFrame(revealResults);
-  }
   if (message) announce(message);
 }
 
@@ -344,7 +345,7 @@ function render() {
       showNotice('bad-link', {
         tone: 'invalid',
         title: 'O link aberto não tem um código válido',
-        text: 'Digite o código que apareceu no vídeo. Os códigos são assim: P0022.'
+        text: 'Digite o código que aparece no post. Os códigos são assim: P0022.'
       });
       return;
     }
