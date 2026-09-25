@@ -12,7 +12,7 @@ const CODE_PATTERN = /^P[0-9]{4,}$/;
 const HOST_LABEL_PATTERN = /^[a-z0-9-]{1,63}$/;
 const TOP_LEVEL_LABEL_PATTERN = /^(?:[a-z]{2,63}|xn--[a-z0-9-]{1,59})$/;
 const UPDATED_AT_PATTERN = /^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]{1,9})?Z$/;
-const NON_BLANK_PATTERN = /\S/;
+const NON_BLANK_PATTERN = /[^\t\n\v\f\r ]/;
 const LEADING_ZEROS_PATTERN = /^0+/;
 
 function own(object, key) {
@@ -41,10 +41,25 @@ export function canonicalCode(code) {
   return codeProblem(code) ? null : formatCode(code.slice(1));
 }
 
+function codePointCut(text, limit) {
+  if (text.length <= limit) return -1;
+  let count = 0;
+  for (let index = 0; index < text.length; index += 1) {
+    if (count === limit) return index;
+    const unit = text.charCodeAt(index);
+    if (unit >= 0xd800 && unit <= 0xdbff && index + 1 < text.length) {
+      const next = text.charCodeAt(index + 1);
+      if (next >= 0xdc00 && next <= 0xdfff) index += 1;
+    }
+    count += 1;
+  }
+  return -1;
+}
+
 export function titleProblem(title) {
   if (typeof title !== 'string') return 'type';
   if (!NON_BLANK_PATTERN.test(title)) return 'blank';
-  if (title.length > MAX_TITLE_LENGTH) return 'length';
+  if (codePointCut(title, MAX_TITLE_LENGTH) !== -1) return 'length';
   return '';
 }
 
@@ -52,10 +67,7 @@ export function readTitle(title) {
   const problem = titleProblem(title);
   if (problem && problem !== 'length') return null;
   if (!problem) return title;
-  let end = MAX_TITLE_LENGTH;
-  const last = title.charCodeAt(end - 1);
-  if (last >= 0xd800 && last <= 0xdbff) end -= 1;
-  return title.slice(0, end).trimEnd() + '\u2026';
+  return title.slice(0, codePointCut(title, MAX_TITLE_LENGTH)).trimEnd() + '\u2026';
 }
 
 function hostnameProblem(host) {
