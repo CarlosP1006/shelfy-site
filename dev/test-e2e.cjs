@@ -368,10 +368,17 @@ it('sem JavaScript: o que o Google confere continua visível', async (browser) =
   assert.ok(parseFloat(await privacyLink.evaluate((a) => getComputedStyle(a).fontSize)) >= 12, 'link da política legível');
   await page.goto(BASE + 'privacidade.html');
   const policy = await page.innerText('body');
-  for (const text of ['drive.file', 'Não lê, não altera e não apaga nenhum outro arquivo do Drive', 'myaccount.google.com/permissions', 'dinosauroxd9@gmail.com', 'não usa cookies', 'links de afiliado', 'Última atualização']) {
+  for (const text of ['A shelfy é um projeto pessoal de Carlos Eduardo', 'não coleta, não vende e não compartilha dados de usuários do Google', 'Uso Limitado', 'myaccount.google.com/permissions', 'dinosauroxd9@gmail.com', 'não usa cookies', 'links de afiliado', 'Última atualização']) {
     assert.ok(policy.includes(text), 'política: ' + text);
   }
+  for (const href of ['https://developers.google.com/terms/api-services-user-data-policy', 'https://myaccount.google.com/permissions']) {
+    assert.ok(await page.locator('main a[href="' + href + '"]').isVisible(), 'política com link visível: ' + href);
+  }
   assert.match(await page.title(), /Política de privacidade — shelfy/);
+  assert.match(await page.textContent('h1'), /shelfy/);
+  await page.goto(BASE + 'termos.html');
+  const terms = await page.innerText('body');
+  for (const text of ['Links de afiliado', 'Todos os direitos reservados', 'não podem ser copiados nem reutilizados']) assert.ok(terms.includes(text), 'termos: ' + text);
   await context.close();
 });
 

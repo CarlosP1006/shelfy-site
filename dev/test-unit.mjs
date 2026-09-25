@@ -250,6 +250,13 @@ test('shelfy é sempre feminina: a, da, na, pela, à', () => {
   }
 });
 
+test('texto do site: não explica a ferramenta por dentro nem cita a hospedagem', () => {
+  for (const page of ['index.html', 'privacidade.html', 'termos.html', '404.html']) {
+    const text = readFileSync(page, 'utf8').replace(/<[^>]*>/g, ' ');
+    for (const word of ['GitHub', 'drive.file', 'Google Drive', 'publicador', 'token']) assert.ok(!text.includes(word), page + ' cita “' + word + '”');
+  }
+});
+
 test('HTML: CSP idêntica, nada inline, nada de outro domínio', () => {
   const pages = ['index.html', 'privacidade.html', 'termos.html', '404.html'];
   const policies = new Set();
