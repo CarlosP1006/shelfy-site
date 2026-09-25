@@ -103,26 +103,13 @@
 
   <section id="sobre" class="section about-section" aria-labelledby="titulo-sobre">
     <div class="shell about">
-      <div class="about-main">
+      <span class="brand-mark about-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
+      <div class="about-bubble">
         <h2 id="titulo-sobre" class="section-title">Sobre a shelfy</h2>
         <p class="about-lead">A shelfy é um projeto pessoal que transforma produtos de uma loja online em imagens e vídeos curtos, gerados automaticamente, e publica esses conteúdos nas redes sociais.</p>
         <p>Cada produto publicado ganha um código curto, como <b class="code-inline">P0022</b>. Este site é o link da bio da shelfy: é aqui que você digita esse código e chega ao link do produto que viu no post.</p>
         <p>Quem usa esta busca não entra com conta nenhuma: o site não tem login, não usa cookies, não tem analytics e não coleta dados pessoais. A busca acontece no seu próprio navegador.</p>
       </div>
-      <aside class="about-card" aria-labelledby="titulo-drive">
-        <h3 id="titulo-drive" class="about-card-title">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M12 3 5 6v5.5c0 4.3 2.9 8 7 9.5 4.1-1.5 7-5.2 7-9.5V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m8.8 12 2.2 2.2 4.3-4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Como a shelfy usa o Google Drive
-        </h3>
-        <p>A ferramenta da shelfy guarda as imagens e os vídeos que ela mesma gera no <b>Google Drive do próprio dono do projeto</b>. Para isso, pede ao Google só a permissão <code>drive.file</code>.</p>
-        <ul class="check-list">
-          <li>Com o <code>drive.file</code>, a shelfy só enxerga os arquivos e pastas que ela mesma criou.</li>
-          <li>Não lê, não altera e não apaga nenhum outro arquivo do Drive.</li>
-          <li>Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros.</li>
-          <li>O acesso pode ser revogado a qualquer momento nas permissões da Conta do Google.</li>
-        </ul>
-        <p class="about-card-link"><a href="privacidade.html">Leia a política de privacidade</a></p>
-      </aside>
     </div>
   </section>
 
@@ -131,13 +118,6 @@
 
 <footer class="site-footer">
   <div class="shell footer-inner">
-    <div class="footer-brand">
-      <a class="brand brand-small" href="./" aria-label="shelfy — início">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
-        <span class="brand-name">shelfy</span>
-      </a>
-      <p class="footer-tagline">Viu no post, achou aqui.</p>
-    </div>
     <nav class="footer-nav" aria-label="Rodapé">
       <ul>
         <li><a href="./">Início</a></li>
@@ -146,7 +126,8 @@
         <li><a href="mailto:dinosauroxd9@gmail.com">Contato</a></li>
       </ul>
     </nav>
-    <p class="footer-note">Os links de produto são links de afiliado: a shelfy pode receber comissão, sem custo extra pra você. Sem login, sem cookies, sem rastreadores.</p>
+    <p class="footer-note">A shelfy pode receber comissão pelos links, sem custo extra pra você.</p>
+    <p class="footer-note">© 2026 Carlos Eduardo. Todos os direitos reservados.</p>
   </div>
 </footer>
 
@@ -167,7 +148,6 @@
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M5 12h13m-5.5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <p class="result-note" data-slot="note"><b>Link de afiliado.</b> A shelfy pode receber comissão se você comprar, sem custo extra pra você.</p>
     <p class="result-unavailable" data-slot="unavailable" hidden>O link deste produto está indisponível no momento. Tente de novo mais tarde.</p>
   </article>
 </template>
