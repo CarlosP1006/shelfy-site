@@ -1,1 +1,2 @@
 dev/fixtures/gen-*.json
+__pycache__/
