@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { parseQuery, parseDeepLink, parseHash, normalizeText, MAX_CODES_PER_QUERY } from '../js/query.js';
 import {
   buildCatalog, parseCatalog, readProduct, readTitle, readProductLink, linkProblem, codeProblem, canonicalCode,
@@ -215,4 +215,37 @@ test('regex usados com entrada externa são lineares', () => {
     parseQuery(input);
     assert.ok(performance.now() - started < 200, 'demorou demais com entrada de ' + input.length + ' caracteres');
   }
+});
+
+test('código do site não usa sinks perigosos', () => {
+  const forbidden = [/\.innerHTML\b/, /\.outerHTML\b/, /insertAdjacentHTML/, /document\.write/, /\beval\s*\(/, /new\s+Function\s*\(/,
+    /setTimeout\s*\(\s*['"`]/, /setInterval\s*\(\s*['"`]/, /\.srcdoc\b/, /createContextualFragment/, /DOMParser/, /javascript:/i];
+  for (const file of readdirSync('js')) {
+    const source = readFileSync('js/' + file, 'utf8');
+    for (const pattern of forbidden) assert.ok(!pattern.test(source), 'js/' + file + ' contém ' + pattern);
+  }
+});
+
+test('HTML: CSP idêntica, nada inline, nada de outro domínio', () => {
+  const pages = ['index.html', 'privacidade.html', 'termos.html', '404.html'];
+  const policies = new Set();
+  for (const page of pages) {
+    const html = readFileSync(page, 'utf8');
+    const csp = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
+    assert.ok(csp, page + ' sem CSP');
+    policies.add(csp[1]);
+    assert.ok(!/unsafe-inline|unsafe-eval/.test(csp[1]), page + ' com unsafe');
+    assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('<link'), page + ': CSP precisa vir antes dos recursos');
+    assert.ok(!/\sstyle="/i.test(html), page + ' tem atributo style');
+    assert.ok(!/<style[\s>]/i.test(html), page + ' tem <style>');
+    assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(html), page + ' tem <script> inline');
+    assert.ok(!/\son[a-z]+=/i.test(html), page + ' tem handler inline');
+    for (const [tag, url] of html.matchAll(/<(?:script|link|img|iframe|source|video|audio)\b[^>]*\b(?:src|href)="([^"]+)"[^>]*>/gi)) {
+      if (/rel="canonical"/.test(tag)) continue;
+      assert.ok(!/^(?:[a-z]+:)?\/\//i.test(url), page + ' carrega recurso externo: ' + url);
+    }
+    assert.match(html, /<title>[^<]*shelfy[^<]*<\/title>/, page + ': title sem shelfy');
+    assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, page + ': precisa de exatamente um h1');
+  }
+  assert.equal(policies.size, 1, 'CSP diferente entre as páginas');
 });
