@@ -350,18 +350,23 @@ Depois do merge, em até ~10 minutos:
 
 ## 9. Trocar o endereço do site (domínio próprio ou organização)
 
-O endereço atual mostra o usuário pessoal do GitHub (`carlosp1006`). Dá para trocar, mas **a URL está cadastrada no Google Cloud**: a troca só pode acontecer junto com a atualização do cadastro OAuth (homepage e política), senão o Google pode suspender o acesso da aplicação ao Drive.
+O endereço atual mostra o usuário pessoal do GitHub (`carlosp1006`). Trocar o endereço do site exigiria mudar o cadastro no Google Cloud, pagar domínio ou mover o repositório — e nada disso é desejado agora.
+
+**Solução adotada: porta de entrada.** Um site mínimo, gratuito, numa organização do GitHub com o nome da marca (`NOME.github.io`), que só redireciona para este site. O link da bio, dos posts e do botão “Copiar link” deixa de mostrar o usuário pessoal; o site, as URLs do Google e este repositório não mudam. Os arquivos e o passo a passo estão em [`dev/porta/`](dev/porta/LEIA-ME.md). Depois de criada, preencha `data-link-curto="https://NOME.github.io/"` no `<body>` de `index.html` e `404.html` para o “Copiar link” usar o endereço curto. Limite: depois do redirecionamento, a barra de endereço mostra o endereço final.
+
+As alternativas abaixo ficam registradas para o futuro. Qualquer uma que troque o endereço do site só pode acontecer junto com a atualização do cadastro OAuth (homepage e política), senão o Google pode suspender o acesso da aplicação ao Drive.
 
 | Opção | Endereço | Custo | Esconde o usuário? | Observação |
 | --- | --- | --- | --- | --- |
 | **Domínio próprio (recomendado)** | `https://shelfy.com.br/` (exemplo) | domínio (~R$ 40/ano no .com.br) | Sim, se usar o domínio *apex* com registros A/AAAA. O registro `www` é um CNAME para `USUARIO.github.io` e revela o usuário a quem consultar o DNS | Link curto e fácil de digitar; domínio verificado é melhor para o Google |
 | **Organização gratuita** no GitHub com o nome da marca | `https://NOME-DA-ORG.github.io/` | grátis | Sim (deixe a sua participação na organização como privada) | Transferir o repositório para a organização e renomeá-lo para `NOME-DA-ORG.github.io` |
 | Organização + domínio próprio | `https://shelfy.com.br/` | domínio | Sim, inclusive no DNS (`www` aponta para a organização) | A combinação mais discreta |
+| **Porta de entrada (adotada)** | `https://NOME.github.io/` redireciona | grátis | Na bio, nos posts e nos links copiados, sim; na barra de endereço depois do clique, não | Não muda o site, o Google nem este repositório. Ver `dev/porta/` |
 | Encurtador na bio | — | — | Não: o endereço final aparece no navegador | Coloca rastreamento de terceiros no caminho; contradiz a política. Não use |
 
 Mesmo trocando o endereço, o repositório público continua mostrando o histórico: o primeiro commit tem nome e e-mail do dono; o e-mail de contato está na política (o Google exige um contato; pode ser um e-mail só do shelfy, atualizado também no Google Cloud); e os commits do publicador saem com o usuário dono do token (com um GitHub App eles aparecem como robô). Com o GitHub Pro, o repositório pode ficar privado e o site continua público.
 
-**Roteiro da troca** (fazer tudo no mesmo dia):
+**Roteiro da troca de endereço do site** (só se um dia optar por domínio próprio ou organização; fazer tudo no mesmo dia):
 
 1. Domínio próprio: verifique o domínio no GitHub **antes** de usar (Settings da conta ou da organização → Pages → *Add a domain*), para ninguém tomar o domínio (*domain takeover*). Nunca use DNS com curinga (`*.dominio`).
 2. DNS do domínio apex: registros `A` para `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` e `AAAA` para `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`.

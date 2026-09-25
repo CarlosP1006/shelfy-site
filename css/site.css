@@ -1726,8 +1726,7 @@
 
       @keyframes rise {
         from {
-          opacity: 0.35;
-          transform: translateY(1.5rem) scale(0.97);
+          transform: translateY(2rem) scale(0.96) rotate(-1deg);
         }
       }
     }

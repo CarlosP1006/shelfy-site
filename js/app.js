@@ -1,4 +1,4 @@
-import { parseCatalog, MAX_CATALOG_BYTES } from './catalog.js';
+import { parseCatalog, readProductLink, MAX_CATALOG_BYTES } from './catalog.js';
 import { parseQuery, parseDeepLink, parseHash, MAX_QUERY_LENGTH } from './query.js';
 
 const CATALOG_URL = 'data/products.json';
@@ -22,6 +22,7 @@ const recentClear = document.querySelector('[data-recent-clear]');
 const isHome = document.body.classList.contains('page-home');
 const framed = detectFraming();
 const siteRoot = new URL('./', document.baseURI);
+const shortRoot = readShortRoot();
 
 const state = {
   catalog: null,
@@ -170,8 +171,17 @@ function hiddenText(text) {
   return span;
 }
 
+function readShortRoot() {
+  const href = readProductLink(document.body.dataset.linkCurto || '');
+  if (!href) return null;
+  const url = new URL(href);
+  url.search = '';
+  url.hash = '';
+  return url;
+}
+
 function shareUrl(code) {
-  const url = new URL(siteRoot.href);
+  const url = new URL((shortRoot || siteRoot).href);
   url.searchParams.set('c', code);
   return url.href;
 }
