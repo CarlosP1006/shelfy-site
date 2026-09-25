@@ -11,7 +11,6 @@ export const MAX_HOST_LENGTH = 253;
 const CODE_PATTERN = /^P[0-9]{4,}$/;
 const HOST_LABEL_PATTERN = /^[a-z0-9-]{1,63}$/;
 const TOP_LEVEL_LABEL_PATTERN = /^(?:[a-z]{2,63}|xn--[a-z0-9-]{1,59})$/;
-const UPDATED_AT_PATTERN = /^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]{1,9})?Z$/;
 const NON_BLANK_PATTERN = /[^\t\n\v\f\r ]/;
 const LEADING_ZEROS_PATTERN = /^0+/;
 
@@ -121,12 +120,6 @@ export function readProductLink(link) {
   return inspection.problem ? null : inspection.href;
 }
 
-export function readUpdatedAt(value) {
-  if (typeof value !== 'string' || !UPDATED_AT_PATTERN.test(value)) return null;
-  const time = Date.parse(value);
-  return Number.isNaN(time) ? null : new Date(time);
-}
-
 export function readProduct(entry) {
   if (!isPlainObject(entry)) return null;
   const code = canonicalCode(own(entry, 'code'));
@@ -160,7 +153,6 @@ export function buildCatalog(data) {
     ok: true,
     products,
     highestNumber,
-    updatedAt: readUpdatedAt(own(data, 'updatedAt')),
     ignored,
     truncated: entries.length > limit
   };

@@ -40,11 +40,8 @@ const state = {
 let idleTimer = 0;
 let commitTimer = 0;
 
-class CatalogError extends Error {
-  constructor(reason) {
-    super(reason);
-    this.reason = reason;
-  }
+function catalogError(reason) {
+  return Object.assign(new Error(reason), { reason });
 }
 
 function detectFraming() {
@@ -60,16 +57,14 @@ function isLocalHost() {
 }
 
 function catalogUrl() {
-  if (!isLocalHost()) return CATALOG_URL;
-  const name = new URLSearchParams(location.search).get('catalog');
+  const name = isLocalHost() && new URLSearchParams(location.search).get('catalog');
   if (name === 'dev') return 'dev/products.sample.json';
-  if (name && DEV_CATALOG_PATTERN.test(name)) return 'dev/fixtures/' + name + '.json';
-  return CATALOG_URL;
+  return name && DEV_CATALOG_PATTERN.test(name) ? 'dev/fixtures/' + name + '.json' : CATALOG_URL;
 }
 
 async function readLimited(response, limit) {
   const declared = Number(response.headers.get('content-length'));
-  if (declared > limit) throw new CatalogError('size');
+  if (declared > limit) throw catalogError('size');
   const reader = response.body.getReader();
   const chunks = [];
   let total = 0;
@@ -79,7 +74,7 @@ async function readLimited(response, limit) {
     total += value.byteLength;
     if (total > limit) {
       reader.cancel();
-      throw new CatalogError('size');
+      throw catalogError('size');
     }
     chunks.push(value);
   }
@@ -101,26 +96,22 @@ async function loadCatalog() {
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
     const response = await fetch(catalogUrl(), { cache: 'no-cache', credentials: 'same-origin', signal: controller.signal });
-    if (!response.ok) throw new CatalogError(response.status === 404 ? 'missing' : 'http');
+    if (!response.ok) throw catalogError(response.status === 404 ? 'missing' : 'http');
     const catalog = parseCatalog(await readLimited(response, MAX_CATALOG_BYTES));
-    if (!catalog.ok) throw new CatalogError(catalog.reason);
+    if (!catalog.ok) throw catalogError(catalog.reason);
     state.catalog = catalog;
     if (state.committed) rememberFound();
   } catch (error) {
-    state.catalogError = error instanceof CatalogError ? error.reason : controller.signal.aborted ? 'timeout' : 'network';
+    state.catalogError = error.reason || (controller.signal.aborted ? 'timeout' : 'network');
   } finally {
     clearTimeout(timer);
     state.loading = false;
   }
   render();
-  if (state.catalogError && !state.autoRetried && isTransient(state.catalogError)) {
+  if (state.catalogError && !state.autoRetried && ['network', 'timeout', 'http'].includes(state.catalogError)) {
     state.autoRetried = true;
     setTimeout(loadCatalog, AUTO_RETRY_DELAY_MS);
   }
-}
-
-function isTransient(reason) {
-  return reason === 'network' || reason === 'timeout' || reason === 'http';
 }
 
 function readRecent() {
@@ -245,12 +236,11 @@ function revealTitleToggles() {
 async function copyLink(code, button) {
   const url = shareUrl(code);
   const label = slot(button, 'copy-label');
-  let copied = false;
+  let copied = true;
   try {
     await navigator.clipboard.writeText(url);
-    copied = true;
   } catch {
-    copied = legacyCopy(url);
+    copied = false;
   }
   label.textContent = copied ? 'Link copiado!' : 'Não deu para copiar';
   button.classList.toggle('is-done', copied);
@@ -259,23 +249,6 @@ async function copyLink(code, button) {
     label.textContent = 'Copiar link';
     button.classList.remove('is-done');
   }, 2400);
-}
-
-function legacyCopy(text) {
-  const field = document.createElement('textarea');
-  field.value = text;
-  field.setAttribute('readonly', '');
-  field.className = 'visually-hidden';
-  document.body.append(field);
-  field.select();
-  let copied = false;
-  try {
-    copied = document.execCommand('copy');
-  } catch {
-    copied = false;
-  }
-  field.remove();
-  return copied;
 }
 
 let lastAnnouncement = '';
@@ -300,7 +273,7 @@ function catalogErrorNotice() {
     title: offline ? 'Não conseguimos baixar o catálogo' : 'O catálogo está temporariamente indisponível',
     text: offline
       ? 'Parece que a conexão falhou. Confira a internet e tente de novo.'
-      : 'Estamos com um problema para ler a lista de produtos. Tente de novo em alguns minutos.',
+      : 'Não conseguimos ler a lista de produtos agora. Tente de novo em alguns minutos.',
     actions: [retryButton()]
   };
 }
@@ -310,7 +283,7 @@ function missingNotice(code) {
     return {
       tone: 'fresh',
       title: 'O ' + code + ' ainda não chegou aqui',
-      text: 'Se o post acabou de sair, o produto pode levar alguns minutos para aparecer. Confira o código e tente de novo daqui a pouco.',
+      text: 'Se o post acabou de sair, o produto pode levar alguns minutos para aparecer aqui.',
       actions: [retryButton()]
     };
   }
@@ -360,7 +333,7 @@ function render() {
     showNotice('framed', {
       tone: 'framed',
       title: 'Abra o shelfy no endereço oficial',
-      text: 'Esta página foi aberta dentro de outro site. Para sua segurança, a busca só funciona no endereço ' + siteRoot.host + siteRoot.pathname.replace(/\/$/, '') + '.',
+      text: 'Esta página foi aberta dentro de outro site. Por segurança, a busca só funciona no endereço oficial.',
       actions: [official]
     });
     return;

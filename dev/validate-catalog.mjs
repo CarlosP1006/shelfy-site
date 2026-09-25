@@ -12,9 +12,16 @@ import {
   canonicalCode,
   codeProblem,
   titleProblem,
-  linkProblem,
-  readUpdatedAt
+  linkProblem
 } from '../js/catalog.js';
+
+const UPDATED_AT_PATTERN = /^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]{1,9})?Z$/;
+
+export function readUpdatedAt(value) {
+  if (typeof value !== 'string' || !UPDATED_AT_PATTERN.test(value)) return null;
+  const time = Date.parse(value);
+  return Number.isNaN(time) ? null : new Date(time);
+}
 
 const CONTENTS_API_INLINE_LIMIT = 1024 * 1024;
 

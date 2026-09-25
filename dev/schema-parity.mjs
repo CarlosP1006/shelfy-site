@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { codeProblem, titleProblem, linkProblem, readUpdatedAt } from '../js/catalog.js';
+import { codeProblem, titleProblem, linkProblem } from '../js/catalog.js';
+import { readUpdatedAt } from './validate-catalog.mjs';
 
 const char = (...points) => String.fromCodePoint(...points);
 const cases = [];

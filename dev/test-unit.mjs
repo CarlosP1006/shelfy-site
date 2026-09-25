@@ -6,7 +6,7 @@ import {
   buildCatalog, parseCatalog, readProduct, readTitle, readProductLink, linkProblem, codeProblem, canonicalCode,
   MAX_PRODUCTS, MAX_TITLE_LENGTH
 } from '../js/catalog.js';
-import { validateCatalogText } from './validate-catalog.mjs';
+import { validateCatalogText, readUpdatedAt } from './validate-catalog.mjs';
 
 const char = (...points) => String.fromCodePoint(...points);
 const codesOf = (input) => {
@@ -159,7 +159,7 @@ test('catálogo: arquivo inválido vira erro; produto inválido é ignorado sozi
   const deep = parseCatalog('{"version":1,"products":[' + '['.repeat(20000) + ']'.repeat(20000) + ']}');
   assert.ok(deep.reason === 'json' || (deep.ok && deep.products.size === 0));
   const empty = parseCatalog('{"version":1,"updatedAt":null,"products":[]}');
-  assert.ok(empty.ok && empty.products.size === 0 && empty.updatedAt === null && empty.highestNumber === -1);
+  assert.ok(empty.ok && empty.products.size === 0 && empty.highestNumber === -1);
   const catalog = buildCatalog({ version: 1, updatedAt: '2026-10-02T14:05:00Z', extra: true, products: [
     { code: 'P0022', title: 'velho', link: 'https://a.bc/1' }, null, 'x', { code: 'P0023', title: 'sem link' },
     { code: 'P0024', title: 'link ruim', link: 'javascript:alert(1)' }, { code: 'P0022', title: 'novo', link: 'https://a.bc/2', preco: 1 },
@@ -173,8 +173,9 @@ test('catálogo: arquivo inválido vira erro; produto inválido é ignorado sozi
   assert.equal(catalog.products.size, 3);
   assert.equal(catalog.ignored, 4);
   assert.equal(catalog.highestNumber, 24);
-  assert.equal(catalog.updatedAt.toISOString(), '2026-10-02T14:05:00.000Z');
-  assert.equal(buildCatalog({ version: 1, updatedAt: 'ontem', products: [] }).updatedAt, null);
+  assert.equal(readUpdatedAt('2026-10-02T14:05:00Z').toISOString(), '2026-10-02T14:05:00.000Z');
+  assert.equal(readUpdatedAt('ontem'), null);
+  assert.ok(buildCatalog({ version: 1, updatedAt: 'ontem', products: [] }).ok, 'updatedAt ruim não derruba o catálogo');
   const polluted = JSON.parse('{"version":1,"products":[{"__proto__":{"code":"P0001","title":"x","link":"https://a.bc"}}]}');
   assert.equal(buildCatalog(polluted).products.size, 0);
 });
