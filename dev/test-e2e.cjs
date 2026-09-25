@@ -201,6 +201,28 @@ it('estados: catálogo vazio (arquivo real)', async (browser) => {
   await context.close();
 });
 
+it('código de teste: TESTE676767 mostra o produto fictício sem mexer no catálogo', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE);
+  await typeCode(page, 'teste676767');
+  await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
+  assert.match((await resultTitles(page))[0], /fictício/);
+  const link = await page.$eval('[data-results] a.button-primary', (a) => ({ href: a.href, rel: a.rel }));
+  assert.deepEqual(link, { href: 'https://example.com/', rel: 'sponsored nofollow noopener noreferrer' });
+  await page.press('#codigo', 'Enter');
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'TESTE676767');
+  assert.equal(await page.evaluate(() => localStorage.getItem('shelfy:recentes')), null, 'não entra nos recentes');
+  await page.goto(BASE + '?c=teste676767');
+  await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
+  await typeCode(page, '676767');
+  await page.press('#codigo', 'Enter');
+  await page.waitForSelector('[data-results] .notice');
+  await expectNotice(page, 'A prateleira ainda está vazia');
+  assert.deepEqual(problems, [], problems.join('\n'));
+  await context.close();
+});
+
 it('estados: formato inválido e sugestão', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev');
   await typeCode(page, 'tenis nike');

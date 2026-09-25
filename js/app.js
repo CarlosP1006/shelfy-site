@@ -1,5 +1,5 @@
 import { parseCatalog, readProductLink, MAX_CATALOG_BYTES } from './catalog.js';
-import { parseQuery, parseDeepLink, parseHash, MAX_QUERY_LENGTH } from './query.js';
+import { parseQuery, parseDeepLink, parseHash, MAX_QUERY_LENGTH, TEST_CODE } from './query.js';
 
 const CATALOG_URL = 'data/products.json';
 const FETCH_TIMEOUT_MS = 15000;
@@ -78,13 +78,7 @@ async function readLimited(response, limit) {
     }
     chunks.push(value);
   }
-  const bytes = new Uint8Array(total);
-  let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  return new TextDecoder().decode(bytes);
+  return new Blob(chunks).text();
 }
 
 async function loadCatalog() {
@@ -413,7 +407,7 @@ function render() {
   const found = [];
   const missing = [];
   for (const code of codes) {
-    const product = products.get(code);
+    const product = code === TEST_CODE ? { code, title: 'Luminária de mesa (produto fictício, só para teste)', link: 'https://example.com/' } : products.get(code);
     if (product) found.push(product);
     else missing.push(code);
   }
