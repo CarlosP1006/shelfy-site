@@ -6,7 +6,7 @@ Estes arquivos formam um site mínimo que só redireciona para o site da shelfy.
 - `https://NOME-DA-ORG.github.io/?c=P0022` → abre o site já com o resultado do P0022 (use este formato em links clicáveis).
 - `https://NOME-DA-ORG.github.io/P0022` → também funciona (atalho para quem digita), mas responde com status 404 antes de redirecionar; por isso, em link clicável prefira o `?c=`.
 
-**Limite honesto:** depois do redirecionamento, o navegador mostra o endereço final (`carlosp1006.github.io/shelfy-site`). A porta esconde o usuário do GitHub na bio, nos posts e nos links compartilhados, não na barra de endereço. Esconder também na barra exigiria domínio próprio ou proxy (ver README, seção 9).
+**Limite honesto:** depois do redirecionamento, o navegador mostra o endereço final (`carlosp1006.github.io/shelfy-site`). A porta esconde o usuário do GitHub na bio, nos posts e nos links compartilhados, não na barra de endereço. Esconder também na barra exigiria domínio próprio ou proxy.
 
 **Segurança:** a porta só aceita código no formato `P` + até 8 dígitos (com ou sem `#`, `P`, zeros) e manda sempre para o mesmo destino fixo. Qualquer outra coisa vai para a página inicial. Não é um redirecionador aberto. O script e o estilo são inline, liberados na CSP por hash `sha256` (sem `'unsafe-inline'`), para o redirecionamento sair na primeira resposta, sem requisição extra. `noindex` evita que a porta apareça no Google no lugar do site.
 

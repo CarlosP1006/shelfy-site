@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://carlosp1006.github.io/shelfy-site/schema/products.schema.json",
   "title": "Catálogo de produtos da shelfy (data/products.json), versão 1",
-  "description": "Contrato entre o publicador da aplicação shelfy e o site. O publicador valida o arquivo contra este schema antes de cada commit. O site aplica as mesmas regras produto a produto (js/catalog.js). Campos extras, em qualquer nível, são permitidos e ignorados.",
+  "description": "Campos extras, em qualquer nível, são permitidos e ignorados.",
   "type": "object",
   "required": ["version", "updatedAt", "products"],
   "properties": {
