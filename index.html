@@ -37,7 +37,7 @@
 <header class="site-header">
   <div class="shell header-inner">
     <a class="brand" href="./" aria-label="shelfy — início">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.4" cy="13.4" r="3.3" fill="#fff"/><rect x="11.7" y="8.3" width="4.9" height="8.4" rx="1.3" fill="#fff"/><rect x="17.7" y="11.9" width="3.3" height="4.8" rx="1" fill="#fff" fill-opacity=".78"/><rect x="2.6" y="17.6" width="18.8" height="2.4" rx="1.2" fill="#fff"/></svg></span>
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
       <span class="brand-name">shelfy</span>
     </a>
     <nav class="header-nav" aria-label="Atalhos">
@@ -64,15 +64,20 @@
         <p id="dica-busca" class="search-hint">Pode ser só o número: <b>22</b> vira <b>P0022</b>. Colou a legenda inteira? A gente acha o código.</p>
       </form>
 
-      <div class="results" id="resultado">
-        <p class="visually-hidden" id="status-busca" role="status" aria-live="polite" aria-atomic="true"></p>
-        <div class="results-body" data-results></div>
-        <noscript><p class="notice notice-static">A busca por código precisa do JavaScript ligado. Ative o JavaScript neste navegador ou abra o site em outro navegador para buscar.</p></noscript>
-      </div>
       <div class="recent" data-recent hidden>
         <p class="recent-label" id="recentes-titulo">Buscados recentemente <span class="recent-hint">(só neste aparelho)</span></p>
         <ul class="recent-list" aria-labelledby="recentes-titulo" data-recent-list></ul>
         <button class="link-button" type="button" data-recent-clear>Limpar</button>
+      </div>
+      <div class="results" id="resultado">
+        <p class="visually-hidden" id="status-busca" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="results-body" data-results></div>
+        <div class="shelf" aria-hidden="true">
+          <svg class="shelf-ghosts" viewBox="0 0 240 92" width="240" height="92" focusable="false"><rect x="34" y="22" width="44" height="68" rx="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="8 7"/><circle cx="120" cy="64" r="25" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="8 7"/><rect x="164" y="44" width="40" height="46" rx="9" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="8 7"/></svg>
+          <span class="shelf-plank"></span>
+        </div>
+        <p class="shelf-caption">A prateleira está esperando o seu código.</p>
+        <noscript><p class="notice notice-static">A busca por código precisa do JavaScript ligado. Ative o JavaScript neste navegador ou abra o site em outro navegador para buscar.</p></noscript>
       </div>
     </div>
   </section>
@@ -82,17 +87,17 @@
       <h2 id="titulo-como" class="section-title">Como funciona</h2>
       <ol class="steps">
         <li class="step">
-          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><rect x="3" y="4" width="18" height="16" rx="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg></span>
+          <div class="step-art art-video" aria-hidden="true"><span class="art-phone"><span class="art-play"></span><span class="art-tag">#P0022</span><span class="art-progress"></span></span></div>
           <h3 class="step-title">Viu o vídeo</h3>
           <p class="step-text">Todo produto que aparece nos posts do shelfy tem um código, tipo <b class="code-inline">#P0022</b>.</p>
         </li>
         <li class="step">
-          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M9.5 3.5 7.5 20.5m9-17-2 17M4 8.5h16.5M3.5 15.5H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <div class="step-art art-search" aria-hidden="true"><span class="art-field"><span class="art-lens"></span><span class="art-typed">P0022</span><span class="art-caret"></span></span></div>
           <h3 class="step-title">Pegou o código</h3>
           <p class="step-text">Digite aqui em cima. Pode ser só o número, ou colar a legenda inteira do post.</p>
         </li>
         <li class="step">
-          <span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M6 8.5h12l-1 11.5H7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 10V7a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <div class="step-art art-result" aria-hidden="true"><span class="art-card"><span class="art-badge">P0022</span><span class="art-line"></span><span class="art-line art-line-short"></span><span class="art-button">Ver produto</span></span><span class="art-plank"></span></div>
           <h3 class="step-title">Achou o produto</h3>
           <p class="step-text">Toque em <b>Ver produto</b> e siga direto para a página dele na loja.</p>
         </li>
@@ -130,7 +135,7 @@
   <div class="shell footer-inner">
     <div class="footer-brand">
       <a class="brand brand-small" href="./" aria-label="shelfy — início">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.4" cy="13.4" r="3.3" fill="#fff"/><rect x="11.7" y="8.3" width="4.9" height="8.4" rx="1.3" fill="#fff"/><rect x="17.7" y="11.9" width="3.3" height="4.8" rx="1" fill="#fff" fill-opacity=".78"/><rect x="2.6" y="17.6" width="18.8" height="2.4" rx="1.2" fill="#fff"/></svg></span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
         <span class="brand-name">shelfy</span>
       </a>
       <p class="footer-tagline">Viu no vídeo, achou aqui.</p>
@@ -151,6 +156,10 @@
   <article class="result">
     <div class="result-head">
       <span class="code-badge" data-slot="code"></span>
+      <button class="copy-button" type="button" data-slot="copy">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.4-1.4a4 4 0 0 1 5.6 5.6L16.6 12M13 17.5l-1.4 1.4a4 4 0 0 1-5.6-5.6L7.4 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span data-slot="copy-label">Copiar link</span>
+      </button>
     </div>
     <h2 class="result-title" data-slot="title" dir="auto"></h2>
     <button class="title-toggle" type="button" data-slot="toggle" aria-expanded="false" hidden>Ver título completo</button>
@@ -159,12 +168,8 @@
         <span>Ver produto</span>
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M5 12h13m-5.5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <button class="button button-quiet" type="button" data-slot="copy">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.4-1.4a4 4 0 0 1 5.6 5.6L16.6 12M13 17.5l-1.4 1.4a4 4 0 0 1-5.6-5.6L7.4 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <span data-slot="copy-label">Copiar link</span>
-      </button>
     </div>
-    <p class="result-note" data-slot="note">Link de afiliado: o shelfy pode receber comissão se você comprar, sem custo extra pra você.</p>
+    <p class="result-note" data-slot="note"><b>Link de afiliado.</b> O shelfy pode receber comissão se você comprar, sem custo extra pra você.</p>
     <p class="result-unavailable" data-slot="unavailable" hidden>O link deste produto está indisponível no momento. Tente de novo mais tarde.</p>
   </article>
 </template>

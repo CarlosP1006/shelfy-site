@@ -224,6 +224,7 @@ function buildResult(product, compact) {
     card.classList.add('is-unavailable');
     slot(card, 'actions').remove();
     slot(card, 'note').remove();
+    copy.remove();
     slot(card, 'unavailable').hidden = false;
   }
   return card;

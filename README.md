@@ -1,6 +1,10 @@
 # shelfy-site
 
-Site público do **shelfy**, publicado pelo GitHub Pages em **https://carlosp1006.github.io/shelfy-site/**.
+### 🔗 Site no ar: **[carlosp1006.github.io/shelfy-site](https://carlosp1006.github.io/shelfy-site/)**
+
+`https://carlosp1006.github.io/shelfy-site/` · [política de privacidade](https://carlosp1006.github.io/shelfy-site/privacidade.html) · [termos](https://carlosp1006.github.io/shelfy-site/termos.html) · exemplo de link direto: `https://carlosp1006.github.io/shelfy-site/?c=P0022`
+
+Site público do **shelfy**, publicado pelo GitHub Pages.
 
 Ele tem dois papéis, e os dois são obrigatórios:
 
