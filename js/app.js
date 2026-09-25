@@ -70,11 +70,6 @@ function catalogUrl() {
 async function readLimited(response, limit) {
   const declared = Number(response.headers.get('content-length'));
   if (declared > limit) throw new CatalogError('size');
-  if (!response.body || typeof response.body.getReader !== 'function') {
-    const text = await response.text();
-    if (text.length > limit) throw new CatalogError('size');
-    return text;
-  }
   const reader = response.body.getReader();
   const chunks = [];
   let total = 0;
@@ -294,50 +289,35 @@ function announce(message) {
   });
 }
 
+function retryButton() {
+  return makeButton('Tentar de novo', () => loadCatalog());
+}
+
 function catalogErrorNotice() {
-  const retry = makeButton('Tentar de novo', () => loadCatalog());
-  if (state.catalogError === 'network' || state.catalogError === 'timeout') {
-    return {
-      notice: buildNotice({
-        tone: 'error',
-        title: 'Não conseguimos baixar o catálogo',
-        text: 'Parece que a conexão falhou. Confira a internet e tente de novo.',
-        actions: [retry]
-      }),
-      message: 'Não foi possível baixar o catálogo. Confira a conexão e tente de novo.'
-    };
-  }
+  const offline = state.catalogError === 'network' || state.catalogError === 'timeout';
   return {
-    notice: buildNotice({
-      tone: 'error',
-      title: 'O catálogo está temporariamente indisponível',
-      text: 'Estamos com um problema para ler a lista de produtos. Tente de novo em alguns minutos.',
-      actions: [retry]
-    }),
-    message: 'O catálogo está temporariamente indisponível. Tente de novo em alguns minutos.'
+    tone: 'error',
+    title: offline ? 'Não conseguimos baixar o catálogo' : 'O catálogo está temporariamente indisponível',
+    text: offline
+      ? 'Parece que a conexão falhou. Confira a internet e tente de novo.'
+      : 'Estamos com um problema para ler a lista de produtos. Tente de novo em alguns minutos.',
+    actions: [retryButton()]
   };
 }
 
-function describeMissing(code) {
-  const number = Number(code.slice(1));
-  if (state.catalog && number > state.catalog.highestNumber) {
+function missingNotice(code) {
+  if (Number(code.slice(1)) > state.catalog.highestNumber) {
     return {
-      notice: buildNotice({
-        tone: 'fresh',
-        title: 'O ' + code + ' ainda não chegou aqui',
-        text: 'Se o post acabou de sair, o produto pode levar alguns minutos para aparecer. Confira o código e tente de novo daqui a pouco.',
-        actions: [makeButton('Tentar de novo', () => loadCatalog())]
-      }),
-      message: 'O código ' + code + ' ainda não está no catálogo. Tente de novo em alguns minutos.'
+      tone: 'fresh',
+      title: 'O ' + code + ' ainda não chegou aqui',
+      text: 'Se o post acabou de sair, o produto pode levar alguns minutos para aparecer. Confira o código e tente de novo daqui a pouco.',
+      actions: [retryButton()]
     };
   }
   return {
-    notice: buildNotice({
-      tone: 'notfound',
-      title: 'Não encontramos o ' + code,
-      text: 'Esse código não existe ou o produto saiu do ar. Confira no vídeo se o código é esse mesmo.'
-    }),
-    message: 'Nenhum produto com o código ' + code + '. Esse código não existe ou o produto saiu do ar.'
+    tone: 'notfound',
+    title: 'Não encontramos o ' + code,
+    text: 'Esse código não existe ou o produto saiu do ar. Confira no vídeo se o código é esse mesmo.'
   };
 }
 
@@ -356,6 +336,11 @@ function view(key, nodes, message) {
   if (message) announce(message);
 }
 
+function showNotice(key, options, before = []) {
+  const title = options.title;
+  view(key, [...before, buildNotice(options)], title + (/[.?!\u2026]$/.test(title) ? ' ' : '. ') + (options.text || ''));
+}
+
 function markStale() {
   if (resultsBody.childElementCount) resultsBody.classList.add('is-stale');
 }
@@ -372,22 +357,22 @@ function render() {
     official.target = '_blank';
     official.rel = 'noopener noreferrer';
     official.textContent = 'Abrir o shelfy';
-    view('framed', [buildNotice({
+    showNotice('framed', {
       tone: 'framed',
       title: 'Abra o shelfy no endereço oficial',
       text: 'Esta página foi aberta dentro de outro site. Para sua segurança, a busca só funciona no endereço ' + siteRoot.host + siteRoot.pathname.replace(/\/$/, '') + '.',
       actions: [official]
-    })], 'Abra o shelfy no endereço oficial para buscar.');
+    });
     return;
   }
 
   if (query.kind === 'empty') {
     if (state.badLink) {
-      view('bad-link', [buildNotice({
+      showNotice('bad-link', {
         tone: 'invalid',
         title: 'O link aberto não tem um código válido',
         text: 'Digite o código que apareceu no vídeo. Os códigos são assim: P0022.'
-      })], 'O link aberto não tem um código válido.');
+      });
       return;
     }
     view('empty', [], '');
@@ -396,24 +381,24 @@ function render() {
 
   if (query.kind === 'partial') {
     if (!committed) return markStale();
-    view('partial', [buildNotice({
+    showNotice('partial', {
       tone: 'invalid',
       title: 'Faltou o número',
       text: 'Os códigos são assim: P0022. Digite o P seguido dos números, ou só os números.'
-    })], 'Faltou o número. Os códigos são assim: P0022.');
+    });
     return;
   }
 
   if (query.kind === 'invalid') {
     if (!committed) return markStale();
     const long = query.reason === 'long';
-    view('invalid-' + query.reason, [buildNotice({
+    showNotice('invalid-' + query.reason, {
       tone: 'invalid',
       title: long ? 'Esse número é grande demais' : 'Não achamos um código aí',
       text: long
         ? 'Os códigos têm um P e até 8 números, assim: P0022.'
         : 'Os códigos são assim: P0022. A busca é só por código; o nome do produto não funciona aqui.'
-    })], 'Os códigos são assim: P0022.');
+    });
     return;
   }
 
@@ -425,12 +410,12 @@ function render() {
       commit();
       input.focus({ preventScroll: true });
     });
-    view('suggest-' + query.code, [buildNotice({
+    showNotice('suggest-' + query.code, {
       tone: 'suggest',
       title: 'Você quis dizer ' + query.code + '?',
       text: 'Não achamos um código no formato P0022 no que você digitou, mas achamos um número.',
       actions: [accept]
-    })], 'Não achamos um código. Você quis dizer ' + query.code + '?');
+    });
     return;
   }
 
@@ -438,17 +423,15 @@ function render() {
 
   if (!state.catalog) {
     if (state.catalogError && !state.loading) {
-      const { notice, message } = catalogErrorNotice();
-      view('error-' + state.catalogError, [notice], message);
+      showNotice('error-' + state.catalogError, catalogErrorNotice());
       return;
     }
     if (query.settle !== 'now' && !committed) return markStale();
-    const loading = cloneTemplate('tpl-loading');
-    view('loading', [loading, buildNotice({
+    showNotice('loading', {
       tone: 'loading',
-      title: 'Carregando o catálogo…',
+      title: 'Carregando o catálogo\u2026',
       text: 'Sua busca aparece aqui assim que ele chegar.'
-    })], 'Carregando o catálogo. Sua busca aparece em seguida.');
+    }, [cloneTemplate('tpl-loading')]);
     return;
   }
 
@@ -464,23 +447,22 @@ function render() {
   if (!found.length) {
     if (!committed) return markStale();
     if (products.size === 0) {
-      view('catalog-empty', [buildNotice({
+      showNotice('catalog-empty', {
         tone: 'empty',
         title: 'A prateleira ainda está vazia',
         text: 'Os primeiros produtos do shelfy estão chegando. Volte daqui a pouco e busque o código de novo.'
-      })], 'O catálogo ainda está vazio. Os primeiros produtos chegam em breve.');
+      });
       return;
     }
     if (missing.length === 1) {
-      const { notice, message } = describeMissing(missing[0]);
-      view('missing-' + missing[0] + '-' + state.catalog.highestNumber, [notice], message);
+      showNotice('missing-' + missing[0] + '-' + state.catalog.highestNumber, missingNotice(missing[0]));
       return;
     }
-    view('missing-' + missing.join('+'), [buildNotice({
+    showNotice('missing-' + missing.join('+'), {
       tone: 'notfound',
       title: 'Nenhum desses códigos está no catálogo',
       text: 'Procuramos ' + missing.join(', ') + '. Eles não existem ou os produtos saíram do ar.'
-    })], 'Nenhum dos códigos foi encontrado.');
+    });
     return;
   }
 
