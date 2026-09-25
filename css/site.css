@@ -288,9 +288,14 @@
     padding-block: clamp(0.75rem, 0.25rem + 2.5vw, 3rem) clamp(2.5rem, 1rem + 5vw, 5rem);
   }
 
+  .page-home .header-inner {
+    justify-content: center;
+  }
+
   .page-home .hero {
     min-height: calc(100vh - 4.5rem);
     min-height: calc(100svh - 4.5rem);
+    padding-top: clamp(0rem, 1.2vw - 0.25rem, 1.25rem);
   }
 
   .hero::before {
@@ -417,6 +422,17 @@
     font-size: 1.5rem;
   }
 
+  .brand-solo .brand-mark {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.95rem;
+  }
+
+  .brand-solo .brand-mark svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
   .header-link {
     display: inline-flex;
     align-items: center;
@@ -446,10 +462,6 @@
     color: var(--terra-900);
   }
 
-  .page-home .header-nav {
-    display: none;
-  }
-
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -471,6 +483,20 @@
     border-radius: 50%;
     background: var(--orange-500);
     box-shadow: 0 0 0 4px var(--ring-soft);
+  }
+
+  .eyebrow-name {
+    gap: 0.6rem;
+    padding-inline: 0.85rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow-name .eyebrow-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    box-shadow: 0 0 0 3px var(--ring-soft);
   }
 
   .hero-title {
@@ -1938,6 +1964,15 @@
       animation: print 0.75s steps(7, end) 0.35s both;
     }
 
+    .brand-solo .brand-mark svg > :not(:last-child) {
+      animation: bounce 4.2s var(--ease-out) 0.8s infinite;
+    }
+
+    .brand-solo .brand-mark svg > :nth-child(2),
+    .brand-solo .brand-mark svg > :nth-child(3) {
+      animation-delay: 1s;
+    }
+
     .brand:hover .brand-mark svg > :not(:last-child) {
       animation: hop 0.35s var(--ease-out) 2 alternate;
     }
@@ -1992,6 +2027,12 @@
 
   @keyframes hop {
     to { transform: translateY(-0.28rem); }
+  }
+
+  @keyframes bounce {
+    0%, 22%, 100% { transform: none; }
+    7% { transform: translateY(-0.26rem) scaleY(1.05); }
+    14% { transform: scaleY(0.9); }
   }
 
   @keyframes settle {
