@@ -81,6 +81,12 @@ O servidor imita o GitHub Pages: serve o repositório no subcaminho `/shelfy-sit
 - `?catalog=<nome>` usa `dev/fixtures/<nome>.json`: `hostile`, `empty`, `broken`, `version2`, `version-string`, `no-products`, `products-object`, `array-root`, `deep-nesting`, e os gerados `gen-huge-5000`, `gen-huge-12000`, `gen-oversized`.
 - `node dev/gen-fixtures.mjs` regenera tudo (os `gen-*` são grandes e ficam fora do git).
 
+**Código de teste no site no ar:** digite `teste676767` na busca (ou abra `https://carlosp1006.github.io/shelfy-site/?c=teste676767`) e aparece um produto fictício, “Luminária de mesa (produto fictício, só para teste)”, com o botão levando a `https://example.com/` (domínio reservado para exemplos). Serve para ver o resultado de ponta a ponta antes de a aplicação shelfy publicar produtos de verdade.
+
+- Ele não está no `data/products.json` e não segue o formato dos códigos (`P` + números): ninguém cai nele por acaso, o `676767` sozinho continua sendo o código normal `P676767`, e a aplicação shelfy nem enxerga nem mexe nele.
+- Não entra nos “buscados recentemente”.
+- Para tirar: apague a constante `TEST_CODE` e a linha dela em `parseQuery` (`js/query.js`), a linha do produto fictício em `js/app.js` e os dois testes que citam `TESTE676767`.
+
 **Testes**
 
 | Comando | O que testa | Precisa de |

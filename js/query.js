@@ -3,6 +3,7 @@ import { formatCode } from './catalog.js';
 export const MAX_QUERY_LENGTH = 4000;
 export const MAX_DEEP_LINK_LENGTH = 200;
 export const MAX_CODES_PER_QUERY = 10;
+export const TEST_CODE = 'TESTE676767';
 const MAX_RUN_LENGTH = 16;
 const MAX_HASH_LENGTH = 32;
 const SCAN_SEPARATORS = ' -.:_';
@@ -133,6 +134,7 @@ function suggestFromNumbers(text) {
 export function parseQuery(raw) {
   const text = normalizeText(raw);
   if (!text) return { kind: 'empty' };
+  if (text.toUpperCase() === TEST_CODE) return { kind: 'codes', codes: [TEST_CODE], source: 'direct', settle: 'now' };
   return parseDirect(text) || scanText(text) || suggestFromNumbers(text) || { kind: 'invalid', reason: 'format' };
 }
 

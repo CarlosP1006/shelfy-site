@@ -1,6 +1,7 @@
 const { spawn } = require('node:child_process');
 const path = require('node:path');
 const assert = require('node:assert/strict');
+const { isDeepStrictEqual } = require('node:util');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -11,6 +12,7 @@ const CHROME = process.env.CHROME_PATH || undefined;
 const tests = [];
 const it = (name, fn) => tests.push({ name, fn });
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const RESULT = '[data-results] .result:not(.result-loading)';
 
 async function startServer() {
   const server = spawn(process.execPath, [path.join(ROOT, 'dev/serve.mjs')], { env: { ...process.env, PORT: String(PORT) }, stdio: ['ignore', 'pipe', 'inherit'] });
@@ -48,11 +50,29 @@ async function noticeTitle(page) {
   return page.$eval('[data-results] .notice-title', (node) => node.textContent).catch(() => null);
 }
 
+// A troca de resultado roda dentro de uma View Transition, um quadro depois da ação: espera o valor certo por até 3 s.
+async function eventually(read, expected) {
+  let value = await read();
+  for (let tries = 0; !isDeepStrictEqual(value, expected) && tries < 60; tries += 1) {
+    await sleep(50);
+    value = await read();
+  }
+  return value;
+}
+
+async function expectTitles(page, expected, message) {
+  assert.deepEqual(await eventually(() => resultTitles(page), expected), expected, message);
+}
+
+async function expectNotice(page, expected) {
+  assert.equal(await eventually(() => noticeTitle(page), expected), expected);
+}
+
 it('jornada (a): digitou 22 e achou o produto', async (browser) => {
   const { page, problems, context } = await openPage(browser, BASE + '?catalog=dev');
   await typeCode(page, '22');
-  await page.waitForSelector('[data-results] .result');
-  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await page.waitForSelector(RESULT);
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   const link = await page.$eval('[data-results] a.button-primary', (a) => ({ href: a.href, rel: a.rel, target: a.getAttribute('target'), text: a.textContent.replace(/\s+/g, ' ').trim() }));
   assert.equal(link.href, 'https://loja.example.com/p/espremedor-de-frutas-eletrico-300ml-22?aff=shelfy');
   assert.equal(link.rel, 'sponsored nofollow noopener noreferrer');
@@ -85,8 +105,8 @@ it('jornada (c): colou a legenda inteira (evento paste)', async (browser) => {
     input.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true }));
   }, text);
   await paste('Gostou? 🧡\nBusca o código #P0022\nno link da bio');
-  await page.waitForSelector('[data-results] .result');
-  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await page.waitForSelector(RESULT);
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   assert.equal(await page.inputValue('#codigo'), 'Gostou? 🧡 Busca o código #P0022 no link da bio');
   await paste('Achados: #P0022 e #P0023 🔥');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
@@ -99,8 +119,8 @@ it('jornada (c): texto inserido sem evento paste (teclado do celular)', async (b
   const { page, context } = await openPage(browser, BASE + '?catalog=dev');
   await page.focus('#codigo');
   await page.keyboard.insertText('Busca o código #P0022\nno link da bio');
-  await page.waitForSelector('[data-results] .result');
-  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await page.waitForSelector(RESULT);
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   await context.close();
 });
 
@@ -110,17 +130,17 @@ it('jornada (d): erros comuns de digitação', async (browser) => {
     await typeCode(page, form);
     await page.press('#codigo', 'Enter');
     await page.waitForFunction(() => document.querySelector('[data-results] .result-title'));
-    assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml'], form);
+    await expectTitles(page, ['Espremedor de frutas elétrico 300ml'], form);
   }
   await context.close();
 });
 
 it('jornada (e): link direto ?c= e #', async (browser) => {
   const { page, context, problems } = await openPage(browser, BASE + '?catalog=dev&c=P0022');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   assert.equal(await page.inputValue('#codigo'), 'P0022');
   await page.goto(BASE + '?catalog=dev#p22');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   await page.waitForFunction(() => location.search.includes('c=P0022') && !location.hash);
   await page.goto(BASE + '?catalog=dev&c=%23P0022+P0023');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
@@ -137,7 +157,7 @@ it('jornada (f): internet lenta, digitou antes do catálogo chegar', async (brow
   await page.waitForSelector('[data-results] .result-loading');
   assert.match(await page.textContent('[data-results]'), /Carregando o catálogo/);
   await page.waitForSelector('[data-results] .result-title', { timeout: 8000 });
-  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   await context.close();
 });
 
@@ -152,7 +172,7 @@ it('jornada (g): produto que saiu do ar e código novo demais', async (browser) 
   await typeCode(page, missing);
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
-  assert.equal(await noticeTitle(page), 'Não encontramos o ' + missing);
+  await expectNotice(page, 'Não encontramos o ' + missing);
   assert.match(await page.textContent('[data-results]'), /não existe ou o produto saiu do ar/);
   await typeCode(page, 'P20000');
   await page.press('#codigo', 'Enter');
@@ -176,7 +196,29 @@ it('estados: catálogo vazio (arquivo real)', async (browser) => {
   await typeCode(page, '22');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
-  assert.equal(await noticeTitle(page), 'A prateleira ainda está vazia');
+  await expectNotice(page, 'A prateleira ainda está vazia');
+  assert.deepEqual(problems, [], problems.join('\n'));
+  await context.close();
+});
+
+it('código de teste: TESTE676767 mostra o produto fictício sem mexer no catálogo', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE);
+  await typeCode(page, 'teste676767');
+  await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
+  assert.match((await resultTitles(page))[0], /fictício/);
+  const link = await page.$eval('[data-results] a.button-primary', (a) => ({ href: a.href, rel: a.rel }));
+  assert.deepEqual(link, { href: 'https://example.com/', rel: 'sponsored nofollow noopener noreferrer' });
+  await page.press('#codigo', 'Enter');
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'TESTE676767');
+  assert.equal(await page.evaluate(() => localStorage.getItem('shelfy:recentes')), null, 'não entra nos recentes');
+  await page.goto(BASE + '?c=teste676767');
+  await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
+  await typeCode(page, '676767');
+  await page.press('#codigo', 'Enter');
+  await page.waitForSelector('[data-results] .notice');
+  await expectNotice(page, 'A prateleira ainda está vazia');
   assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
@@ -186,12 +228,12 @@ it('estados: formato inválido e sugestão', async (browser) => {
   await typeCode(page, 'tenis nike');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
-  assert.equal(await noticeTitle(page), 'Não achamos um código aí');
+  await expectNotice(page, 'Não achamos um código aí');
   await typeCode(page, 'codigo 22 por favor');
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => /Você quis dizer P0022/.test(document.querySelector('[data-results]').textContent));
   await page.click('[data-results] .notice-actions button');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   assert.equal(await page.inputValue('#codigo'), 'P0022');
   await typeCode(page, 'P');
   await page.press('#codigo', 'Enter');
@@ -227,9 +269,9 @@ it('estados: rede falhando, tentar de novo recupera', async (browser) => {
   await page.waitForFunction(() => /Não conseguimos baixar o catálogo/.test(document.querySelector('[data-results]').textContent));
   fail = false;
   await sleep(3000);
-  const recovered = await page.$('[data-results] .result');
+  const recovered = await page.$(RESULT);
   if (!recovered) await page.click('[data-results] .notice-actions button');
-  await page.waitForSelector('[data-results] .result', { timeout: 8000 });
+  await page.waitForSelector(RESULT, { timeout: 8000 });
   await context.close();
 });
 
@@ -252,14 +294,14 @@ it('segurança: catálogo hostil não executa nada e não vira link', async (bro
     if (code === 'P0022' || code === 'P0023') continue;
     await typeCode(page, code);
     await page.press('#codigo', 'Enter');
-    await page.waitForSelector('[data-results] .result');
-    const href = await page.$eval('[data-results] .result', (card) => { const a = card.querySelector('a[href]'); return a ? a.href : null; });
+    await page.waitForSelector(RESULT);
+    const href = await page.$eval(RESULT, (card) => { const a = card.querySelector('a[href]'); return a ? a.href : null; });
     if (href !== null) assert.ok(safeLinks.has(href), code + ' virou link: ' + href);
     else assert.ok(await page.$('[data-results] .result.is-unavailable'), code + ' aparece como indisponível');
   }
   await typeCode(page, 'P0022');
   await page.press('#codigo', 'Enter');
-  await page.waitForFunction(() => document.querySelector('[data-results] .result-title').textContent === 'Versão mais nova (deve ganhar)');
+  await page.waitForFunction(() => document.querySelector('[data-results] .result-title')?.textContent === 'Versão mais nova (deve ganhar)');
   const everyHref = await page.$$eval('a[href]', (anchors) => anchors.map((a) => a.href));
   assert.ok(everyHref.every((href) => /^(https?:|mailto:)/.test(href)), 'nenhum href perigoso na página');
   assert.deepEqual(problems, [], problems.join('\n'));
@@ -269,7 +311,7 @@ it('segurança: catálogo hostil não executa nada e não vira link', async (bro
 it('segurança: URL hostil (?c= e #) não é refletida nem executada', async (browser) => {
   const { page, context, problems } = await openPage(browser, BASE + '?catalog=dev&c=%3Cscript%3Ealert(1)%3C%2Fscript%3E%3Cimg%20src%3Dx%20onerror%3Dalert(2)%3E');
   await page.waitForSelector('[data-results] .notice');
-  assert.equal(await noticeTitle(page), 'O link aberto não tem um código válido');
+  await expectNotice(page, 'O link aberto não tem um código válido');
   assert.equal(await page.inputValue('#codigo'), '');
   assert.equal(new URL(page.url()).searchParams.get('c'), null, 'payload removido da URL');
   assert.ok(!(await page.content()).includes('onerror=alert(2)'));
@@ -302,9 +344,9 @@ it('segurança: dentro de iframe a busca não vira link', async (browser) => {
 it('escala: 5000 e 12000 produtos', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=gen-huge-5000');
   await typeCode(page, 'P4999');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   await page.goto(BASE + '?catalog=gen-huge-12000&c=P10000');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   await typeCode(page, 'P11000');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
@@ -340,7 +382,7 @@ it('404 em URL profunda: estilo, links e busca funcionam', async (browser) => {
   assert.ok(hrefs.includes('http://localhost:' + PORT + '/shelfy-site/privacidade.html'));
   assert.ok(hrefs.includes('http://localhost:' + PORT + '/shelfy-site/'));
   await typeCode(page, '22');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   assert.ok(requests.every((url) => url.startsWith('http://localhost:' + PORT + '/shelfy-site/')), 'tudo carregado do subcaminho');
   assert.deepEqual(problems.filter((p) => !/Failed to load resource: the server responded with a status of 404/.test(p)), []);
   await context.close();
@@ -361,7 +403,7 @@ it('copiar link, recentes e título longo', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev', { permissions: ['clipboard-read', 'clipboard-write'] });
   await typeCode(page, 'P0022');
   await page.press('#codigo', 'Enter');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   await page.click('[data-results] [data-slot="copy"]');
   await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
   assert.equal(await page.evaluate(() => navigator.clipboard.readText()), BASE + '?c=P0022');
@@ -370,7 +412,7 @@ it('copiar link, recentes e título longo', async (browser) => {
   await page.waitForSelector('[data-recent]:not([hidden])');
   assert.deepEqual(await page.$$eval('.recent-chip', (chips) => chips.map((c) => c.textContent)), ['P0022']);
   await page.click('.recent-chip');
-  await page.waitForSelector('[data-results] .result');
+  await page.waitForSelector(RESULT);
   const longCode = await page.evaluate(async () => {
     const data = await (await fetch('dev/products.sample.json')).json();
     return data.products.find((p) => p.title.length > 200 && /^https:/.test(p.link)).code;
@@ -398,8 +440,8 @@ it('layout: 360×560 (navegador embutido) com busca acima da dobra', async (brow
 
 it('movimento reduzido desliga animações', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev&c=P0022', { reducedMotion: 'reduce' });
-  await page.waitForSelector('[data-results] .result');
-  const motion = await page.$eval('[data-results] .result', (node) => getComputedStyle(node).transitionDuration);
+  await page.waitForSelector(RESULT);
+  const motion = await page.$eval(RESULT, (node) => getComputedStyle(node).transitionDuration);
   assert.equal(motion, '0s');
   await context.close();
 });
@@ -454,7 +496,7 @@ it('link curto: copiar usa a porta de entrada quando configurada', async (browse
       await route.fulfill({ response, body });
     });
     await page.goto(BASE + '?catalog=dev&c=P0022');
-    await page.waitForSelector('[data-results] .result');
+    await page.waitForSelector(RESULT);
     await page.click('[data-results] [data-slot="copy"]');
     await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
     assert.equal(await page.evaluate(() => navigator.clipboard.readText()), expected, value);
@@ -466,8 +508,8 @@ it('404 com código no caminho mostra o produto', async (browser) => {
   const { page, context, problems } = await openPage(browser, null);
   const response = await page.goto('http://localhost:' + PORT + '/shelfy-site/P0022?catalog=dev');
   assert.equal(response.status(), 404);
-  await page.waitForSelector('[data-results] .result');
-  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await page.waitForSelector(RESULT);
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   await page.goto('http://localhost:' + PORT + '/shelfy-site/produto/%3Cscript%3Ealert(1)%3C%2Fscript%3E?catalog=dev');
   await sleep(600);
   assert.equal(await page.$('[data-results] .result'), null);

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { parseQuery, parseDeepLink, parseHash, normalizeText, MAX_CODES_PER_QUERY } from '../js/query.js';
+import { parseQuery, parseDeepLink, parseHash, normalizeText, MAX_CODES_PER_QUERY, TEST_CODE } from '../js/query.js';
 import {
   buildCatalog, parseCatalog, readProduct, readTitle, readProductLink, linkProblem, codeProblem, canonicalCode,
   MAX_PRODUCTS, MAX_TITLE_LENGTH
@@ -101,6 +101,19 @@ test('deep link e hash', () => {
   for (const hash of ['#como-funciona', '#buscar', '#sobre', '#conteudo', '#%E0%A4%A', '#<img src=x onerror=alert(1)>', '#' + 'P'.repeat(40)]) {
     assert.equal(parseHash(hash), null, hash);
   }
+});
+
+test('código de teste: só a palavra exata, fora do formato dos códigos', () => {
+  assert.equal(TEST_CODE, 'TESTE676767');
+  for (const input of ['TESTE676767', 'teste676767', ' Teste676767 ']) assert.deepEqual(codesOf(input), [TEST_CODE], input);
+  assert.deepEqual(parseDeepLink('teste676767'), [TEST_CODE]);
+  assert.deepEqual(parseHash('#teste676767'), [TEST_CODE]);
+  assert.deepEqual(codesOf('676767'), ['P676767']);
+  assert.deepEqual(codesOf('P676767'), ['P676767']);
+  for (const input of ['teste 676767', 'TESTE67676', 'teste676767 P0022', 'legenda com TESTE676767 no meio']) {
+    assert.notDeepEqual(codesOf(input), [TEST_CODE], input);
+  }
+  assert.notEqual(codeProblem(TEST_CODE), '', 'nunca vale como código do catálogo');
 });
 
 test('regras de link: só https seguro vira link', () => {

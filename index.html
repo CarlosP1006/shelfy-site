@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
-<title>shelfy — ache o produto do vídeo pelo código</title>
-<meta name="description" content="Viu um produto num vídeo do shelfy? Digite o código do post (tipo P0022) e vá direto para o link do produto. Sem login, sem cadastro, sem rastreadores.">
+<title>shelfy — ache o produto do post pelo código</title>
+<meta name="description" content="Viu um produto num post do shelfy? Digite o código (tipo P0022) e vá direto para o link do produto. Sem login, sem cadastro, sem rastreadores.">
 <link rel="canonical" href="https://carlosp1006.github.io/shelfy-site/">
 <meta name="theme-color" content="#fff4ea">
 <meta name="color-scheme" content="light">
@@ -17,13 +17,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="shelfy">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="shelfy — ache o produto do vídeo pelo código">
-<meta property="og:description" content="Viu no vídeo? Digite o código do post e vá direto para o link do produto.">
+<meta property="og:title" content="shelfy — ache o produto do post pelo código">
+<meta property="og:description" content="Viu no post? Digite o código e vá direto para o link do produto.">
 <meta property="og:url" content="https://carlosp1006.github.io/shelfy-site/">
 <meta property="og:image" content="https://carlosp1006.github.io/shelfy-site/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="shelfy: viu no vídeo? Ache aqui pelo código.">
+<meta property="og:image:alt" content="shelfy: viu no post? Ache aqui pelo código.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/site.css">
 <link rel="preload" href="data/products.json" as="fetch" crossorigin>
@@ -50,9 +50,9 @@
   <section class="hero" aria-labelledby="titulo">
     <div class="shell hero-inner">
       <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>O link da bio do shelfy</p>
-      <h1 id="titulo" class="hero-title">Viu no vídeo? <span class="hero-accent">Ache no shelfy.</span></h1>
+      <h1 id="titulo" class="hero-title">Viu no post? <span class="hero-accent">Ache no shelfy.</span></h1>
       <form id="buscar" class="search" role="search" action="./" method="get" autocomplete="off" novalidate>
-        <label class="search-label" for="codigo">Digite o código que apareceu no vídeo.</label>
+        <label class="search-label" for="codigo">Digite o código que aparece no post.</label>
         <div class="search-field">
           <svg class="search-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
           <input id="codigo" class="search-input" name="c" type="text" inputmode="text" enterkeyhint="search" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="4000" placeholder="P0022" aria-describedby="dica-busca">
@@ -87,9 +87,9 @@
       <h2 id="titulo-como" class="section-title">Como funciona</h2>
       <ol class="steps">
         <li class="step">
-          <div class="step-art art-video" aria-hidden="true"><span class="art-phone"><span class="art-play"></span><span class="art-tag">#P0022</span><span class="art-progress"></span></span></div>
-          <h3 class="step-title">Viu o vídeo</h3>
-          <p class="step-text">Todo produto que aparece nos posts do shelfy tem um código, tipo <b class="code-inline">#P0022</b>.</p>
+          <div class="step-art" aria-hidden="true"><span class="art-post"><span class="art-post-head"></span><span class="art-media"><span class="art-track"><span></span><span></span><span></span></span></span><span class="art-dots"></span><span class="art-caption"><span class="art-tag">#P0022</span></span></span></div>
+          <h3 class="step-title">Viu o post</h3>
+          <p class="step-text">Foto, carrossel ou vídeo: todo produto dos posts do shelfy tem um código, tipo <b class="code-inline">#P0022</b>.</p>
         </li>
         <li class="step">
           <div class="step-art art-search" aria-hidden="true"><span class="art-field"><span class="art-lens"></span><span class="art-typed">P0022</span><span class="art-caret"></span></span></div>
@@ -129,6 +129,8 @@
       </aside>
     </div>
   </section>
+
+  <a class="back-to-search" href="#buscar">Buscar código</a>
 </main>
 
 <footer class="site-footer">
@@ -138,7 +140,7 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
         <span class="brand-name">shelfy</span>
       </a>
-      <p class="footer-tagline">Viu no vídeo, achou aqui.</p>
+      <p class="footer-tagline">Viu no post, achou aqui.</p>
     </div>
     <nav class="footer-nav" aria-label="Rodapé">
       <ul>

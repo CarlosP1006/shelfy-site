@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>shelfy</ShortName>
-  <Description>Ache o produto do vídeo pelo código (ex.: P0022)</Description>
+  <Description>Ache o produto do post pelo código (ex.: P0022)</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image width="16" height="16" type="image/png">https://carlosp1006.github.io/shelfy-site/img/favicon-32.png</Image>
   <Url type="text/html" method="get" template="https://carlosp1006.github.io/shelfy-site/?c={searchTerms}"/>
