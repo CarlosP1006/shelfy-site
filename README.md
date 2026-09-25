@@ -8,7 +8,7 @@ Site público do **shelfy**, publicado pelo GitHub Pages.
 
 Ele tem dois papéis, e os dois são obrigatórios:
 
-- **Link da bio (Papel A).** Quem viu um produto num post do shelfy digita o código do post (`P0022`) e chega direto no link do produto. Sem login, sem cadastro, sem pop-up.
+- **Link da bio (Papel A).** Quem viu um produto num post da shelfy digita o código do post (`P0022`) e chega direto no link do produto. Sem login, sem cadastro, sem pop-up.
 - **Homepage oficial do app no Google (Papel B).** Estas páginas estão cadastradas na tela de consentimento OAuth do Google Cloud como homepage e política de privacidade do app shelfy, que usa a API do Google Drive. Se elas quebrarem, a aplicação pode perder o acesso ao Drive.
 
 ## Sumário
@@ -35,8 +35,8 @@ Estes dois endereços estão cadastrados no Google Cloud e **não podem mudar, r
 
 - `index.html` e `privacidade.html` ficam **na raiz**, com esses nomes exatos. Nunca renomear, mover, transformar em redirect (meta refresh, JavaScript, truque de 404) nem trocar por roteamento no navegador.
 - Todo o conteúdo exigido está no HTML servido e aparece **com JavaScript desligado**. Nada escondido (`display: none`, modal, `<details>` fechado, conteúdo carregado por JS).
-- A homepage precisa: mostrar o nome **shelfy**; descrever o que o app faz; explicar para que usa dados do Google (o Drive do próprio dono, com a permissão `drive.file`, só para guardar as imagens e vídeos que ele mesmo gera); e ter um link visível para `privacidade.html` (o mesmo endereço do cadastro). Isso está na seção “Sobre o shelfy” e no rodapé.
-- A política precisa manter: escopo `drive.file` (só enxerga o que o shelfy criou; não lê, não altera, não apaga mais nada); arquivos só no Drive do dono; nenhum dado do Google compartilhado, vendido ou enviado a terceiros; link de revogação https://myaccount.google.com/permissions; contato dinosauroxd9@gmail.com; e a seção do site público (sem login, sem cookies, sem analytics, busca local, links de afiliado, data de atualização).
+- A homepage precisa: mostrar o nome **shelfy**; descrever o que o app faz; explicar para que usa dados do Google (o Drive do próprio dono, com a permissão `drive.file`, só para guardar as imagens e vídeos que ele mesmo gera); e ter um link visível para `privacidade.html` (o mesmo endereço do cadastro). Isso está na seção “Sobre a shelfy” e no rodapé.
+- A política precisa manter: escopo `drive.file` (só enxerga o que a shelfy criou; não lê, não altera, não apaga mais nada); arquivos só no Drive do dono; nenhum dado do Google compartilhado, vendido ou enviado a terceiros; link de revogação https://myaccount.google.com/permissions; contato dinosauroxd9@gmail.com; e a seção do site público (sem login, sem cookies, sem analytics, busca local, links de afiliado, data de atualização).
 - `<title>` e `<h1>` das duas páginas contêm “shelfy”.
 - Não criar `CNAME`, não mudar configurações do repositório ou do Pages, não criar GitHub Actions. O deploy é: commit na `main` → o Pages publica sozinho.
 - **Qualquer coisa que colete dado** (analytics, fonte externa, embed, pixel) torna a política mentirosa e põe o app em risco. Não adicione.
@@ -47,7 +47,7 @@ Os testes ponta a ponta (`dev/test-e2e.cjs`) abrem as duas páginas com JavaScri
 ## 2. Estrutura do repositório
 
 ```
-index.html              busca (herói) + como funciona + sobre o shelfy (texto do Google)
+index.html              busca (herói) + como funciona + sobre a shelfy (texto do Google)
 privacidade.html        política de privacidade (nome e lugar intocáveis)
 termos.html             termos de uso
 404.html                página de erro com busca; usa <base href="/shelfy-site/">
@@ -280,9 +280,9 @@ Repita no máximo **4 vezes**, com espera curta e crescente (1 s, 2 s, 4 s, 8 s,
 
 ### e) Volume e limites
 
-O shelfy publica ~6 produtos novos por dia, mais remoções eventuais. **Agrupe as mudanças do mesmo ciclo num commit só.**
+A shelfy publica ~6 produtos novos por dia, mais remoções eventuais. **Agrupe as mudanças do mesmo ciclo num commit só.**
 
-| Limite | Valor documentado | Uso do shelfy | Folga |
+| Limite | Valor documentado | Uso da shelfy | Folga |
 | --- | --- | --- | --- |
 | Taxa primária da API (token pessoal) | 5000 requisições/hora | ~2 por ciclo (1 GET + 1 PUT; +1 GET de blob acima de 1 MB) | milhares de vezes |
 | Taxa secundária: requisições que criam conteúdo | ≤ 80/minuto e ≤ 500/hora | 1 PUT por ciclo, ~6 por dia | enorme |
@@ -370,7 +370,7 @@ As alternativas abaixo ficam registradas para o futuro. Qualquer uma que troque 
 | **Porta de entrada (adotada)** | `https://NOME.github.io/` redireciona | grátis | Na bio, nos posts e nos links copiados, sim; na barra de endereço depois do clique, não | Não muda o site, o Google nem este repositório. Ver `dev/porta/` |
 | Encurtador na bio | — | — | Não: o endereço final aparece no navegador | Coloca rastreamento de terceiros no caminho; contradiz a política. Não use |
 
-Mesmo trocando o endereço, o repositório público continua mostrando o histórico: o primeiro commit tem nome e e-mail do dono; o e-mail de contato está na política (o Google exige um contato; pode ser um e-mail só do shelfy, atualizado também no Google Cloud); e os commits do publicador saem com o usuário dono do token (com um GitHub App eles aparecem como robô). Com o GitHub Pro, o repositório pode ficar privado e o site continua público.
+Mesmo trocando o endereço, o repositório público continua mostrando o histórico: o primeiro commit tem nome e e-mail do dono; o e-mail de contato está na política (o Google exige um contato; pode ser um e-mail só da shelfy, atualizado também no Google Cloud); e os commits do publicador saem com o usuário dono do token (com um GitHub App eles aparecem como robô). Com o GitHub Pro, o repositório pode ficar privado e o site continua público.
 
 **Roteiro da troca de endereço do site** (só se um dia optar por domínio próprio ou organização; fazer tudo no mesmo dia):
 

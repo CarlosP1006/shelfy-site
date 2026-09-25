@@ -240,6 +240,16 @@ test('código do site não usa sinks perigosos', () => {
   }
 });
 
+test('shelfy é sempre feminina: a, da, na, pela, à', () => {
+  const files = ['index.html', 'privacidade.html', 'termos.html', '404.html', 'opensearch.xml', 'README.md', 'SECURITY.md',
+    'dev/porta/index.html', 'dev/porta/404.html', ...readdirSync('js').map((file) => 'js/' + file)];
+  const masculine = /(?<![\p{L}\p{N}_])(?:o|do|no|pelo|ao|um|num|dum|este|esse|deste|desse|neste|nesse)\s+shelfy(?![\p{L}\p{N}_-])/iu;
+  for (const file of files) {
+    const found = readFileSync(file, 'utf8').match(masculine);
+    assert.equal(found, null, file + ': “' + found?.[0] + '”');
+  }
+});
+
 test('HTML: CSP idêntica, nada inline, nada de outro domínio', () => {
   const pages = ['index.html', 'privacidade.html', 'termos.html', '404.html'];
   const policies = new Set();

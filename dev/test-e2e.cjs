@@ -336,7 +336,7 @@ it('segurança: dentro de iframe a busca não vira link', async (browser) => {
   await page.setContent('<iframe src="' + BASE + '?catalog=dev&c=P0022" width="400" height="700"></iframe>');
   const frame = await (await page.waitForSelector('iframe')).contentFrame();
   await frame.waitForSelector('[data-results] .notice');
-  assert.match(await frame.textContent('[data-results]'), /Abra o shelfy no endereço oficial/);
+  assert.match(await frame.textContent('[data-results]'), /Abra a shelfy no endereço oficial/);
   assert.equal(await frame.$('[data-results] a.button-primary'), null);
   await context.close();
 });
@@ -358,7 +358,7 @@ it('sem JavaScript: conteúdo do Google continua visível', async (browser) => {
   const h1 = await page.textContent('h1');
   assert.match(h1, /shelfy/);
   const body = await page.innerText('body');
-  for (const text of ['Sobre o shelfy', 'Google Drive', 'drive.file', 'só enxerga os arquivos e pastas que ele mesmo criou', 'Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros', 'Política de privacidade', 'precisa do JavaScript']) {
+  for (const text of ['Sobre a shelfy', 'Google Drive', 'drive.file', 'só enxerga os arquivos e pastas que ela mesma criou', 'Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros', 'Política de privacidade', 'precisa do JavaScript']) {
     assert.ok(body.includes(text), 'visível sem JS: ' + text);
   }
   const privacyLink = await page.$('a[href="privacidade.html"]');
