@@ -1,0 +1,315 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-24T14:05:00Z",
+  "products": [
+    {
+      "code": "P0001",
+      "title": "<script>alert(\"xss\")</script> Garrafa térmica",
+      "link": "https://loja.example.com/p/1"
+    },
+    {
+      "code": "P0002",
+      "title": "<img src=x onerror=alert(1)> Luminária",
+      "link": "https://loja.example.com/p/2"
+    },
+    {
+      "code": "P0003",
+      "title": "\"><svg onload=alert(1)> Tapete",
+      "link": "https://loja.example.com/p/3"
+    },
+    {
+      "code": "P0004",
+      "title": "&lt;b&gt;entidade&lt;/b&gt; &amp; &#x3C;script&#x3E; Organizador",
+      "link": "https://loja.example.com/p/4"
+    },
+    {
+      "code": "P0005",
+      "title": "Fone com RLO ‮ossefrop olad oirártnoc",
+      "link": "https://loja.example.com/p/5"
+    },
+    {
+      "code": "P0006",
+      "title": "Cha​leira com zero‍width‌ e ⁠ invisíveis",
+      "link": "https://loja.example.com/p/6"
+    },
+    {
+      "code": "P0007",
+      "title": "Controle\u0000 com\u0007 caracteres de\u001b controle",
+      "link": "https://loja.example.com/p/7"
+    },
+    {
+      "code": "P0008",
+      "title": "Bidi ⁦isolado⁩ e ‫embutido‬",
+      "link": "https://loja.example.com/p/8"
+    },
+    {
+      "code": "P0009",
+      "title": "🔥🔥 Oferta relâmpago 🔥🔥 👨‍👩‍👧 família",
+      "link": "https://loja.example.com/p/9"
+    },
+    {
+      "code": "P0010",
+      "title": "مصباح LED قابل لإعادة الشحن",
+      "link": "https://loja.example.com/p/10"
+    },
+    {
+      "code": "P0011",
+      "title": "Z̴̡̛͓a̶̢͎l̷̙͝g̸̖̏o̵̲͂ combinando marcas",
+      "link": "https://loja.example.com/p/11"
+    },
+    {
+      "code": "P0012",
+      "title": "Título enorme muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo ",
+      "link": "https://loja.example.com/p/12"
+    },
+    {
+      "code": "P0013",
+      "title": "javascript:alert(1)",
+      "link": "https://loja.example.com/p/13"
+    },
+    {
+      "code": "P0014",
+      "title": "   ",
+      "link": "https://loja.example.com/p/14"
+    },
+    {
+      "code": "P0015",
+      "title": "Link hostil P0015",
+      "link": "javascript:alert(1)"
+    },
+    {
+      "code": "P0016",
+      "title": "Link hostil P0016",
+      "link": "JAVASCRIPT:alert(1)"
+    },
+    {
+      "code": "P0017",
+      "title": "Link hostil P0017",
+      "link": " javascript:alert(1)"
+    },
+    {
+      "code": "P0018",
+      "title": "Link hostil P0018",
+      "link": "java\tscript:alert(1)"
+    },
+    {
+      "code": "P0019",
+      "title": "Link hostil P0019",
+      "link": "jav&#x09;ascript:alert(1)"
+    },
+    {
+      "code": "P0020",
+      "title": "Link hostil P0020",
+      "link": "data:text/html,<script>alert(1)</script>"
+    },
+    {
+      "code": "P0021",
+      "title": "Link hostil P0021",
+      "link": "vbscript:msgbox(1)"
+    },
+    {
+      "code": "P0022",
+      "title": "Link hostil P0022",
+      "link": "http://loja.example.com/p/1"
+    },
+    {
+      "code": "P0023",
+      "title": "Link hostil P0023",
+      "link": "HTTPS://LOJA.EXAMPLE.COM/p/1"
+    },
+    {
+      "code": "P0024",
+      "title": "Link hostil P0024",
+      "link": "https://usuario:senha@loja.example.com/p/1"
+    },
+    {
+      "code": "P0025",
+      "title": "Link hostil P0025",
+      "link": "https://loja.example.com@evil.example/p/1"
+    },
+    {
+      "code": "P0026",
+      "title": "Link hostil P0026",
+      "link": "https://evil.example\\@loja.example.com/"
+    },
+    {
+      "code": "P0027",
+      "title": "Link hostil P0027",
+      "link": "https://127.0.0.1/p/1"
+    },
+    {
+      "code": "P0028",
+      "title": "Link hostil P0028",
+      "link": "https://[::1]/p/1"
+    },
+    {
+      "code": "P0029",
+      "title": "Link hostil P0029",
+      "link": "https://localhost/p/1"
+    },
+    {
+      "code": "P0030",
+      "title": "Link hostil P0030",
+      "link": "https://loja.example.com:8443/p/1"
+    },
+    {
+      "code": "P0031",
+      "title": "Link hostil P0031",
+      "link": "//loja.example.com/p/1"
+    },
+    {
+      "code": "P0032",
+      "title": "Link hostil P0032",
+      "link": "/p/1"
+    },
+    {
+      "code": "P0033",
+      "title": "Link hostil P0033",
+      "link": "https://loja.example.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "code": "P0034",
+      "title": "Link hostil P0034",
+      "link": "https://loja.example.com/‮lmth.exe"
+    },
+    {
+      "code": "P0035",
+      "title": "Link hostil P0035",
+      "link": "https://loja.example.com/ espaço"
+    },
+    {
+      "code": "P0036",
+      "title": "Link hostil P0036",
+      "link": "https://-loja.example.com/p/1"
+    },
+    {
+      "code": "P0037",
+      "title": "Link hostil P0037",
+      "link": "https://loja..example.com/p/1"
+    },
+    {
+      "code": "P0038",
+      "title": "Link hostil P0038",
+      "link": "https://loja.example.c0m/p/1"
+    },
+    {
+      "code": "P0039",
+      "title": "Link hostil P0039",
+      "link": "https://loja.example.com./p/1"
+    },
+    {
+      "code": "P0040",
+      "title": "Link hostil P0040",
+      "link": "https://xn--bcher-kva.example/p/1"
+    },
+    {
+      "code": "P0041",
+      "title": "Link hostil P0041",
+      "link": "https://loja.example.com/p/1?q=<script>alert(1)</script>"
+    },
+    {
+      "code": "P0042",
+      "title": "Link hostil P0042",
+      "link": 12345
+    },
+    {
+      "code": "P0043",
+      "title": "Link hostil P0043",
+      "link": null
+    },
+    {
+      "code": "P0044",
+      "title": "Link hostil P0044",
+      "link": [
+        "https://loja.example.com/p/1"
+      ]
+    },
+    {
+      "code": "P0045",
+      "title": "Link hostil P0045",
+      "link": {
+        "href": "https://loja.example.com"
+      }
+    },
+    {
+      "code": "P0022",
+      "title": "Primeira versão (deve perder)",
+      "link": "https://loja.example.com/p/antigo"
+    },
+    {
+      "code": "P0022",
+      "title": "Versão mais nova (deve ganhar)",
+      "link": "https://loja.example.com/p/novo"
+    },
+    {
+      "code": "P00023",
+      "title": "Código não canônico P00023 vira P0023",
+      "link": "https://loja.example.com/p/23"
+    },
+    null,
+    "texto",
+    42,
+    [],
+    {},
+    {
+      "code": "P0200"
+    },
+    {
+      "title": "Sem código",
+      "link": "https://loja.example.com/p/x"
+    },
+    {
+      "code": "P0201",
+      "title": "Sem link (indisponível)"
+    },
+    {
+      "code": "P0202",
+      "title": 42,
+      "link": "https://loja.example.com/p/202"
+    },
+    {
+      "code": 22,
+      "title": "Código numérico",
+      "link": "https://loja.example.com/p/22"
+    },
+    {
+      "code": "p0203",
+      "title": "Código minúsculo",
+      "link": "https://loja.example.com/p/203"
+    },
+    {
+      "code": "P-0204",
+      "title": "Código com hífen",
+      "link": "https://loja.example.com/p/204"
+    },
+    {
+      "code": "P123456789",
+      "title": "Código com 9 dígitos",
+      "link": "https://loja.example.com/p/9"
+    },
+    {
+      "code": "P0000000000000000000000000000005",
+      "title": "Código gigante",
+      "link": "https://loja.example.com/p/5"
+    },
+    {
+      "code": "<script>alert(1)</script>",
+      "title": "Código com script",
+      "link": "https://loja.example.com/p/s"
+    },
+    {
+      "code": "P0205",
+      "title": "Campos extras são ignorados",
+      "link": "https://loja.example.com/p/205",
+      "preco": 19.9,
+      "tags": [
+        "a"
+      ],
+      "constructor": "x"
+    }
+  ],
+  "extra": {
+    "ignorado": true
+  },
+  "firstHostileLink": 15
+}
