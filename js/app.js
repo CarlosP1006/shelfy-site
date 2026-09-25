@@ -30,6 +30,7 @@ const state = {
   autoRetried: false,
   query: { kind: 'empty' },
   committed: false,
+  badLink: false,
   revealPending: false,
   view: '',
   recent: readRecent()
@@ -370,6 +371,14 @@ function render() {
   }
 
   if (query.kind === 'empty') {
+    if (state.badLink) {
+      view('bad-link', [buildNotice({
+        tone: 'invalid',
+        title: 'O link aberto não tem um código válido',
+        text: 'Digite o código que apareceu no vídeo. Os códigos são assim: P0022.'
+      })], 'O link aberto não tem um código válido.');
+      return;
+    }
     view('empty', [], '');
     return;
   }
@@ -526,6 +535,7 @@ function clearTimers() {
 
 function handleInput() {
   clearTimers();
+  state.badLink = false;
   state.query = parseQuery(input.value);
   state.committed = false;
   if (state.query.kind === 'empty') {
@@ -639,12 +649,9 @@ function start() {
     state.revealPending = true;
     applyCodes(initial.codes);
   } else if (initial.fromLink) {
+    state.badLink = true;
     syncUrl();
-    view('bad-link', [buildNotice({
-      tone: 'invalid',
-      title: 'O link aberto não tem um código válido',
-      text: 'Digite o código que apareceu no vídeo. Os códigos são assim: P0022.'
-    })], 'O link aberto não tem um código válido.');
+    render();
   } else if (input.value) {
     handleInput();
   } else {

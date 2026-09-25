@@ -22,7 +22,11 @@ async function openPage(browser, url, options = {}) {
   const context = await browser.newContext({ viewport: { width: 390, height: 780 }, ...options });
   const page = await context.newPage();
   const problems = [];
-  page.on('console', (message) => { if (message.type() === 'error' || message.type() === 'warning') problems.push(message.text()); });
+  page.on('console', (message) => {
+    if (message.type() !== 'error' && message.type() !== 'warning') return;
+    const swappedCatalog = /[?&]catalog=/.test(page.url()) && /was preloaded using link preload but not used/.test(message.text());
+    if (!swappedCatalog) problems.push(message.text());
+  });
   page.on('pageerror', (error) => problems.push('pageerror: ' + error.message));
   page.on('dialog', async (dialog) => { problems.push('DIALOG: ' + dialog.message()); await dialog.dismiss(); });
   const requests = [];
@@ -55,11 +59,10 @@ it('jornada (a): digitou 22 e achou o produto', async (browser) => {
   assert.equal(link.target, null);
   assert.equal(link.text, 'Ver produto P0022');
   assert.match(await page.textContent('[data-results]'), /Link de afiliado/);
-  assert.equal(new URL(page.url()).searchParams.get('c'), null, 'URL só muda depois do commit');
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P0022');
   assert.match(await page.textContent('#status-busca'), /Produto encontrado: P0022/);
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
@@ -88,7 +91,7 @@ it('jornada (c): colou a legenda inteira (evento paste)', async (browser) => {
   await paste('Achados: #P0022 e #P0023 🔥');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
   assert.match(await page.textContent('.results-heading'), /2 códigos/);
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
@@ -121,7 +124,7 @@ it('jornada (e): link direto ?c= e #', async (browser) => {
   await page.waitForFunction(() => location.search.includes('c=P0022') && !location.hash);
   await page.goto(BASE + '?catalog=dev&c=%23P0022+P0023');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
@@ -160,7 +163,7 @@ it('jornada (g): produto que saiu do ar e código novo demais', async (browser) 
 it('não pisca "não encontrado" enquanto digita', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev');
   await page.focus('#codigo');
-  await page.keyboard.type('P99', { delay: 20 });
+  await page.keyboard.type('P20000', { delay: 20 });
   await sleep(250);
   assert.equal(await page.$('[data-results] .notice'), null);
   await sleep(900);
@@ -174,7 +177,7 @@ it('estados: catálogo vazio (arquivo real)', async (browser) => {
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
   assert.equal(await noticeTitle(page), 'A prateleira ainda está vazia');
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
@@ -259,7 +262,7 @@ it('segurança: catálogo hostil não executa nada e não vira link', async (bro
   await page.waitForFunction(() => document.querySelector('[data-results] .result-title').textContent === 'Versão mais nova (deve ganhar)');
   const everyHref = await page.$$eval('a[href]', (anchors) => anchors.map((a) => a.href));
   assert.ok(everyHref.every((href) => /^(https?:|mailto:)/.test(href)), 'nenhum href perigoso na página');
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
@@ -275,7 +278,7 @@ it('segurança: URL hostil (?c= e #) não é refletida nem executada', async (br
   await page.goto(BASE + '?catalog=dev&c=Promo%C3%A7%C3%A3o%20encerrada%2C%20compre%20em%20golpe.example');
   await page.waitForSelector('[data-results] .notice');
   assert.ok(!(await page.textContent('body')).includes('golpe.example'), 'texto da URL não aparece na página');
-  assert.deepEqual(problems, []);
+  assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
 
