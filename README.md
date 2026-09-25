@@ -91,6 +91,7 @@ O servidor imita o GitHub Pages: serve o repositório no subcaminho `/shelfy-sit
 | `python3 dev/test-publicador.py` | o publicador de referência contra um simulador da API do GitHub | `pip install jsonschema` |
 | `NODE_PATH=$(npm root -g) node dev/test-e2e.cjs` | jornadas completas no Chromium: busca, estados, deep link, catálogo hostil, URL hostil, iframe, sem JS, 404 profundo, rede, 360 px, reduced motion | `npm i -g playwright` e um Chromium do Playwright |
 | `node dev/check-contrast.mjs` | contraste WCAG de todos os pares de cor usados, calculado a partir dos tokens do CSS | só Node |
+| `NODE_PATH=$(npm root -g) node dev/gen-images.cjs && python3 dev/otimizar-png.py` | gera `img/og.png`, `img/apple-touch-icon.png` e `img/favicon-32.png` a partir dos SVGs de `img/` e `dev/art/` | Playwright; `pip install pillow imagequant pyoxipng` |
 
 ## 4. Contrato do catálogo (`data/products.json`)
 
