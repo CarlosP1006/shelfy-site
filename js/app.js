@@ -2,7 +2,6 @@ import { parseCatalog, MAX_CATALOG_BYTES } from './catalog.js';
 import { parseQuery, parseDeepLink, parseHash, MAX_QUERY_LENGTH } from './query.js';
 
 const CATALOG_URL = 'data/products.json';
-const SITE_URL = 'https://carlosp1006.github.io/shelfy-site/';
 const FETCH_TIMEOUT_MS = 15000;
 const AUTO_RETRY_DELAY_MS = 2500;
 const IDLE_SHORT_MS = 450;
@@ -22,6 +21,7 @@ const recentList = document.querySelector('[data-recent-list]');
 const recentClear = document.querySelector('[data-recent-clear]');
 const isHome = document.body.classList.contains('page-home');
 const framed = detectFraming();
+const siteRoot = new URL('./', document.baseURI);
 
 const state = {
   catalog: null,
@@ -171,9 +171,9 @@ function hiddenText(text) {
 }
 
 function shareUrl(code) {
-  const url = new URL('./', document.baseURI);
+  const url = new URL(siteRoot.href);
   url.searchParams.set('c', code);
-  return isLocalHost() ? url.href : SITE_URL + '?c=' + code;
+  return url.href;
 }
 
 function makeButton(label, onClick, className = 'button button-secondary') {
@@ -358,14 +358,14 @@ function render() {
   if (framed) {
     const official = document.createElement('a');
     official.className = 'button button-secondary';
-    official.href = SITE_URL;
+    official.href = siteRoot.href;
     official.target = '_blank';
     official.rel = 'noopener noreferrer';
     official.textContent = 'Abrir o shelfy';
     view('framed', [buildNotice({
       tone: 'framed',
       title: 'Abra o shelfy no endereço oficial',
-      text: 'Esta página foi aberta dentro de outro site. Para sua segurança, a busca só funciona no endereço carlosp1006.github.io/shelfy-site.',
+      text: 'Esta página foi aberta dentro de outro site. Para sua segurança, a busca só funciona no endereço ' + siteRoot.host + siteRoot.pathname.replace(/\/$/, '') + '.',
       actions: [official]
     })], 'Abra o shelfy no endereço oficial para buscar.');
     return;

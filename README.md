@@ -21,7 +21,8 @@ Ele tem dois papéis, e os dois são obrigatórios:
 6. [Segurança](#6-segurança)
 7. [Front-end: decisões e orçamento](#7-front-end-decisões-e-orçamento)
 8. [Checklist de deploy](#8-checklist-de-deploy)
-9. [Fontes](#9-fontes)
+9. [Trocar o endereço do site (domínio próprio ou organização)](#9-trocar-o-endereço-do-site-domínio-próprio-ou-organização)
+10. [Fontes](#10-fontes)
 
 ## 1. Regras do Google — não quebre isto
 
@@ -346,12 +347,35 @@ Depois do merge, em até ~10 minutos:
 - [ ] https://carlosp1006.github.io/shelfy-site/privacidade.html abre (200), com o conteúdo exigido.
 - [ ] Uma busca por um código existente leva ao link certo.
 
-## 9. Fontes
+## 9. Trocar o endereço do site (domínio próprio ou organização)
+
+O endereço atual mostra o usuário pessoal do GitHub (`carlosp1006`). Dá para trocar, mas **a URL está cadastrada no Google Cloud**: a troca só pode acontecer junto com a atualização do cadastro OAuth (homepage e política), senão o Google pode suspender o acesso da aplicação ao Drive.
+
+| Opção | Endereço | Custo | Esconde o usuário? | Observação |
+| --- | --- | --- | --- | --- |
+| **Domínio próprio (recomendado)** | `https://shelfy.com.br/` (exemplo) | domínio (~R$ 40/ano no .com.br) | Sim, se usar o domínio *apex* com registros A/AAAA. O registro `www` é um CNAME para `USUARIO.github.io` e revela o usuário a quem consultar o DNS | Link curto e fácil de digitar; domínio verificado é melhor para o Google |
+| **Organização gratuita** no GitHub com o nome da marca | `https://NOME-DA-ORG.github.io/` | grátis | Sim (deixe a sua participação na organização como privada) | Transferir o repositório para a organização e renomeá-lo para `NOME-DA-ORG.github.io` |
+| Organização + domínio próprio | `https://shelfy.com.br/` | domínio | Sim, inclusive no DNS (`www` aponta para a organização) | A combinação mais discreta |
+| Encurtador na bio | — | — | Não: o endereço final aparece no navegador | Coloca rastreamento de terceiros no caminho; contradiz a política. Não use |
+
+Mesmo trocando o endereço, o repositório público continua mostrando o histórico: o primeiro commit tem nome e e-mail do dono; o e-mail de contato está na política (o Google exige um contato; pode ser um e-mail só do shelfy, atualizado também no Google Cloud); e os commits do publicador saem com o usuário dono do token (com um GitHub App eles aparecem como robô). Com o GitHub Pro, o repositório pode ficar privado e o site continua público.
+
+**Roteiro da troca** (fazer tudo no mesmo dia):
+
+1. Domínio próprio: verifique o domínio no GitHub **antes** de usar (Settings da conta ou da organização → Pages → *Add a domain*), para ninguém tomar o domínio (*domain takeover*). Nunca use DNS com curinga (`*.dominio`).
+2. DNS do domínio apex: registros `A` para `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` e `AAAA` para `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`.
+3. No repositório: Settings → Pages → *Custom domain* (isso cria o arquivo `CNAME` na raiz) → marque **Enforce HTTPS** quando ficar disponível (pode levar até 24 h).
+4. Neste repositório, troque o endereço antigo pelo novo em: `canonical` e `og:*` das páginas, `sitemap.xml`, `robots.txt`, `opensearch.xml`, `$id` do schema, `URL_PUBLICA` e `REPOSITORIO` em `dev/publicador_referencia.py`, e na documentação (`grep -rn "carlosp1006" .`). Se o site passar a ficar na raiz do domínio, troque `<base href="/shelfy-site/">` do `404.html` por `<base href="/">`. O JavaScript e a CSP não têm endereço fixo e não precisam mudar.
+5. No Google Cloud (tela de consentimento OAuth / Branding): atualize a homepage e a política para os endereços novos e adicione o domínio em *Authorized domains* (o Google pede verificação no Search Console).
+6. Organização: gere um token novo para o repositório novo (o token antigo não vale lá) e atualize `GITHUB_SITE_TOKEN` e `REPOSITORIO` no publicador.
+7. Confira os dois endereços novos no ar e o redirecionamento dos antigos.
+
+## 10. Fontes
 
 Documentação consultada em setembro de 2026:
 
 - GitHub REST API — [Repository contents](https://docs.github.com/en/rest/repos/contents) (limites de 1 MB/100 MB, `sha`, 409/422, escritas paralelas), [Git blobs](https://docs.github.com/en/rest/git/blobs), [Rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api), [API versions](https://docs.github.com/en/rest/about-the-rest-api/api-versions) e [Breaking changes](https://docs.github.com/en/rest/about-the-rest-api/breaking-changes).
-- GitHub Pages — [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits), [Creating a GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site) (até 10 minutos para publicar), [Creating a custom 404 page](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site), [Configuring a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+- GitHub Pages — [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits), [Creating a GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site) (até 10 minutos para publicar), [Creating a custom 404 page](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site), [Configuring a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site), [Managing a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), [Verifying your custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
 - GitHub — [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens), [Token expiration and revocation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/token-expiration-and-revocation), [About rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets), [Available rules for rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets), [Creating rulesets for a repository](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository), [Push protection](https://docs.github.com/en/code-security/concepts/secret-security/push-protection), [Secret scanning](https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning).
 - Google Cloud — [App Homepage](https://support.google.com/cloud/answer/13807376), [App Privacy Policy](https://support.google.com/cloud/answer/13806988), [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy).
 - W3C — [Content Security Policy Level 3](https://www.w3.org/TR/CSP3/) (`frame-ancestors`, `report-uri` e `sandbox` não valem em `<meta>`); [Trusted Types](https://www.w3.org/TR/trusted-types/).
