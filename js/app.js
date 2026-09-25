@@ -606,7 +606,8 @@ function readInitialCodes() {
   if (value !== null && value.trim()) {
     return { codes: parseDeepLink(value), fromLink: true };
   }
-  const codes = parseHash(location.hash);
+  const segment = isHome ? '' : location.pathname.split('/').filter(Boolean).pop();
+  const codes = parseHash(location.hash) || (segment ? parseHash('#' + segment) : null);
   return { codes, fromLink: Boolean(codes) };
 }
 

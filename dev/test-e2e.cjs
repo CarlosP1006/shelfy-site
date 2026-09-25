@@ -462,6 +462,20 @@ it('link curto: copiar usa a porta de entrada quando configurada', async (browse
   }
 });
 
+it('404 com código no caminho mostra o produto', async (browser) => {
+  const { page, context, problems } = await openPage(browser, null);
+  const response = await page.goto('http://localhost:' + PORT + '/shelfy-site/P0022?catalog=dev');
+  assert.equal(response.status(), 404);
+  await page.waitForSelector('[data-results] .result');
+  assert.deepEqual(await resultTitles(page), ['Espremedor de frutas elétrico 300ml']);
+  await page.goto('http://localhost:' + PORT + '/shelfy-site/produto/%3Cscript%3Ealert(1)%3C%2Fscript%3E?catalog=dev');
+  await sleep(600);
+  assert.equal(await page.$('[data-results] .result'), null);
+  assert.ok(!(await page.content()).includes('alert(1)</'), 'caminho não é refletido');
+  assert.deepEqual(problems.filter((p) => !/status of 404/.test(p)), []);
+  await context.close();
+});
+
 (async () => {
   const server = await startServer();
   const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {});
