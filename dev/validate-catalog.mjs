@@ -23,8 +23,6 @@ export function readUpdatedAt(value) {
   return Number.isNaN(time) ? null : new Date(time);
 }
 
-const CONTENTS_API_INLINE_LIMIT = 1024 * 1024;
-
 const CODE_MESSAGES = {
   type: 'code precisa ser texto (string)',
   length: 'code tem mais de ' + MAX_CODE_LENGTH + ' caracteres',
@@ -56,9 +54,6 @@ export function validateCatalogText(text, byteLength = Buffer.byteLength(text)) 
   if (byteLength > MAX_CATALOG_BYTES) {
     error('(arquivo)', 'arquivo tem ' + byteLength + ' bytes; o site recusa acima de ' + MAX_CATALOG_BYTES);
     return { errors, warnings };
-  }
-  if (byteLength > CONTENTS_API_INLINE_LIMIT) {
-    warning('(arquivo)', 'arquivo passa de 1 MB: a API de Contents não devolve o conteúdo inline; use o fluxo de blob descrito no README');
   }
   if (text.charCodeAt(0) === 0xfeff) error('(arquivo)', 'arquivo começa com BOM; grave UTF-8 sem BOM');
 

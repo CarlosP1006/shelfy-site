@@ -78,7 +78,8 @@ it('jornada (a): digitou 22 e achou o produto', async (browser) => {
   assert.equal(link.rel, 'sponsored nofollow noopener noreferrer');
   assert.equal(link.target, null);
   assert.equal(link.text, 'Ver produto P0022');
-  assert.match(await page.textContent('[data-results]'), /Link de afiliado/);
+  assert.doesNotMatch(await page.textContent('[data-results]'), /afiliado|comissão/, 'o aviso de comissão fica só no rodapé');
+  assert.match(await page.textContent('.site-footer'), /pode receber comissão pelos links, sem custo extra/);
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P0022');
   assert.match(await page.textContent('#status-busca'), /Produto encontrado: P0022/);
@@ -336,7 +337,7 @@ it('segurança: dentro de iframe a busca não vira link', async (browser) => {
   await page.setContent('<iframe src="' + BASE + '?catalog=dev&c=P0022" width="400" height="700"></iframe>');
   const frame = await (await page.waitForSelector('iframe')).contentFrame();
   await frame.waitForSelector('[data-results] .notice');
-  assert.match(await frame.textContent('[data-results]'), /Abra o shelfy no endereço oficial/);
+  assert.match(await frame.textContent('[data-results]'), /Abra a shelfy no endereço oficial/);
   assert.equal(await frame.$('[data-results] a.button-primary'), null);
   await context.close();
 });
@@ -353,22 +354,31 @@ it('escala: 5000 e 12000 produtos', async (browser) => {
   await context.close();
 });
 
-it('sem JavaScript: conteúdo do Google continua visível', async (browser) => {
+it('sem JavaScript: o que o Google confere continua visível', async (browser) => {
   const { page, context } = await openPage(browser, BASE, { javaScriptEnabled: false });
-  const h1 = await page.textContent('h1');
-  assert.match(h1, /shelfy/);
+  assert.match(await page.title(), /shelfy/);
+  assert.match(await page.textContent('h1'), /shelfy/);
   const body = await page.innerText('body');
-  for (const text of ['Sobre o shelfy', 'Google Drive', 'drive.file', 'só enxerga os arquivos e pastas que ele mesmo criou', 'Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros', 'Política de privacidade', 'precisa do JavaScript']) {
+  for (const text of ['Sobre a shelfy', 'A shelfy é um projeto pessoal', 'Política de privacidade', 'precisa do JavaScript', '© 2026 Carlos Eduardo. Todos os direitos reservados.']) {
     assert.ok(body.includes(text), 'visível sem JS: ' + text);
   }
-  const privacyLink = await page.$('a[href="privacidade.html"]');
-  assert.ok(await privacyLink.isVisible());
+  for (const text of ['Google Drive', 'drive.file']) assert.ok(!body.includes(text), 'a página inicial não explica a ferramenta: ' + text);
+  const privacyLink = page.locator('.site-footer a[href="privacidade.html"]');
+  assert.ok(await privacyLink.isVisible(), 'link da política visível');
+  assert.ok(parseFloat(await privacyLink.evaluate((a) => getComputedStyle(a).fontSize)) >= 12, 'link da política legível');
   await page.goto(BASE + 'privacidade.html');
   const policy = await page.innerText('body');
-  for (const text of ['drive.file', 'Não lê, não altera e não apaga nenhum outro arquivo do Drive', 'myaccount.google.com/permissions', 'dinosauroxd9@gmail.com', 'não usa cookies', 'links de afiliado', 'Última atualização']) {
+  for (const text of ['A shelfy é um projeto pessoal de Carlos Eduardo', 'não coleta, não vende e não compartilha dados de usuários do Google', 'Uso Limitado', 'myaccount.google.com/permissions', 'dinosauroxd9@gmail.com', 'não usa cookies', 'links de afiliado', 'Última atualização']) {
     assert.ok(policy.includes(text), 'política: ' + text);
   }
+  for (const href of ['https://developers.google.com/terms/api-services-user-data-policy', 'https://myaccount.google.com/permissions']) {
+    assert.ok(await page.locator('main a[href="' + href + '"]').isVisible(), 'política com link visível: ' + href);
+  }
   assert.match(await page.title(), /Política de privacidade — shelfy/);
+  assert.match(await page.textContent('h1'), /shelfy/);
+  await page.goto(BASE + 'termos.html');
+  const terms = await page.innerText('body');
+  for (const text of ['Links de afiliado', 'Todos os direitos reservados', 'não podem ser copiados nem reutilizados']) assert.ok(terms.includes(text), 'termos: ' + text);
   await context.close();
 });
 
@@ -433,8 +443,14 @@ it('layout: 360×560 (navegador embutido) com busca acima da dobra', async (brow
   const { page, context } = await openPage(browser, BASE, { viewport: { width: 360, height: 560 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   const box = await page.$eval('.search-field', (node) => node.getBoundingClientRect().toJSON());
   assert.ok(box.bottom <= 560, 'caixa de busca visível: bottom=' + box.bottom);
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  assert.equal(overflow, 0, 'sem rolagem horizontal');
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y <= height; y += 280) {
+    await page.evaluate((top) => { window.scrollTo(0, top); return new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))); }, y);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    assert.equal(overflow, 0, 'sem rolagem horizontal com a página rolada em ' + y + 'px');
+  }
+  const [pill, footer] = await page.$$eval('.back-to-search, .site-footer', (nodes) => nodes.map((node) => node.getBoundingClientRect().toJSON()));
+  assert.ok(pill.bottom <= footer.top, 'o botão "Buscar código" não cobre o rodapé');
   await context.close();
 });
 

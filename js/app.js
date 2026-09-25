@@ -211,7 +211,6 @@ function buildResult(product, compact) {
   } else {
     card.classList.add('is-unavailable');
     slot(card, 'actions').remove();
-    slot(card, 'note').remove();
     copy.remove();
     slot(card, 'unavailable').hidden = false;
   }
@@ -324,10 +323,10 @@ function render() {
     official.href = siteRoot.href;
     official.target = '_blank';
     official.rel = 'noopener noreferrer';
-    official.textContent = 'Abrir o shelfy';
+    official.textContent = 'Abrir a shelfy';
     showNotice('framed', {
       tone: 'framed',
-      title: 'Abra o shelfy no endereço oficial',
+      title: 'Abra a shelfy no endereço oficial',
       text: 'Esta página foi aberta dentro de outro site. Por segurança, a busca só funciona no endereço oficial.',
       actions: [official]
     });
@@ -418,7 +417,7 @@ function render() {
       showNotice('catalog-empty', {
         tone: 'empty',
         title: 'A prateleira ainda está vazia',
-        text: 'Os primeiros produtos do shelfy estão chegando. Volte daqui a pouco e busque o código de novo.'
+        text: 'Os primeiros produtos da shelfy estão chegando. Volte daqui a pouco e busque o código de novo.'
       });
       return;
     }

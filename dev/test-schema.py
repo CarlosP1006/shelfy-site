@@ -1,7 +1,6 @@
 """Confere que schema/products.schema.json e as regras do site (js/catalog.js) concordam.
 
 Uso: pip install jsonschema && python3 dev/test-schema.py
-O publicador em Python vai validar com esta mesma biblioteca.
 """
 import copy
 import json
