@@ -2,15 +2,131 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <title>Política de privacidade — shelfy</title>
+<meta name="description" content="Como o shelfy usa o Google Drive (só com a permissão drive.file) e por que este site não coleta dados: sem login, sem cookies, sem analytics, sem rastreadores.">
+<link rel="canonical" href="https://carlosp1006.github.io/shelfy-site/privacidade.html">
+<meta name="theme-color" content="#fff4ea">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="search" type="application/opensearchdescription+xml" title="shelfy" href="opensearch.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="shelfy">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Política de privacidade — shelfy">
+<meta property="og:description" content="O shelfy só acessa o Google Drive com a permissão drive.file, e este site não coleta dados de quem visita.">
+<meta property="og:url" content="https://carlosp1006.github.io/shelfy-site/privacidade.html">
+<meta property="og:image" content="https://carlosp1006.github.io/shelfy-site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="shelfy: viu no vídeo? Ache aqui pelo código.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/site.css">
 </head>
-<body>
-<h1>Política de privacidade — shelfy</h1>
-<p>O shelfy acessa o Google Drive apenas com a permissão <code>drive.file</code>, ou seja, só enxerga os arquivos e pastas que ele mesmo criou. Não lê, não altera e não apaga nenhum outro arquivo do Drive.</p>
-<p>Os arquivos enviados ficam só no Drive do dono da conta. Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros.</p>
-<p>O acesso pode ser revogado a qualquer momento em <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
-<p>Contato: dinosauroxd9@gmail.com</p>
-<p><a href="index.html">Voltar</a></p>
+<body class="page-doc">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="./" aria-label="shelfy — início">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
+      <span class="brand-name">shelfy</span>
+    </a>
+    <nav class="header-nav" aria-label="Atalhos">
+      <a class="header-link" href="./#buscar">Buscar código</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo" class="site-main">
+  <article class="doc shell">
+    <header class="doc-header">
+      <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Privacidade</p>
+      <h1 class="doc-title">Política de privacidade — shelfy</h1>
+      <p class="doc-meta">Última atualização: <time datetime="2026-09-24">24 de setembro de 2026</time></p>
+    </header>
+
+    <section class="doc-summary" aria-labelledby="resumo">
+      <h2 id="resumo" class="doc-summary-title">Resumo</h2>
+      <ul class="check-list">
+        <li>O shelfy acessa o Google Drive apenas com a permissão <code>drive.file</code>: só enxerga os arquivos e pastas que ele mesmo criou.</li>
+        <li>Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros.</li>
+        <li>Este site não tem login, não usa cookies, não usa analytics e não tem rastreamento de terceiros.</li>
+        <li>A busca por código acontece no seu navegador. O código digitado não é enviado a servidor nenhum.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section" aria-labelledby="quem-somos">
+      <h2 id="quem-somos">1. Quem somos</h2>
+      <p>O shelfy é um projeto pessoal, mantido por uma única pessoa (o “dono do projeto”). Ele gera automaticamente imagens e vídeos de produtos de uma loja online e publica esses conteúdos nas redes sociais. Este site é o link da bio do shelfy: a página onde qualquer pessoa digita o código de um post e encontra o link do produto.</p>
+      <p>Esta política vale para as duas partes do shelfy: a ferramenta que usa o Google Drive e este site público.</p>
+    </section>
+
+    <section class="doc-section" aria-labelledby="google-drive">
+      <h2 id="google-drive">2. A ferramenta shelfy e o Google Drive</h2>
+      <p>O shelfy acessa o Google Drive apenas com a permissão <code>drive.file</code>, ou seja, só enxerga os arquivos e pastas que ele mesmo criou. Não lê, não altera e não apaga nenhum outro arquivo do Drive.</p>
+      <p>O Drive é usado só para guardar as imagens e os vídeos que a própria ferramenta gera. A única conta de Google usada é a do dono do projeto, e os arquivos enviados ficam só no Drive do dono da conta.</p>
+      <p>Nenhum dado do Google é compartilhado, vendido ou enviado a terceiros. Os dados do Google também não são usados para publicidade. O uso e a transferência de informações recebidas das APIs do Google seguem a <a href="https://developers.google.com/terms/api-services-user-data-policy">Política de dados do usuário dos serviços de API do Google</a>, incluindo os requisitos de Uso Limitado.</p>
+      <p>O acesso pode ser revogado a qualquer momento em <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+    </section>
+
+    <section class="doc-section" aria-labelledby="site-publico">
+      <h2 id="site-publico">3. Este site: a busca por código</h2>
+      <ul class="doc-list">
+        <li><strong>Sem login e sem cadastro.</strong> Qualquer pessoa usa a busca sem criar conta e sem informar nada sobre si.</li>
+        <li><strong>Sem coleta de dados pessoais.</strong> O site não pede, não recebe e não guarda dados pessoais de quem visita.</li>
+        <li><strong>Sem cookies, sem analytics, sem rastreamento de terceiros.</strong> Não há pixels, estatísticas de visita, anúncios nem scripts, fontes ou imagens carregados de outros sites.</li>
+        <li><strong>A busca acontece no seu navegador.</strong> Ao abrir a página, o navegador baixa o catálogo público do shelfy (um arquivo estático com código, título e link de cada produto, hospedado junto com o site) e procura o código ali mesmo. O código que você digita não é enviado a servidor nenhum.</li>
+        <li><strong>Últimos códigos buscados.</strong> Para você voltar a um produto com um toque, o site pode lembrar os 3 últimos códigos encontrados. Eles ficam guardados só no seu aparelho (no armazenamento local do navegador), nunca são enviados a lugar nenhum, e você pode apagá-los no botão “Limpar” da página inicial ou limpando os dados do site no navegador.</li>
+        <li><strong>Hospedagem.</strong> O site é hospedado no GitHub Pages. Como acontece com qualquer servidor web, o serviço de hospedagem pode registrar dados técnicos das conexões (como o endereço IP) para segurança e funcionamento. O shelfy não tem acesso a esses registros e não os usa.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section" aria-labelledby="links-afiliado">
+      <h2 id="links-afiliado">4. Links de compra e links de afiliado</h2>
+      <p>O botão “Ver produto” leva a sites de terceiros (as lojas), que têm políticas de privacidade e termos próprios. O que acontece nesses sites (cookies, cadastro, compra, pagamento, entrega) é responsabilidade deles.</p>
+      <p>Os links de produto são links de afiliado: se você comprar por eles, o shelfy pode receber uma comissão, sem nenhum custo extra pra você.</p>
+      <p>O shelfy não envia à loja nenhuma informação sobre você nem sobre a sua busca: os links abrem sem informar de qual página você veio.</p>
+    </section>
+
+    <section class="doc-section" aria-labelledby="alteracoes">
+      <h2 id="alteracoes">5. Alterações desta política</h2>
+      <p>Se esta política mudar, a nova versão será publicada nesta mesma página, com a data de atualização revisada no topo.</p>
+    </section>
+
+    <section class="doc-section" aria-labelledby="contato">
+      <h2 id="contato">6. Contato</h2>
+      <p>Contato: <a href="mailto:dinosauroxd9@gmail.com">dinosauroxd9@gmail.com</a></p>
+      <p>Escreva para esse endereço para tirar dúvidas sobre privacidade, sobre esta política ou sobre o shelfy.</p>
+    </section>
+
+    <p class="doc-back"><a class="back-link" href="./">Voltar para a busca</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-brand">
+      <a class="brand brand-small" href="./" aria-label="shelfy — início">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="7.9" cy="12.3" r="3.7" fill="#fff"/><rect x="12.7" y="5.6" width="5.8" height="10.4" rx="1.6" fill="#fff"/><rect x="14.2" y="8.6" width="2.8" height="1.5" rx=".75" fill="#f08a4b"/><rect x="2.8" y="16.9" width="18.4" height="3" rx="1.5" fill="#fff"/></svg></span>
+        <span class="brand-name">shelfy</span>
+      </a>
+      <p class="footer-tagline">Viu no vídeo, achou aqui.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Rodapé">
+      <ul>
+        <li><a href="./">Início</a></li>
+        <li><a href="privacidade.html">Política de privacidade</a></li>
+        <li><a href="termos.html">Termos de uso</a></li>
+        <li><a href="mailto:dinosauroxd9@gmail.com">Contato</a></li>
+      </ul>
+    </nav>
+    <p class="footer-note">Os links de produto são links de afiliado: o shelfy pode receber comissão, sem custo extra pra você. Sem login, sem cookies, sem rastreadores.</p>
+  </div>
+</footer>
 </body>
 </html>

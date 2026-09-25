@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carlosp1006.github.io/shelfy-site/schema/products.schema.json",
+  "title": "Catálogo de produtos do shelfy (data/products.json), versão 1",
+  "description": "Contrato entre o publicador da aplicação shelfy e o site. O publicador valida o arquivo contra este schema antes de cada commit. O site aplica as mesmas regras produto a produto (js/catalog.js). Campos extras, em qualquer nível, são permitidos e ignorados.",
+  "type": "object",
+  "required": ["version", "updatedAt", "products"],
+  "properties": {
+    "version": {
+      "description": "Versão do formato. O site só aceita 1; qualquer outro valor deixa a busca em estado de erro.",
+      "const": 1
+    },
+    "updatedAt": {
+      "description": "Momento da última alteração, em ISO 8601 UTC terminando em Z (ex.: 2026-10-02T14:05:00Z), ou null se o catálogo nunca foi gerado.",
+      "anyOf": [
+        { "type": "null" },
+        {
+          "type": "string",
+          "format": "date-time",
+          "not": { "pattern": "[\\n\\r]" },
+          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,9})?Z$"
+        }
+      ]
+    },
+    "products": {
+      "description": "Lista de produtos, ordenada por code. Pode ser vazia. No máximo 10000 itens (o site ignora o que passar disso).",
+      "type": "array",
+      "maxItems": 10000,
+      "items": { "$ref": "#/$defs/product" }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "product": {
+      "type": "object",
+      "required": ["code", "title", "link"],
+      "properties": {
+        "code": {
+          "description": "Código do post: P seguido de no mínimo 4 dígitos, com zeros à esquerda até 4 dígitos (P0022, P0137, P12345). Único no arquivo. O segundo padrão limita a 8 dígitos significativos, o máximo que a busca aceita.",
+          "type": "string",
+          "maxLength": 16,
+          "allOf": [
+            { "pattern": "^P[0-9]{4,}$" },
+            { "pattern": "^P0*[0-9]{1,8}$" },
+            { "not": { "pattern": "[\\n\\r]" } }
+          ]
+        },
+        "title": {
+          "description": "Título exibido como texto puro (nunca HTML). Qualquer caractere é permitido; precisa ter pelo menos um caractere que não seja espaço, tab ou quebra de linha. O limite de 500 conta caracteres Unicode (code points).",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "[^\\t\\n\\u000B\\f\\r ]"
+        },
+        "link": {
+          "description": "URL absoluta https, só com caracteres ASCII visíveis (percent-encode o resto), sem usuário/senha, sem porta, com host de domínio (nada de IP ou localhost). Link fora dessa regra deixa o produto como indisponível no site.",
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 2048,
+          "not": { "pattern": "[\\n\\r]" },
+          "pattern": "^https://(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)+(?:[A-Za-z]{2,63}|[Xx][Nn]--[A-Za-z0-9](?:[A-Za-z0-9-]{0,57}[A-Za-z0-9])?)(?:[/?#][\\x21-\\x5B\\x5D-\\x7E]*)?$"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

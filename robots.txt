@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carlosp1006.github.io/shelfy-site/sitemap.xml
