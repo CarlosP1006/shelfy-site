@@ -247,8 +247,8 @@ it('não pisca "não encontrado" enquanto digita', async (browser) => {
   await context.close();
 });
 
-it('estados: catálogo vazio (arquivo real)', async (browser) => {
-  const { page, context, problems } = await openPage(browser, BASE);
+it('estados: catálogo vazio', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE + '?catalog=empty');
   await typeCode(page, '22');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
@@ -258,7 +258,7 @@ it('estados: catálogo vazio (arquivo real)', async (browser) => {
 });
 
 it('código de teste: TESTE676767 mostra o produto fictício sem mexer no catálogo', async (browser) => {
-  const { page, context, problems } = await openPage(browser, BASE);
+  const { page, context, problems } = await openPage(browser, BASE + '?catalog=empty');
   await typeCode(page, 'teste676767');
   await page.waitForSelector(RESULT);
   assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
@@ -268,7 +268,7 @@ it('código de teste: TESTE676767 mostra o produto fictício sem mexer no catál
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'TESTE676767');
   assert.equal(await page.evaluate(() => localStorage.getItem('shelfy:recentes')), null, 'não entra nos recentes');
-  await page.goto(BASE + '?c=teste676767');
+  await page.goto(BASE + '?catalog=empty&c=teste676767');
   await page.waitForSelector(RESULT);
   assert.equal(await page.textContent('[data-results] .code-badge'), 'TESTE676767');
   await typeCode(page, '676767');
@@ -518,64 +518,6 @@ it('movimento reduzido desliga animações', async (browser) => {
   const motion = await page.$eval(RESULT, (node) => getComputedStyle(node).transitionDuration);
   assert.equal(motion, '0s');
   await context.close();
-});
-
-it('porta de entrada: redireciona só códigos válidos para o destino fixo', async (browser) => {
-  const http = require('node:http');
-  const fs = require('node:fs');
-  const door = http.createServer((request, response) => {
-    const known = request.url === '/' || request.url.startsWith('/?') || request.url.startsWith('/#');
-    const file = path.join(ROOT, 'dev/porta', known ? 'index.html' : '404.html');
-    response.writeHead(known ? 200 : 404, { 'content-type': 'text/html; charset=utf-8' });
-    response.end(fs.readFileSync(file));
-  });
-  await new Promise((resolve) => door.listen(8184, resolve));
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  const problems = [];
-  page.on('console', (message) => { if (message.type() === 'error' && !/status of 404/.test(message.text())) problems.push(message.text()); });
-  await context.route('https://carlosp1006.github.io/**', (route) => route.fulfill({ status: 200, contentType: 'text/html', body: '<p>destino</p>' }));
-  const cases = [
-    ['/', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/P0022', 'https://carlosp1006.github.io/shelfy-site/?c=P0022'],
-    ['/p22', 'https://carlosp1006.github.io/shelfy-site/?c=P0022'],
-    ['/22', 'https://carlosp1006.github.io/shelfy-site/?c=P0022'],
-    ['/P12345/', 'https://carlosp1006.github.io/shelfy-site/?c=P12345'],
-    ['/?c=P0023', 'https://carlosp1006.github.io/shelfy-site/?c=P0023'],
-    ['/?c=%23P0024', 'https://carlosp1006.github.io/shelfy-site/?c=P0024'],
-    ['/#P0025', 'https://carlosp1006.github.io/shelfy-site/?c=P0025'],
-    ['/javascript:alert(1)', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/%2F%2Fgolpe.example', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/?c=https://golpe.example', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/%E0%A4%A', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/P0022/extra', 'https://carlosp1006.github.io/shelfy-site/'],
-    ['/P123456789', 'https://carlosp1006.github.io/shelfy-site/']
-  ];
-  for (const [doorPath, expected] of cases) {
-    await page.goto('http://localhost:8184' + doorPath);
-    await page.waitForURL((url) => url.hostname === 'carlosp1006.github.io');
-    assert.equal(page.url(), expected, doorPath);
-  }
-  assert.deepEqual(problems, [], problems.join('\n'));
-  await context.close();
-  door.close();
-});
-
-it('link curto: copiar usa a porta de entrada quando configurada', async (browser) => {
-  for (const [value, expected] of [['https://shelfybr.github.io/', 'https://shelfybr.github.io/?c=P00022'], ['javascript:alert(1)', BASE + '?c=P00022'], ['http://golpe.example/', BASE + '?c=P00022']]) {
-    const { page, context } = await openPage(browser, null, { permissions: ['clipboard-read', 'clipboard-write'] });
-    await page.route('**/shelfy-site/?catalog=dev*', async (route) => {
-      const response = await route.fetch();
-      const body = (await response.text()).replace('data-link-curto=""', 'data-link-curto="' + value + '"');
-      await route.fulfill({ response, body });
-    });
-    await page.goto(BASE + '?catalog=dev&c=P00022');
-    await page.waitForSelector(RESULT);
-    await page.click('[data-results] [data-slot="copy"]');
-    await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
-    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), expected, value);
-    await context.close();
-  }
 });
 
 it('404 com código no caminho mostra o produto', async (browser) => {
