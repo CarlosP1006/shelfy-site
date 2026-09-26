@@ -94,6 +94,10 @@
     --hairline: oklch(85% 0.048 60 / 0.6);
     --glass: oklch(99.5% 0.004 75 / 0.72);
     --ghost: oklch(72% 0.16 49 / 0.55);
+    --glow-a: oklch(92% 0.05 64 / 0.9);
+    --glow-b: oklch(95.2% 0.033 68 / 0.95);
+    --glow-c: oklch(87% 0.08 58 / 0.5);
+    --glow-d: oklch(87% 0.08 58 / 0.55);
 
     --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
     --font-display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
@@ -135,6 +139,62 @@
       --glass: color-mix(in oklch, var(--white) 72%, transparent);
       --ghost: color-mix(in oklch, var(--orange-500) 55%, transparent);
     }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-tema="claro"]) {
+      color-scheme: dark;
+      --white: oklch(20% 0.02 45);
+      --cream: oklch(17.5% 0.018 45);
+      --peach-50: oklch(23% 0.028 48);
+      --peach-100: oklch(26.5% 0.036 50);
+      --peach-200: oklch(31% 0.048 50);
+      --apricot-300: oklch(39% 0.07 48);
+      --terra-700: oklch(76% 0.13 52);
+      --terra-800: oklch(83% 0.1 58);
+      --terra-900: oklch(90% 0.06 64);
+      --ink: oklch(95.5% 0.012 70);
+      --ink-soft: oklch(86% 0.022 65);
+      --ink-muted: oklch(77% 0.028 60);
+      --line: oklch(30% 0.03 48);
+      --line-strong: oklch(38% 0.045 48);
+      --action-hover: oklch(80% 0.115 55);
+      --shadow-tint: oklch(8% 0.02 40 / 0.45);
+      --shadow-tint-strong: oklch(6% 0.02 40 / 0.7);
+      --hairline: oklch(38% 0.045 48 / 0.6);
+      --glass: oklch(20% 0.02 45 / 0.72);
+      --glow-a: oklch(40% 0.09 46 / 0.5);
+      --glow-b: oklch(30% 0.05 50 / 0.6);
+      --glow-c: oklch(48% 0.12 45 / 0.25);
+      --glow-d: oklch(45% 0.1 46 / 0.35);
+    }
+  }
+
+  :root[data-tema="escuro"] {
+    color-scheme: dark;
+    --white: oklch(20% 0.02 45);
+    --cream: oklch(17.5% 0.018 45);
+    --peach-50: oklch(23% 0.028 48);
+    --peach-100: oklch(26.5% 0.036 50);
+    --peach-200: oklch(31% 0.048 50);
+    --apricot-300: oklch(39% 0.07 48);
+    --terra-700: oklch(76% 0.13 52);
+    --terra-800: oklch(83% 0.1 58);
+    --terra-900: oklch(90% 0.06 64);
+    --ink: oklch(95.5% 0.012 70);
+    --ink-soft: oklch(86% 0.022 65);
+    --ink-muted: oklch(77% 0.028 60);
+    --line: oklch(30% 0.03 48);
+    --line-strong: oklch(38% 0.045 48);
+    --action-hover: oklch(80% 0.115 55);
+    --shadow-tint: oklch(8% 0.02 40 / 0.45);
+    --shadow-tint-strong: oklch(6% 0.02 40 / 0.7);
+    --hairline: oklch(38% 0.045 48 / 0.6);
+    --glass: oklch(20% 0.02 45 / 0.72);
+    --glow-a: oklch(40% 0.09 46 / 0.5);
+    --glow-b: oklch(30% 0.05 50 / 0.6);
+    --glow-c: oklch(48% 0.12 45 / 0.25);
+    --glow-d: oklch(45% 0.1 46 / 0.35);
   }
 
   @supports (transition-timing-function: linear(0, 1)) {
@@ -290,7 +350,16 @@
   }
 
   .page-home .header-inner {
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .page-home .brand-solo {
+    grid-column: 2;
+  }
+
+  .header-nav {
+    margin-inline-start: auto;
   }
 
   .page-home .hero {
@@ -305,9 +374,9 @@
     inset: -4.5rem 0 0;
     z-index: -2;
     background:
-      radial-gradient(58% 48% at 50% 0%, oklch(92% 0.05 64 / 0.9), transparent 72%),
-      radial-gradient(38% 34% at 6% 16%, oklch(95.2% 0.033 68 / 0.95), transparent 72%),
-      radial-gradient(34% 32% at 96% 24%, oklch(87% 0.08 58 / 0.5), transparent 74%),
+      radial-gradient(58% 48% at 50% 0%, var(--glow-a), transparent 72%),
+      radial-gradient(38% 34% at 6% 16%, var(--glow-b), transparent 72%),
+      radial-gradient(34% 32% at 96% 24%, var(--glow-c), transparent 74%),
       linear-gradient(to bottom, var(--peach-50), var(--surface) 78%);
   }
 
@@ -1051,7 +1120,7 @@
     overflow: hidden;
     overflow: clip;
     background:
-      radial-gradient(70% 90% at 50% 110%, oklch(87% 0.08 58 / 0.55), transparent 70%),
+      radial-gradient(70% 90% at 50% 110%, var(--glow-d), transparent 70%),
       linear-gradient(to bottom, var(--peach-50), var(--peach-100));
   }
 
@@ -2135,3 +2204,141 @@
   initial-value: 100%;
 }
 
+@layer components {
+  .theme-toggle {
+    --largura: 3.5rem;
+    --altura: 2rem;
+    --bola: 1.5rem;
+    position: relative;
+    flex: none;
+    width: var(--largura);
+    height: var(--altura);
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    overflow: hidden;
+    cursor: pointer;
+    background: linear-gradient(90deg, oklch(50% 0.15 38), oklch(66% 0.15 50));
+    box-shadow: inset 0 1px 3px oklch(25% 0.08 35 / 0.45), 0 6px 14px -8px var(--shadow-tint-strong);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .page-home .theme-toggle {
+    justify-self: end;
+  }
+
+  .theme-toggle::before,
+  .theme-toggle::after,
+  .theme-toggle-knob::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .theme-toggle::before {
+    background:
+      radial-gradient(circle at 18% 30%, oklch(98% 0.03 95) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 34% 70%, oklch(98% 0.03 95) 0 0.8px, transparent 1.4px),
+      radial-gradient(circle at 47% 24%, oklch(98% 0.03 95) 0 1.2px, transparent 1.8px),
+      radial-gradient(circle at 26% 52%, oklch(98% 0.03 95 / 0.7) 0 0.7px, transparent 1.2px),
+      radial-gradient(circle at 56% 62%, oklch(98% 0.03 95 / 0.8) 0 0.8px, transparent 1.4px),
+      linear-gradient(90deg, oklch(26% 0.07 300), oklch(34% 0.09 285));
+    opacity: 0;
+  }
+
+  .theme-toggle::after {
+    background:
+      radial-gradient(circle at 66% 92%, oklch(97% 0.02 80) 0 0.4rem, transparent calc(0.4rem + 0.5px)),
+      radial-gradient(circle at 81% 80%, oklch(97% 0.02 80) 0 0.5rem, transparent calc(0.5rem + 0.5px)),
+      radial-gradient(circle at 96% 94%, oklch(97% 0.02 80) 0 0.45rem, transparent calc(0.45rem + 0.5px));
+  }
+
+  .theme-toggle-knob {
+    position: absolute;
+    z-index: 1;
+    top: calc((var(--altura) - var(--bola)) / 2);
+    left: calc((var(--altura) - var(--bola)) / 2);
+    width: var(--bola);
+    height: var(--bola);
+    border-radius: 50%;
+    background: oklch(91% 0.14 92);
+    box-shadow: 0 0 0 0.25rem oklch(92% 0.13 92 / 0.25), 0 0 0.75rem oklch(90% 0.15 90 / 0.8), inset -0.125rem -0.15rem 0 oklch(80% 0.16 75);
+  }
+
+  .theme-toggle-knob::before {
+    background:
+      radial-gradient(circle at 36% 34%, oklch(84% 0.02 80) 0 0.2rem, transparent calc(0.2rem + 0.5px)),
+      radial-gradient(circle at 66% 62%, oklch(84% 0.02 80) 0 0.14rem, transparent calc(0.14rem + 0.5px)),
+      radial-gradient(circle at 62% 26%, oklch(84% 0.02 80) 0 0.08rem, transparent calc(0.08rem + 0.5px));
+    opacity: 0;
+  }
+
+  .theme-toggle[aria-pressed="true"] {
+    box-shadow: inset 0 1px 3px oklch(10% 0.03 290 / 0.6), 0 0 0 1px oklch(100% 0 0 / 0.1), 0 6px 14px -8px var(--shadow-tint-strong);
+  }
+
+  .theme-toggle[aria-pressed="true"]::before,
+  .theme-toggle[aria-pressed="true"] .theme-toggle-knob::before {
+    opacity: 1;
+  }
+
+  .theme-toggle[aria-pressed="true"]::after {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+
+  .theme-toggle[aria-pressed="true"] .theme-toggle-knob {
+    translate: calc(var(--largura) - var(--altura)) 0;
+    rotate: 1turn;
+    background: oklch(95% 0.015 85);
+    box-shadow: 0 0 0 0.25rem oklch(95% 0.02 85 / 0.08), 0 0 0.75rem oklch(95% 0.02 85 / 0.35), inset -0.125rem -0.15rem 0 oklch(84% 0.02 80);
+  }
+
+  .theme-toggle:focus-visible {
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 30rem) {
+    .header-link {
+      justify-content: center;
+      width: 2.75rem;
+      padding: 0;
+      font-size: 0;
+      gap: 0;
+    }
+
+    .header-link::before {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+  }
+}
+
+@layer enhancements {
+  @media (prefers-reduced-motion: no-preference) {
+    .theme-toggle-knob {
+      transition: translate 0.7s var(--ease-spring), rotate 0.7s var(--ease-out), scale 0.3s var(--ease-spring), background-color 0.4s, box-shadow 0.5s var(--ease-out);
+    }
+
+    .theme-toggle::before,
+    .theme-toggle-knob::before {
+      transition: opacity 0.5s var(--ease-out);
+    }
+
+    .theme-toggle::after {
+      transition: opacity 0.35s var(--ease-out), transform 0.5s var(--ease-out);
+    }
+
+    .theme-toggle:active .theme-toggle-knob {
+      scale: 0.88;
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .theme-toggle:hover .theme-toggle-knob {
+      scale: 1.1;
+    }
+  }
+}

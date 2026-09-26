@@ -9,12 +9,14 @@
 <title>Página não encontrada — shelfy</title>
 <meta name="description" content="Essa página não existe, mas o produto que você procura pode estar aqui: digite o código do post.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#fff4ea">
+<meta name="theme-color" content="#fff4ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#281911" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="stylesheet" href="css/site.css">
+<script src="js/tema.js?v=20260926"></script>
+<link rel="stylesheet" href="css/site.css?v=20260926">
 <link rel="preload" href="data/products.json" as="fetch" crossorigin>
 <link rel="modulepreload" href="js/catalog.js">
 <link rel="modulepreload" href="js/query.js">
@@ -30,6 +32,7 @@
     <nav class="header-nav" aria-label="Atalhos">
       <a class="header-link" href="./#buscar">Buscar código</a>
     </nav>
+    <button class="theme-toggle" type="button" data-botao-tema aria-pressed="false" aria-label="Tema escuro" title="Tema escuro" hidden><span class="theme-toggle-knob"></span></button>
   </div>
 </header>
 

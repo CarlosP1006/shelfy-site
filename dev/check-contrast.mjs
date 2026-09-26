@@ -87,20 +87,27 @@ function resolve(tokens, name, seen = new Set()) {
   return oklchToLinearSrgb(Number(color[1]) / 100, Number(color[2]), Number(color[3]));
 }
 
-const tokens = readTokens(readFileSync(new URL('../css/site.css', import.meta.url), 'utf8'));
+const css = readFileSync(new URL('../css/site.css', import.meta.url), 'utf8');
+const light = readTokens(css);
+const darkBlock = css.match(/:root\[data-tema="escuro"\]\s*\{([^}]*)\}/);
+if (!darkBlock) throw new Error('bloco do tema escuro não encontrado');
+const themes = [['claro', light], ['escuro', new Map([...light, ...readTokens(darkBlock[1])])]];
 let failures = 0;
 const rows = [];
-for (const [foreground, background, minimum, usage] of PAIRS) {
-  const fg = resolve(tokens, foreground);
-  const bg = resolve(tokens, background);
-  const lighter = Math.max(luminance(fg), luminance(bg));
-  const darker = Math.min(luminance(fg), luminance(bg));
-  const ratio = (lighter + 0.05) / (darker + 0.05);
-  const ok = ratio >= minimum;
-  if (!ok) failures += 1;
-  const gamut = inGamut(fg) && inGamut(bg) ? '' : ' (fora do sRGB)';
-  rows.push((ok ? 'ok   ' : 'FALHA') + '  ' + ratio.toFixed(2).padStart(5) + ':1  mín ' + minimum + '  --' + foreground + ' ' + hex(fg) + ' sobre --' + background + ' ' + hex(bg) + gamut + '  — ' + usage);
+for (const [theme, tokens] of themes) {
+  rows.push('— tema ' + theme);
+  for (const [foreground, background, minimum, usage] of PAIRS) {
+    const fg = resolve(tokens, foreground);
+    const bg = resolve(tokens, background);
+    const lighter = Math.max(luminance(fg), luminance(bg));
+    const darker = Math.min(luminance(fg), luminance(bg));
+    const ratio = (lighter + 0.05) / (darker + 0.05);
+    const ok = ratio >= minimum;
+    if (!ok) failures += 1;
+    const gamut = inGamut(fg) && inGamut(bg) ? '' : ' (fora do sRGB)';
+    rows.push((ok ? 'ok   ' : 'FALHA') + '  ' + ratio.toFixed(2).padStart(5) + ':1  mín ' + minimum + '  --' + foreground + ' ' + hex(fg) + ' sobre --' + background + ' ' + hex(bg) + gamut + '  — ' + usage);
+  }
 }
 console.log(rows.join('\n'));
-console.log(failures ? failures + ' par(es) abaixo do mínimo' : 'todos os ' + PAIRS.length + ' pares passam no WCAG 2.2 AA');
+console.log(failures ? failures + ' par(es) abaixo do mínimo' : 'todos os ' + PAIRS.length + ' pares passam no WCAG 2.2 AA nos temas claro e escuro');
 process.exitCode = failures ? 1 : 0;

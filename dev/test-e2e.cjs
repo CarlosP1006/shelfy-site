@@ -540,6 +540,36 @@ it('404 com código no caminho mostra o produto', async (browser) => {
   await context.close();
 });
 
+it('tema escuro: o botão do topo troca o tema, lembra a escolha e some sem JS', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE, { colorScheme: 'light' });
+  const state = () => page.evaluate(() => [document.documentElement.dataset.tema || '', document.querySelector('[data-botao-tema]').getAttribute('aria-pressed'), getComputedStyle(document.body).color]);
+  await page.locator('[data-botao-tema]').waitFor({ state: 'visible' });
+  const [, pressedBefore, lightText] = await state();
+  assert.equal(pressedBefore, 'false', 'começa no tema do aparelho (claro)');
+  await page.click('[data-botao-tema]');
+  await page.waitForFunction(() => document.querySelector('[data-botao-tema]').getAttribute('aria-pressed') === 'true');
+  const [theme, , darkText] = await state();
+  assert.equal(theme, 'escuro');
+  assert.notEqual(darkText, lightText, 'o texto muda de cor no tema escuro');
+  await page.goto(BASE + 'privacidade.html');
+  await page.locator('[data-botao-tema]').waitFor({ state: 'visible' });
+  assert.deepEqual((await state()).slice(0, 2), ['escuro', 'true'], 'a escolha vale nas outras páginas');
+  await page.click('[data-botao-tema]');
+  await page.waitForFunction(() => localStorage.getItem('shelfy:tema') === 'claro');
+  assert.deepEqual(problems, []);
+  await context.close();
+
+  const systemDark = await openPage(browser, BASE, { colorScheme: 'dark' });
+  await systemDark.page.locator('[data-botao-tema]').waitFor({ state: 'visible' });
+  assert.equal(await systemDark.page.getAttribute('[data-botao-tema]', 'aria-pressed'), 'true', 'segue o tema escuro do aparelho');
+  await systemDark.context.close();
+
+  const noJs = await openPage(browser, BASE, { javaScriptEnabled: false, colorScheme: 'dark' });
+  assert.equal(await noJs.page.locator('[data-botao-tema]').isVisible(), false, 'sem JS o botão não aparece');
+  assert.notEqual(await noJs.page.evaluate(() => getComputedStyle(document.body).color), lightText, 'sem JS o tema do aparelho continua valendo');
+  await noJs.context.close();
+});
+
 (async () => {
   const server = await startServer();
   const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {});

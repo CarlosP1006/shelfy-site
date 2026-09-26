@@ -334,3 +334,20 @@ test('logo escolhida: SVG limpo e só com cores da paleta do site', () => {
   assert.ok(!/<(text|image|foreignObject|script|style|use|a)[\s>]|font|href|url\(|@import|\son[a-z]+=/i.test(svg), 'texto, fonte, imagem ou referência externa');
   for (const color of svg.match(/#[0-9a-f]{3,8}\b/gi) || []) assert.ok(palette.has(color.toLowerCase()), 'cor fora da paleta ' + color);
 });
+
+test('tema escuro: as mesmas cores valem pelo aparelho e pelo botão, em todas as páginas', () => {
+  const css = readFileSync('css/site.css', 'utf8');
+  const bySystem = css.match(/:root:not\(\[data-tema="claro"\]\)\s*\{([^}]*)\}/);
+  const byButton = css.match(/:root\[data-tema="escuro"\]\s*\{([^}]*)\}/);
+  assert.ok(bySystem && byButton, 'os dois blocos do tema escuro existem');
+  const declarations = (block) => block[1].split(';').map((line) => line.trim()).filter(Boolean);
+  assert.deepEqual(declarations(bySystem), declarations(byButton));
+  const versions = new Set();
+  for (const page of ['index.html', 'privacidade.html', 'termos.html', '404.html']) {
+    const html = readFileSync(page, 'utf8');
+    assert.match(html, /<script src="js\/tema\.js\?v=\w+"><\/script>\n<link rel="stylesheet" href="css\/site\.css\?v=\w+">/, page + ': tema.js logo antes do CSS');
+    assert.equal((html.match(/<button class="theme-toggle" type="button" data-botao-tema aria-pressed="false" aria-label="Tema escuro" title="Tema escuro" hidden>/g) || []).length, 1, page + ': um botão de tema, escondido até o JS');
+    for (const [, version] of html.matchAll(/\.(?:css|js)\?v=(\w+)"/g)) versions.add(version);
+  }
+  assert.equal(versions.size, 1, 'mesma versão do CSS e do tema.js em todas as páginas');
+});
