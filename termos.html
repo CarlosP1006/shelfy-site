@@ -8,7 +8,8 @@
 <title>Termos de uso — shelfy</title>
 <meta name="description" content="Termos de uso da shelfy: um site informativo com links de afiliado. Preço, estoque e entrega são da loja de destino.">
 <link rel="canonical" href="https://carlosp1006.github.io/shelfy-site/termos.html">
-<meta name="theme-color" content="#fff4ea">
+<meta name="theme-color" content="#fff4ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#281911" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -25,7 +26,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="shelfy: viu no post? Ache aqui pelo código.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/site.css">
+<script src="js/tema.js?v=20260926"></script>
+<link rel="stylesheet" href="css/site.css?v=20260926">
 </head>
 <body class="page-doc">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -39,6 +41,7 @@
     <nav class="header-nav" aria-label="Atalhos">
       <a class="header-link" href="./#buscar">Buscar código</a>
     </nav>
+    <button class="theme-toggle" type="button" data-botao-tema aria-pressed="false" aria-label="Tema escuro" title="Tema escuro" hidden><span class="theme-toggle-knob"></span></button>
   </div>
 </header>
 

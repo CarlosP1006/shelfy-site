@@ -8,7 +8,8 @@
 <title>shelfy — ache o produto do post pelo código</title>
 <meta name="description" content="Viu um produto num post da shelfy? Digite o código (tipo P00022) e vá direto para o link do produto. Sem login, sem cadastro, sem rastreadores.">
 <link rel="canonical" href="https://carlosp1006.github.io/shelfy-site/">
-<meta name="theme-color" content="#fff4ea">
+<meta name="theme-color" content="#fff4ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#281911" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -25,7 +26,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="shelfy: viu no post? Ache aqui pelo código.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/site.css">
+<script src="js/tema.js?v=20260926"></script>
+<link rel="stylesheet" href="css/site.css?v=20260926">
 <link rel="preload" href="data/products.json" as="fetch" crossorigin>
 <link rel="modulepreload" href="js/catalog.js">
 <link rel="modulepreload" href="js/query.js">
@@ -39,6 +41,7 @@
     <a class="brand brand-solo" href="./" aria-label="shelfy — início">
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 120 120" width="120" height="120" focusable="false"><rect width="120" height="120" fill="#fda96e"/><g class="carrinho"><g transform="translate(3 1) rotate(-9 50 94)"><path d="M37 50c-6-4-9-10-7-16" fill="none" stroke="#b9491c" stroke-width="8" stroke-linecap="round"/><circle cx="51" cy="88" r="7.5" fill="#6f2817"/><circle cx="84" cy="88" r="7.5" fill="#6f2817"/><path d="M47 42h43c8 0 13 6 11 13l-4 15c-2 6-6 10-13 10H53c-7 0-11-4-13-10l-4-15c-2-7 3-13 11-13z" fill="#b9491c"/><g fill="none" stroke="#fff4e8" stroke-width="4.5" stroke-linecap="round"><path d="M56.5 59q4-6 8 0"/><path d="M74.5 59q4-6 8 0"/></g><path d="M60.5 65.5h18a9 9 0 0 1-18 0z" fill="#fff4e8"/></g></g></svg></span>
     </a>
+    <button class="theme-toggle" type="button" data-botao-tema aria-pressed="false" aria-label="Tema escuro" title="Tema escuro" hidden><span class="theme-toggle-knob"></span></button>
   </div>
 </header>
 

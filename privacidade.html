@@ -8,7 +8,8 @@
 <title>Política de privacidade — shelfy</title>
 <meta name="description" content="Política de privacidade da shelfy: sem login, sem cookies, sem analytics e sem rastreadores. A shelfy não coleta, não vende e não compartilha dados de usuários do Google.">
 <link rel="canonical" href="https://carlosp1006.github.io/shelfy-site/privacidade.html">
-<meta name="theme-color" content="#fff4ea">
+<meta name="theme-color" content="#fff4ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#281911" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -25,7 +26,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="shelfy: viu no post? Ache aqui pelo código.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/site.css">
+<script src="js/tema.js?v=20260926"></script>
+<link rel="stylesheet" href="css/site.css?v=20260926">
 </head>
 <body class="page-doc">
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -39,6 +41,7 @@
     <nav class="header-nav" aria-label="Atalhos">
       <a class="header-link" href="./#buscar">Buscar código</a>
     </nav>
+    <button class="theme-toggle" type="button" data-botao-tema aria-pressed="false" aria-label="Tema escuro" title="Tema escuro" hidden><span class="theme-toggle-knob"></span></button>
   </div>
 </header>
 
@@ -47,7 +50,7 @@
     <header class="doc-header">
       <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Privacidade</p>
       <h1 class="doc-title">Política de privacidade — shelfy</h1>
-      <p class="doc-meta">Última atualização: <time datetime="2026-09-25">25 de setembro de 2026</time></p>
+      <p class="doc-meta">Última atualização: <time datetime="2026-09-26">26 de setembro de 2026</time></p>
     </header>
 
     <section class="doc-summary" aria-labelledby="resumo">
@@ -78,6 +81,7 @@
         <li><strong>Sem cookies, sem analytics, sem rastreamento de terceiros.</strong> Não há pixels, estatísticas de visita, anúncios nem scripts, fontes ou imagens carregados de outros sites.</li>
         <li><strong>A busca acontece no seu navegador.</strong> Ao abrir a página, o navegador baixa o catálogo público da shelfy (um arquivo estático com código, título e link de cada produto, hospedado junto com o site) e procura o código ali mesmo. O código que você digita não é enviado a servidor nenhum.</li>
         <li><strong>Últimos códigos buscados.</strong> Para você voltar a um produto com um toque, o site pode lembrar os 3 últimos códigos encontrados. Eles ficam guardados só no seu aparelho (no armazenamento local do navegador), nunca são enviados a lugar nenhum, e você pode apagá-los no botão “Limpar” da página inicial ou limpando os dados do site no navegador.</li>
+        <li><strong>Tema claro ou escuro.</strong> Se você trocar o tema no botão do topo, o site lembra a escolha para abrir do mesmo jeito da próxima vez. Ela fica guardada só no seu aparelho (no armazenamento local do navegador) e nunca é enviada a lugar nenhum.</li>
       </ul>
     </section>
 
