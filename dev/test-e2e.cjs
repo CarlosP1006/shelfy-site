@@ -459,7 +459,7 @@ it('rede: nenhuma requisição para outro domínio; catálogo baixado uma vez', 
     const { page, context, requests, problems } = await openPage(browser, BASE + pagePath);
     await page.waitForLoadState('networkidle');
     assert.ok(requests.every((url) => url.startsWith('http://localhost:' + PORT + '/')), pagePath + ': ' + requests.join(', '));
-    if (pagePath === '') assert.equal(requests.filter((url) => url.includes('products.json')).length, 1, 'preload reaproveitado');
+    if (pagePath === '') assert.equal(requests.filter((url) => url.includes('products.json')).length, 1, 'catálogo baixado uma vez só');
     assert.deepEqual(problems.filter((p) => !/status of 404/.test(p)), [], pagePath);
     await context.close();
   }
@@ -472,7 +472,9 @@ it('copiar link, recentes e título longo', async (browser) => {
   await page.waitForSelector(RESULT);
   await page.click('[data-results] [data-slot="copy"]');
   await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
-  assert.equal(await page.evaluate(() => navigator.clipboard.readText()), BASE + '?c=P00022');
+  const catalog = JSON.parse(require('node:fs').readFileSync(path.join(ROOT, 'dev/products.sample.json'), 'utf8'));
+  const productLink = catalog.products.find((product) => product.code === 'P00022').link;
+  assert.equal(await page.evaluate(() => navigator.clipboard.readText()), productLink, 'copia o link do produto');
   assert.match(await page.textContent('#status-busca'), /Link do P00022 copiado/);
   await page.fill('#codigo', '');
   await page.dispatchEvent('#codigo', 'input');

@@ -87,7 +87,7 @@ async function loadCatalog() {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(catalogUrl(), { cache: 'no-cache', credentials: 'same-origin', signal: controller.signal });
+    const response = await fetch(catalogUrl(), { cache: 'no-store', credentials: 'same-origin', signal: controller.signal });
     if (!response.ok) throw catalogError(response.status === 404 ? 'missing' : 'http');
     const catalog = parseCatalog(await readLimited(response, MAX_CATALOG_BYTES));
     if (!catalog.ok) throw catalogError(catalog.reason);
@@ -149,12 +149,6 @@ function hiddenText(text) {
   return span;
 }
 
-function shareUrl(code) {
-  const url = new URL(siteRoot.href);
-  url.searchParams.set('c', code);
-  return url.href;
-}
-
 function makeButton(label, onClick, className = 'button button-secondary') {
   const button = document.createElement('button');
   button.type = 'button';
@@ -196,7 +190,7 @@ function buildResult(product, compact) {
     link.rel = 'sponsored nofollow noopener noreferrer';
     link.append(hiddenText(' ' + product.code));
     copy.append(hiddenText(' do ' + product.code));
-    copy.addEventListener('click', () => copyLink(product.code, copy));
+    copy.addEventListener('click', () => copyLink(product.code, product.link, copy));
   } else {
     card.classList.add('is-unavailable');
     slot(card, 'actions').remove();
@@ -213,8 +207,7 @@ function revealTitleToggles() {
   }
 }
 
-async function copyLink(code, button) {
-  const url = shareUrl(code);
+async function copyLink(code, url, button) {
   const label = slot(button, 'copy-label');
   let copied = true;
   try {
