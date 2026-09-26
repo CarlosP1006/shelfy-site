@@ -2342,3 +2342,55 @@
     }
   }
 }
+
+@layer components {
+  .brand-mark .brilhos path {
+    transform-box: fill-box;
+    transform-origin: center;
+    scale: 0;
+  }
+
+  .brilhos path:nth-child(2) {
+    --atraso: 0.3s;
+  }
+
+  .brilhos path:nth-child(3) {
+    --atraso: 0.6s;
+  }
+}
+
+@layer enhancements {
+  @media (prefers-reduced-motion: no-preference) {
+    .brand:is(:hover, :focus-visible) .brilhos,
+    .about-avatar:hover .brilhos {
+      opacity: 1;
+    }
+
+    .brand:is(:hover, :focus-visible) .brilhos path,
+    .about-avatar:hover .brilhos path {
+      animation: brilhar 1.4s var(--ease-out) var(--atraso, 0s) infinite both;
+    }
+  }
+}
+
+@keyframes brilhar {
+  0% {
+    scale: 0;
+    rotate: -45deg;
+  }
+
+  30% {
+    scale: 1.15;
+    rotate: 0deg;
+  }
+
+  50% {
+    scale: 1;
+  }
+
+  75%,
+  100% {
+    scale: 0;
+    rotate: 45deg;
+  }
+}
