@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-26T03:15:05.711Z",
+  "updatedAt": "2026-09-26T03:35:19.872Z",
   "products": [
     {
       "code": "P00001",
@@ -11,6 +11,16 @@
       "code": "P00002",
       "title": "kit 21 potes para cozinha",
       "link": "https://s.shopee.com.br/7ptP71hwRE"
+    },
+    {
+      "code": "P00003",
+      "title": "kit 4 capas de almofadas Decorativas Natal",
+      "link": "https://s.shopee.com.br/7VGYiPjD7C"
+    },
+    {
+      "code": "P00004",
+      "title": "Kit Jogo Panelas Em Cerâmica Tampa De Vidro Frigideira 5 Pçs",
+      "link": "https://s.shopee.com.br/7AdiJnkTnA"
     }
   ]
 }
