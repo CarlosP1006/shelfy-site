@@ -36,7 +36,8 @@
       "required": ["code", "title", "link"],
       "properties": {
         "code": {
-          "description": "Código do post: P seguido de no mínimo 4 dígitos, com zeros à esquerda até 4 dígitos (P0022, P0137, P12345). Único no arquivo. O segundo padrão limita a 8 dígitos significativos, o máximo que a busca aceita.",
+          "description": "Código do post: P seguido do número, com zeros à esquerda até 5 dígitos (P00022, P00137, P12345, P100000). Único no arquivo. Por compatibilidade, o formato antigo, com 4 dígitos, continua aceito e vale o mesmo produto do código de 5 dígitos com o mesmo número. O segundo padrão limita a 8 dígitos significativos, o máximo que a busca aceita.",
+          "examples": ["P00022", "P00137", "P12345", "P100000"],
           "type": "string",
           "maxLength": 16,
           "allOf": [

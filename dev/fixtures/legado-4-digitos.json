@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-24T14:05:00Z",
+  "products": [
+    {
+      "code": "P0022",
+      "title": "Produto gravado no formato antigo, com 4 dígitos",
+      "link": "https://loja.example.com/p/legado-22"
+    },
+    {
+      "code": "P0137",
+      "title": "Outro produto no formato antigo",
+      "link": "https://loja.example.com/p/legado-137"
+    }
+  ]
+}

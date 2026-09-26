@@ -77,12 +77,13 @@ it('jornada (a): digitou 22 e achou o produto', async (browser) => {
   assert.equal(link.href, 'https://loja.example.com/p/espremedor-de-frutas-eletrico-300ml-22?aff=shelfy');
   assert.equal(link.rel, 'sponsored nofollow noopener noreferrer');
   assert.equal(link.target, null);
-  assert.equal(link.text, 'Ver produto P0022');
+  assert.equal(link.text, 'Ver produto P00022');
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022');
   assert.doesNotMatch(await page.textContent('[data-results]'), /afiliado|comissão/, 'o aviso de comissão fica só no rodapé');
   assert.match(await page.textContent('.site-footer'), /pode receber comissão pelos links, sem custo extra/);
   await page.press('#codigo', 'Enter');
-  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P0022');
-  assert.match(await page.textContent('#status-busca'), /Produto encontrado: P0022/);
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P00022');
+  assert.match(await page.textContent('#status-busca'), /Produto encontrado: P00022,/);
   assert.deepEqual(problems, [], problems.join('\n'));
   await context.close();
 });
@@ -105,11 +106,11 @@ it('jornada (c): colou a legenda inteira (evento paste)', async (browser) => {
     data.setData('text/plain', value);
     input.dispatchEvent(new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true }));
   }, text);
-  await paste('Gostou? 🧡\nBusca o código #P0022\nno link da bio');
+  await paste('Gostou? 🧡\nBusca o código #P00022\nno link da bio');
   await page.waitForSelector(RESULT);
   await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
-  assert.equal(await page.inputValue('#codigo'), 'Gostou? 🧡 Busca o código #P0022 no link da bio');
-  await paste('Achados: #P0022 e #P0023 🔥');
+  assert.equal(await page.inputValue('#codigo'), 'Gostou? 🧡 Busca o código #P00022 no link da bio');
+  await paste('Achados: #P00022 e #P00023 🔥');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
   assert.match(await page.textContent('.results-heading'), /2 códigos/);
   assert.deepEqual(problems, [], problems.join('\n'));
@@ -119,7 +120,7 @@ it('jornada (c): colou a legenda inteira (evento paste)', async (browser) => {
 it('jornada (c): texto inserido sem evento paste (teclado do celular)', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev');
   await page.focus('#codigo');
-  await page.keyboard.insertText('Busca o código #P0022\nno link da bio');
+  await page.keyboard.insertText('Busca o código #P00022\nno link da bio');
   await page.waitForSelector(RESULT);
   await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
   await context.close();
@@ -127,7 +128,7 @@ it('jornada (c): texto inserido sem evento paste (teclado do celular)', async (b
 
 it('jornada (d): erros comuns de digitação', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev');
-  for (const form of ['PO022', 'p 22', '#p0022', 'P-0022', 'P00 22', 'p00022', 'P022']) {
+  for (const form of ['PO0022', 'p 22', '#p00022', 'P-00022', 'P000 22', 'p000022', 'P022', 'PO022', '#p0022', 'P-0022', 'P00 22']) {
     await typeCode(page, form);
     await page.press('#codigo', 'Enter');
     await page.waitForFunction(() => document.querySelector('[data-results] .result-title'));
@@ -137,15 +138,69 @@ it('jornada (d): erros comuns de digitação', async (browser) => {
 });
 
 it('jornada (e): link direto ?c= e #', async (browser) => {
-  const { page, context, problems } = await openPage(browser, BASE + '?catalog=dev&c=P0022');
+  const { page, context, problems } = await openPage(browser, BASE + '?catalog=dev&c=P00022');
   await page.waitForSelector(RESULT);
-  assert.equal(await page.inputValue('#codigo'), 'P0022');
+  assert.equal(await page.inputValue('#codigo'), 'P00022');
   await page.goto(BASE + '?catalog=dev#p22');
   await page.waitForSelector(RESULT);
-  await page.waitForFunction(() => location.search.includes('c=P0022') && !location.hash);
-  await page.goto(BASE + '?catalog=dev&c=%23P0022+P0023');
+  await page.waitForFunction(() => location.search.includes('c=P00022') && !location.hash);
+  await page.goto(BASE + '?catalog=dev&c=P0022');
+  await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022', 'link antigo, com 4 dígitos');
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P00022');
+  await page.goto(BASE + '?catalog=dev&c=%23P00022+P00023');
   await page.waitForFunction(() => document.querySelectorAll('[data-results] .result').length === 2);
   assert.deepEqual(problems, [], problems.join('\n'));
+  await context.close();
+});
+
+it('busca: cada forma do pedido acha o P00022 e mostra 5 dígitos', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE + '?catalog=dev');
+  for (const form of ['22', 'P22', 'p22', 'P0022', 'P00022', '#P00022', 'P 00022', 'Gostou? Busca o código #P00022 no link da bio']) {
+    await typeCode(page, form);
+    await page.press('#codigo', 'Enter');
+    await expectTitles(page, ['Espremedor de frutas elétrico 300ml'], form);
+    assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022', form);
+    await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P00022');
+  }
+  assert.deepEqual(problems, [], problems.join('\n'));
+  await context.close();
+});
+
+it('compatibilidade: catálogo antigo com 4 dígitos continua valendo', async (browser) => {
+  const { page, context, problems } = await openPage(browser, BASE + '?catalog=legado-4-digitos&c=P00022');
+  await page.waitForSelector(RESULT);
+  await expectTitles(page, ['Produto gravado no formato antigo, com 4 dígitos']);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022');
+  for (const form of ['22', 'P0022', '#P00022']) {
+    await typeCode(page, form);
+    await page.press('#codigo', 'Enter');
+    await expectTitles(page, ['Produto gravado no formato antigo, com 4 dígitos'], form);
+  }
+  await typeCode(page, 'P0137');
+  await page.press('#codigo', 'Enter');
+  await expectTitles(page, ['Outro produto no formato antigo']);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P00137');
+  await page.waitForFunction(() => new URL(location.href).searchParams.get('c') === 'P00137');
+  assert.deepEqual(problems, [], problems.join('\n'));
+  await context.close();
+});
+
+it('compatibilidade: recentes salvos com 4 dígitos são convertidos', async (browser) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 780 } });
+  await context.addInitScript(() => {
+    if (!sessionStorage.getItem('semeado')) {
+      localStorage.setItem('shelfy:recentes', JSON.stringify(['P0022', 'P0023', 'P00022', 'lixo', 'P1']));
+      sessionStorage.setItem('semeado', '1');
+    }
+  });
+  const page = await context.newPage();
+  await page.goto(BASE + '?catalog=dev');
+  await page.waitForSelector('[data-recent]:not([hidden])');
+  assert.deepEqual(await page.$$eval('.recent-chip', (chips) => chips.map((c) => c.textContent)), ['P00022', 'P00023']);
+  await page.click('.recent-chip');
+  await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
+  await page.waitForFunction(() => localStorage.getItem('shelfy:recentes') === '["P00022","P00023"]');
   await context.close();
 });
 
@@ -153,7 +208,7 @@ it('jornada (f): internet lenta, digitou antes do catálogo chegar', async (brow
   const { page, context } = await openPage(browser, null);
   await page.route('**/dev/products.sample.json', async (route) => { await sleep(2500); await route.continue(); });
   await page.goto(BASE + '?catalog=dev');
-  await typeCode(page, 'P0022');
+  await typeCode(page, 'P00022');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .result-loading');
   assert.match(await page.textContent('[data-results]'), /Carregando o catálogo/);
@@ -167,7 +222,7 @@ it('jornada (g): produto que saiu do ar e código novo demais', async (browser) 
   const missing = await page.evaluate(async () => {
     const data = await (await fetch('dev/products.sample.json')).json();
     const have = new Set(data.products.map((p) => p.code));
-    for (let n = 1; n < 2100; n += 1) { const code = 'P' + String(n).padStart(4, '0'); if (!have.has(code)) return code; }
+    for (let n = 1; n < 2100; n += 1) { const code = 'P' + String(n).padStart(5, '0'); if (!have.has(code)) return code; }
     return null;
   });
   await typeCode(page, missing);
@@ -232,10 +287,10 @@ it('estados: formato inválido e sugestão', async (browser) => {
   await expectNotice(page, 'Não achamos um código aí');
   await typeCode(page, 'codigo 22 por favor');
   await page.press('#codigo', 'Enter');
-  await page.waitForFunction(() => /Você quis dizer P0022/.test(document.querySelector('[data-results]').textContent));
+  await page.waitForFunction(() => /Você quis dizer P00022/.test(document.querySelector('[data-results]').textContent));
   await page.click('[data-results] .notice-actions button');
   await page.waitForSelector(RESULT);
-  assert.equal(await page.inputValue('#codigo'), 'P0022');
+  assert.equal(await page.inputValue('#codigo'), 'P00022');
   await typeCode(page, 'P');
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => /Faltou o número/.test(document.querySelector('[data-results]').textContent));
@@ -247,7 +302,7 @@ for (const [fixture, expected] of [['broken', 'temporariamente indisponível'], 
   ['gen-oversized', 'temporariamente indisponível'], ['deep-nesting', '']]) {
   it('estados: catálogo ' + fixture, async (browser) => {
     const { page, context, problems } = await openPage(browser, BASE + '?catalog=' + fixture);
-    await typeCode(page, 'P0022');
+    await typeCode(page, 'P00022');
     await page.press('#codigo', 'Enter');
     await page.waitForSelector('[data-results] .notice', { timeout: 8000 });
     const text = await page.textContent('[data-results]');
@@ -265,7 +320,7 @@ it('estados: rede falhando, tentar de novo recupera', async (browser) => {
   let fail = true;
   await page.route('**/dev/products.sample.json', (route) => (fail ? route.abort('internetdisconnected') : route.continue()));
   await page.goto(BASE + '?catalog=dev');
-  await typeCode(page, 'P0022');
+  await typeCode(page, 'P00022');
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => /Não conseguimos baixar o catálogo/.test(document.querySelector('[data-results]').textContent));
   fail = false;
@@ -291,8 +346,8 @@ it('segurança: catálogo hostil não executa nada e não vira link', async (bro
   let first = hostile.firstHostileLink;
   const safeLinks = new Set(['https://xn--bcher-kva.example/p/1', 'https://loja.example.com/p/1?q=%3Cscript%3Ealert(1)%3C/script%3E']);
   for (let number = first; number < first + 31; number += 1) {
-    const code = 'P' + String(number).padStart(4, '0');
-    if (code === 'P0022' || code === 'P0023') continue;
+    const code = 'P' + String(number).padStart(5, '0');
+    if (code === 'P00022' || code === 'P00023') continue;
     await typeCode(page, code);
     await page.press('#codigo', 'Enter');
     await page.waitForSelector(RESULT);
@@ -300,7 +355,7 @@ it('segurança: catálogo hostil não executa nada e não vira link', async (bro
     if (href !== null) assert.ok(safeLinks.has(href), code + ' virou link: ' + href);
     else assert.ok(await page.$('[data-results] .result.is-unavailable'), code + ' aparece como indisponível');
   }
-  await typeCode(page, 'P0022');
+  await typeCode(page, 'P00022');
   await page.press('#codigo', 'Enter');
   await page.waitForFunction(() => document.querySelector('[data-results] .result-title')?.textContent === 'Versão mais nova (deve ganhar)');
   const everyHref = await page.$$eval('a[href]', (anchors) => anchors.map((a) => a.href));
@@ -334,7 +389,7 @@ it('segurança: Trusted Types bloqueia innerHTML com string', async (browser) =>
 
 it('segurança: dentro de iframe a busca não vira link', async (browser) => {
   const { page, context } = await openPage(browser, null);
-  await page.setContent('<iframe src="' + BASE + '?catalog=dev&c=P0022" width="400" height="700"></iframe>');
+  await page.setContent('<iframe src="' + BASE + '?catalog=dev&c=P00022" width="400" height="700"></iframe>');
   const frame = await (await page.waitForSelector('iframe')).contentFrame();
   await frame.waitForSelector('[data-results] .notice');
   assert.match(await frame.textContent('[data-results]'), /Abra a shelfy no endereço oficial/);
@@ -344,8 +399,9 @@ it('segurança: dentro de iframe a busca não vira link', async (browser) => {
 
 it('escala: 5000 e 12000 produtos', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=gen-huge-5000');
-  await typeCode(page, 'P4999');
+  await typeCode(page, 'P04999');
   await page.waitForSelector(RESULT);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P04999');
   await page.goto(BASE + '?catalog=gen-huge-12000&c=P10000');
   await page.waitForSelector(RESULT);
   await typeCode(page, 'P11000');
@@ -411,16 +467,18 @@ it('rede: nenhuma requisição para outro domínio; catálogo baixado uma vez', 
 
 it('copiar link, recentes e título longo', async (browser) => {
   const { page, context } = await openPage(browser, BASE + '?catalog=dev', { permissions: ['clipboard-read', 'clipboard-write'] });
-  await typeCode(page, 'P0022');
+  await typeCode(page, '22');
   await page.press('#codigo', 'Enter');
   await page.waitForSelector(RESULT);
   await page.click('[data-results] [data-slot="copy"]');
   await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
-  assert.equal(await page.evaluate(() => navigator.clipboard.readText()), BASE + '?c=P0022');
+  assert.equal(await page.evaluate(() => navigator.clipboard.readText()), BASE + '?c=P00022');
+  assert.match(await page.textContent('#status-busca'), /Link do P00022 copiado/);
   await page.fill('#codigo', '');
   await page.dispatchEvent('#codigo', 'input');
   await page.waitForSelector('[data-recent]:not([hidden])');
-  assert.deepEqual(await page.$$eval('.recent-chip', (chips) => chips.map((c) => c.textContent)), ['P0022']);
+  assert.deepEqual(await page.$$eval('.recent-chip', (chips) => chips.map((c) => c.textContent)), ['P00022']);
+  assert.equal(await page.evaluate(() => localStorage.getItem('shelfy:recentes')), '["P00022"]');
   await page.click('.recent-chip');
   await page.waitForSelector(RESULT);
   const longCode = await page.evaluate(async () => {
@@ -455,7 +513,7 @@ it('layout: 360×560 (navegador embutido) com busca acima da dobra', async (brow
 });
 
 it('movimento reduzido desliga animações', async (browser) => {
-  const { page, context } = await openPage(browser, BASE + '?catalog=dev&c=P0022', { reducedMotion: 'reduce' });
+  const { page, context } = await openPage(browser, BASE + '?catalog=dev&c=P00022', { reducedMotion: 'reduce' });
   await page.waitForSelector(RESULT);
   const motion = await page.$eval(RESULT, (node) => getComputedStyle(node).transitionDuration);
   assert.equal(motion, '0s');
@@ -504,14 +562,14 @@ it('porta de entrada: redireciona só códigos válidos para o destino fixo', as
 });
 
 it('link curto: copiar usa a porta de entrada quando configurada', async (browser) => {
-  for (const [value, expected] of [['https://shelfybr.github.io/', 'https://shelfybr.github.io/?c=P0022'], ['javascript:alert(1)', BASE + '?c=P0022'], ['http://golpe.example/', BASE + '?c=P0022']]) {
+  for (const [value, expected] of [['https://shelfybr.github.io/', 'https://shelfybr.github.io/?c=P00022'], ['javascript:alert(1)', BASE + '?c=P00022'], ['http://golpe.example/', BASE + '?c=P00022']]) {
     const { page, context } = await openPage(browser, null, { permissions: ['clipboard-read', 'clipboard-write'] });
     await page.route('**/shelfy-site/?catalog=dev*', async (route) => {
       const response = await route.fetch();
       const body = (await response.text()).replace('data-link-curto=""', 'data-link-curto="' + value + '"');
       await route.fulfill({ response, body });
     });
-    await page.goto(BASE + '?catalog=dev&c=P0022');
+    await page.goto(BASE + '?catalog=dev&c=P00022');
     await page.waitForSelector(RESULT);
     await page.click('[data-results] [data-slot="copy"]');
     await page.waitForFunction(() => /copiado/.test(document.querySelector('[data-slot="copy-label"]').textContent));
@@ -522,10 +580,16 @@ it('link curto: copiar usa a porta de entrada quando configurada', async (browse
 
 it('404 com código no caminho mostra o produto', async (browser) => {
   const { page, context, problems } = await openPage(browser, null);
-  const response = await page.goto('http://localhost:' + PORT + '/shelfy-site/P0022?catalog=dev');
+  const response = await page.goto('http://localhost:' + PORT + '/shelfy-site/P00022?catalog=dev');
   assert.equal(response.status(), 404);
   await page.waitForSelector(RESULT);
   await expectTitles(page, ['Espremedor de frutas elétrico 300ml']);
+  assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022');
+  for (const segment of ['P0022', '22']) {
+    await page.goto('http://localhost:' + PORT + '/shelfy-site/' + segment + '?catalog=dev');
+    await page.waitForSelector(RESULT);
+    assert.equal(await page.textContent('[data-results] .code-badge'), 'P00022', segment);
+  }
   await page.goto('http://localhost:' + PORT + '/shelfy-site/produto/%3Cscript%3Ealert(1)%3C%2Fscript%3E?catalog=dev');
   await sleep(600);
   assert.equal(await page.$('[data-results] .result'), null);

@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { parseQuery, parseDeepLink, parseHash, normalizeText, MAX_CODES_PER_QUERY, TEST_CODE } from '../js/query.js';
 import {
-  buildCatalog, parseCatalog, readProduct, readTitle, readProductLink, linkProblem, codeProblem, canonicalCode,
-  MAX_PRODUCTS, MAX_TITLE_LENGTH
+  buildCatalog, parseCatalog, readProduct, readTitle, readProductLink, linkProblem, codeProblem, canonicalCode, formatCode,
+  MAX_PRODUCTS, MAX_TITLE_LENGTH, CODE_DIGITS
 } from '../js/catalog.js';
 import { validateCatalogText, readUpdatedAt } from './validate-catalog.mjs';
 
@@ -14,31 +14,50 @@ const codesOf = (input) => {
   return query.kind === 'codes' ? query.codes : query.kind;
 };
 
-test('todas as formas da seção 4.2 viram P0022', () => {
-  const forms = ['P0022', 'p0022', '#P0022', '#p0022', 'P22', 'p 22', '22', '0022', ' #P0022 ', 'P-0022', 'P' + char(0xba) + '22',
-    'PO022', 'P0O22', 'po22', 'PO22', 'P 00 22', 'P00022', 'P022', '022', '# P0022', 'P.0022', 'P_0022', 'P:0022', 'P - 0022',
-    char(0xff03, 0xff30, 0xff10, 0xff10, 0xff12, 0xff12), 'P' + char(0x200b) + '0022', char(0x202e) + 'P0022', 'P' + char(0x2013) + '0022',
-    char(0x420) + '0022', 'P' + char(0x41e) + '022', 'P0022' + char(0xfeff), char(0xa0) + 'P0022' + char(0x3000), 'p' + char(0xad) + '22'];
-  for (const form of forms) assert.deepEqual(codesOf(form), ['P0022'], JSON.stringify(form));
+test('pedido do dono: todas estas formas acham o P00022', () => {
+  const caption = 'Gostou? 🧡\nBusca o código #P00022 no link da bio 🛒';
+  for (const form of ['22', 'P22', 'p22', 'P0022', 'P00022', '#P00022', 'P 00022', caption]) {
+    assert.deepEqual(codesOf(form), ['P00022'], JSON.stringify(form));
+  }
+});
+
+test('todas as formas de digitar viram P00022', () => {
+  const forms = ['P00022', 'p00022', '#P00022', '#p00022', 'P22', 'p 22', '22', '022', '0022', '00022', ' #P00022 ', 'P-00022', 'P' + char(0xba) + '22',
+    'PO0022', 'P0O022', 'po22', 'PO22', 'P 000 22', 'P000022', 'P022', '# P00022', 'P.00022', 'P_00022', 'P:00022', 'P - 00022',
+    'P0022', 'p0022', '#P0022', '#p0022', 'P-0022', 'PO022', 'P 00 22', '# P0022', 'P.0022', 'P_0022', 'P:0022', 'P - 0022',
+    char(0xff03, 0xff30, 0xff10, 0xff10, 0xff10, 0xff12, 0xff12), 'P' + char(0x200b) + '00022', char(0x202e) + 'P00022', 'P' + char(0x2013) + '00022',
+    char(0x420) + '00022', 'P' + char(0x41e) + '0022', 'P00022' + char(0xfeff), char(0xa0) + 'P00022' + char(0x3000), 'p' + char(0xad) + '22'];
+  for (const form of forms) assert.deepEqual(codesOf(form), ['P00022'], JSON.stringify(form));
 });
 
 test('códigos maiores e menores', () => {
+  assert.equal(CODE_DIGITS, 5);
   assert.deepEqual(codesOf('P12345'), ['P12345']);
   assert.deepEqual(codesOf('12345'), ['P12345']);
-  assert.deepEqual(codesOf('P1234'), ['P1234']);
-  assert.deepEqual(codesOf('1'), ['P0001']);
+  assert.deepEqual(codesOf('P99999'), ['P99999']);
+  assert.deepEqual(codesOf('P100000'), ['P100000']);
+  assert.deepEqual(codesOf('100000'), ['P100000']);
+  assert.deepEqual(codesOf('P1234'), ['P01234']);
+  assert.deepEqual(codesOf('1'), ['P00001']);
   assert.deepEqual(codesOf('P99999999'), ['P99999999']);
-  assert.deepEqual(codesOf('P000000022'), ['P0022']);
+  assert.deepEqual(codesOf('P000000022'), ['P00022']);
+  assert.equal(formatCode('0'), 'P00000');
+  assert.equal(formatCode('000000000000022'), 'P00022');
   assert.equal(parseQuery('P123456789').kind, 'invalid');
   assert.equal(parseQuery('P123456789').reason, 'long');
 });
 
-test('pressa de mostrar: só código completo aparece na hora', () => {
-  assert.equal(parseQuery('P0022').settle, 'now');
+test('pressa de mostrar: só código completo (5 dígitos) aparece na hora', () => {
+  assert.equal(parseQuery('P00022').settle, 'now');
+  assert.equal(parseQuery('P12345').settle, 'now');
   assert.equal(parseQuery('22').settle, 'idle');
+  assert.equal(parseQuery('1234').settle, 'idle', 'pode estar no meio de um código de 5 dígitos');
+  assert.equal(parseQuery('P0022').settle, 'commit', 'formato antigo espera a pausa ou o Enter');
+  assert.equal(parseQuery('P0002').settle, 'commit', 'digitando P00022 não pisca o P00002');
   assert.equal(parseQuery('P002').settle, 'commit');
   assert.equal(parseQuery('P0').settle, 'commit');
-  assert.equal(parseQuery('#P0022 no link').settle, 'now');
+  assert.equal(parseQuery('#P00022 no link').settle, 'now');
+  assert.equal(parseQuery('#P0022 no link').settle, 'idle');
 });
 
 test('entradas incompletas não viram erro', () => {
@@ -47,19 +66,23 @@ test('entradas incompletas não viram erro', () => {
 });
 
 test('legenda colada inteira', () => {
-  assert.deepEqual(codesOf('Gostou? Busca o código #P0022 no link da bio'), ['P0022']);
-  assert.deepEqual(codesOf('Gostou? Busca o código #P0022\nno link da bio'), ['P0022']);
-  assert.deepEqual(codesOf('Gostou? Busca o código #P0022no link da bio'), ['P0022']);
-  assert.deepEqual(codesOf('Busca no link da bioP0022'), ['P0022']);
-  assert.deepEqual(codesOf('Achados da semana: #P0022 #P0023 e #P0137 🔥'), ['P0022', 'P0023', 'P0137']);
-  assert.deepEqual(codesOf('#P0022#P0023'), ['P0022', 'P0023']);
-  assert.deepEqual(codesOf('P0022P0023'), ['P0022', 'P0023']);
-  assert.deepEqual(codesOf('0022 0023'), ['P0022', 'P0023']);
-  assert.deepEqual(codesOf('código P0022, repetindo: P0022'), ['P0022']);
-  assert.deepEqual(codesOf('código #p22 aqui'), ['P0022']);
-  assert.deepEqual(codesOf('Frete grátis! Código PO022 (com O)'), ['P0022']);
-  assert.deepEqual(codesOf('CEP 01310-100, código P0022'), ['P0022']);
-  const many = Array.from({ length: 15 }, (_, index) => '#P' + String(index + 1).padStart(4, '0')).join(' ');
+  assert.deepEqual(codesOf('Gostou? Busca o código #P00022 no link da bio'), ['P00022']);
+  assert.deepEqual(codesOf('Gostou? Busca o código #P00022\nno link da bio'), ['P00022']);
+  assert.deepEqual(codesOf('Gostou? Busca o código #P00022no link da bio'), ['P00022']);
+  assert.deepEqual(codesOf('Busca no link da bioP00022'), ['P00022']);
+  assert.deepEqual(codesOf('Achados da semana: #P00022 #P00023 e #P00137 🔥'), ['P00022', 'P00023', 'P00137']);
+  assert.deepEqual(codesOf('#P00022#P00023'), ['P00022', 'P00023']);
+  assert.deepEqual(codesOf('P00022P00023'), ['P00022', 'P00023']);
+  assert.deepEqual(codesOf('00022 00023'), ['P00022', 'P00023']);
+  assert.deepEqual(codesOf('código P00022, repetindo: P00022'), ['P00022']);
+  assert.deepEqual(codesOf('código #p22 aqui'), ['P00022']);
+  assert.deepEqual(codesOf('Frete grátis! Código PO0022 (com O)'), ['P00022']);
+  assert.deepEqual(codesOf('CEP 01310-100, código P00022'), ['P00022']);
+  assert.deepEqual(codesOf('Achados: #P100000 e #P99999'), ['P100000', 'P99999']);
+  assert.deepEqual(codesOf('Post antigo: busca o código #P0022 no link da bio'), ['P00022'], 'legenda antiga, com 4 dígitos');
+  assert.deepEqual(codesOf('Antigos: #P0022 #P0023'), ['P00022', 'P00023']);
+  assert.deepEqual(codesOf('0022 0023'), ['P00022', 'P00023']);
+  const many = Array.from({ length: 15 }, (_, index) => '#P' + String(index + 1).padStart(5, '0')).join(' ');
   assert.equal(codesOf(many).length, MAX_CODES_PER_QUERY);
 });
 
@@ -69,16 +92,16 @@ test('sem falso positivo em texto comum', () => {
     assert.notEqual(query.kind, 'codes', text);
   }
   assert.equal(parseQuery('Frete grátis acima de 99').kind, 'suggestion');
-  assert.equal(parseQuery('Frete grátis acima de 99').code, 'P0099');
-  assert.equal(parseQuery('codigo 22 por favor').code, 'P0022');
+  assert.equal(parseQuery('Frete grátis acima de 99').code, 'P00099');
+  assert.equal(parseQuery('codigo 22 por favor').code, 'P00022');
   assert.equal(parseQuery('Leve 3 pague 2').kind, 'invalid');
   assert.equal(parseQuery('tenis nike').kind, 'invalid');
 });
 
 test('entrada hostil não quebra nem demora', () => {
   const hostile = ['<script>alert(1)</script>', '"><img src=x onerror=alert(1)>', 'javascript:alert(1)', '%3Cscript%3E', '${alert(1)}',
-    char(0) + char(7) + 'P0022', '\u0000'.repeat(10), 'P'.repeat(100000), 'P0'.repeat(50000), '#'.repeat(100000), '0'.repeat(100000),
-    ('P' + '0'.repeat(15) + ' ').repeat(3000), 'a'.repeat(200000) + 'P0022'];
+    char(0) + char(7) + 'P00022', '\u0000'.repeat(10), 'P'.repeat(100000), 'P0'.repeat(50000), '#'.repeat(100000), '0'.repeat(100000),
+    ('P' + '0'.repeat(15) + ' ').repeat(3000), 'a'.repeat(200000) + 'P00022'];
   for (const input of hostile) {
     const started = performance.now();
     const query = parseQuery(input);
@@ -90,14 +113,18 @@ test('entrada hostil não quebra nem demora', () => {
 });
 
 test('deep link e hash', () => {
-  assert.deepEqual(parseDeepLink('P0022'), ['P0022']);
-  assert.deepEqual(parseDeepLink('P0022 P0023'), ['P0022', 'P0023']);
+  assert.deepEqual(parseDeepLink('P00022'), ['P00022']);
+  assert.deepEqual(parseDeepLink('P00022 P00023'), ['P00022', 'P00023']);
+  assert.deepEqual(parseDeepLink('P0022'), ['P00022'], 'link antigo, com 4 dígitos');
+  assert.deepEqual(parseDeepLink('P0022 P0023'), ['P00022', 'P00023']);
+  assert.deepEqual(parseDeepLink('22'), ['P00022']);
   assert.equal(parseDeepLink('<script>alert(1)</script>'), null);
   assert.equal(parseDeepLink('x'.repeat(201)), null);
   assert.equal(parseDeepLink(''), null);
-  assert.deepEqual(parseHash('#P0022'), ['P0022']);
-  assert.deepEqual(parseHash('#p22'), ['P0022']);
-  assert.deepEqual(parseHash('#%23P0022'), ['P0022']);
+  assert.deepEqual(parseHash('#P00022'), ['P00022']);
+  assert.deepEqual(parseHash('#p22'), ['P00022']);
+  assert.deepEqual(parseHash('#%23P00022'), ['P00022']);
+  assert.deepEqual(parseHash('#P0022'), ['P00022'], 'link antigo, com 4 dígitos');
   for (const hash of ['#como-funciona', '#buscar', '#sobre', '#conteudo', '#%E0%A4%A', '#<img src=x onerror=alert(1)>', '#' + 'P'.repeat(40)]) {
     assert.equal(parseHash(hash), null, hash);
   }
@@ -110,7 +137,7 @@ test('código de teste: só a palavra exata, fora do formato dos códigos', () =
   assert.deepEqual(parseHash('#teste676767'), [TEST_CODE]);
   assert.deepEqual(codesOf('676767'), ['P676767']);
   assert.deepEqual(codesOf('P676767'), ['P676767']);
-  for (const input of ['teste 676767', 'TESTE67676', 'teste676767 P0022', 'legenda com TESTE676767 no meio']) {
+  for (const input of ['teste 676767', 'TESTE67676', 'teste676767 P00022', 'legenda com TESTE676767 no meio']) {
     assert.notDeepEqual(codesOf(input), [TEST_CODE], input);
   }
   assert.notEqual(codeProblem(TEST_CODE), '', 'nunca vale como código do catálogo');
@@ -137,13 +164,19 @@ test('regras de link: só https seguro vira link', () => {
 });
 
 test('códigos do catálogo', () => {
-  assert.equal(canonicalCode('P0022'), 'P0022');
-  assert.equal(canonicalCode('P00022'), 'P0022');
-  assert.equal(canonicalCode('P0000'), 'P0000');
+  assert.equal(canonicalCode('P00022'), 'P00022');
+  assert.equal(canonicalCode('P0022'), 'P00022', 'arquivo antigo, com 4 dígitos: mesmo produto');
+  assert.equal(canonicalCode('P000022'), 'P00022');
+  assert.equal(canonicalCode('P00000'), 'P00000');
+  assert.equal(canonicalCode('P0000'), 'P00000');
+  assert.equal(canonicalCode('P99999'), 'P99999');
+  assert.equal(canonicalCode('P100000'), 'P100000');
   assert.equal(canonicalCode('P12345678'), 'P12345678');
+  assert.equal(codeProblem('P0022'), '', 'o arquivo continua aceitando 4 dígitos');
+  assert.equal(codeProblem('P00022'), '');
   assert.equal(codeProblem('P123456789'), 'digits');
-  assert.equal(codeProblem('p0022'), 'pattern');
-  assert.equal(codeProblem(' P0022'), 'pattern');
+  assert.equal(codeProblem('p00022'), 'pattern');
+  assert.equal(codeProblem(' P00022'), 'pattern');
   assert.equal(codeProblem('P022'), 'pattern');
   assert.equal(codeProblem('P' + char(0x662, 0x662, 0x662, 0x662)), 'pattern');
   assert.equal(codeProblem(22), 'type');
@@ -174,27 +207,31 @@ test('catálogo: arquivo inválido vira erro; produto inválido é ignorado sozi
   const empty = parseCatalog('{"version":1,"updatedAt":null,"products":[]}');
   assert.ok(empty.ok && empty.products.size === 0 && empty.highestNumber === -1);
   const catalog = buildCatalog({ version: 1, updatedAt: '2026-10-02T14:05:00Z', extra: true, products: [
-    { code: 'P0022', title: 'velho', link: 'https://a.bc/1' }, null, 'x', { code: 'P0023', title: 'sem link' },
-    { code: 'P0024', title: 'link ruim', link: 'javascript:alert(1)' }, { code: 'P0022', title: 'novo', link: 'https://a.bc/2', preco: 1 },
-    { code: 'bad', title: 'x', link: 'https://a.bc' }, { code: 'P0025', title: '', link: 'https://a.bc' }
+    { code: 'P0022', title: 'velho, com 4 dígitos', link: 'https://a.bc/1' }, null, 'x', { code: 'P00023', title: 'sem link' },
+    { code: 'P00024', title: 'link ruim', link: 'javascript:alert(1)' }, { code: 'P00022', title: 'novo', link: 'https://a.bc/2', preco: 1 },
+    { code: 'bad', title: 'x', link: 'https://a.bc' }, { code: 'P00025', title: '', link: 'https://a.bc' }
   ] });
   assert.ok(catalog.ok);
-  assert.equal(catalog.products.get('P0022').title, 'novo');
-  assert.equal(catalog.products.get('P0022').link, 'https://a.bc/2');
-  assert.equal(catalog.products.get('P0023').link, null);
-  assert.equal(catalog.products.get('P0024').link, null);
+  assert.equal(catalog.products.get('P00022').title, 'novo', 'P0022 e P00022 são o mesmo produto; vale o último');
+  assert.equal(catalog.products.get('P00022').link, 'https://a.bc/2');
+  assert.equal(catalog.products.get('P00023').link, null);
+  assert.equal(catalog.products.get('P00024').link, null);
+  assert.ok(!catalog.products.has('P0022'), 'a chave é sempre a forma de 5 dígitos');
+  const legacy = buildCatalog({ version: 1, updatedAt: null, products: [{ code: 'P0022', title: 'antigo', link: 'https://a.bc/9' }, { code: 'P0137', title: 'outro', link: 'https://a.bc/8' }] });
+  assert.deepEqual([...legacy.products.keys()], ['P00022', 'P00137']);
+  assert.equal(legacy.highestNumber, 137);
   assert.equal(catalog.products.size, 3);
   assert.equal(catalog.ignored, 4);
   assert.equal(catalog.highestNumber, 24);
   assert.equal(readUpdatedAt('2026-10-02T14:05:00Z').toISOString(), '2026-10-02T14:05:00.000Z');
   assert.equal(readUpdatedAt('ontem'), null);
   assert.ok(buildCatalog({ version: 1, updatedAt: 'ontem', products: [] }).ok, 'updatedAt ruim não derruba o catálogo');
-  const polluted = JSON.parse('{"version":1,"products":[{"__proto__":{"code":"P0001","title":"x","link":"https://a.bc"}}]}');
+  const polluted = JSON.parse('{"version":1,"products":[{"__proto__":{"code":"P00001","title":"x","link":"https://a.bc"}}]}');
   assert.equal(buildCatalog(polluted).products.size, 0);
 });
 
 test('catálogo: teto de quantidade', () => {
-  const products = Array.from({ length: MAX_PRODUCTS + 50 }, (_, index) => ({ code: 'P' + String(index + 1).padStart(4, '0'), title: 't', link: 'https://a.bc/' + index }));
+  const products = Array.from({ length: MAX_PRODUCTS + 50 }, (_, index) => ({ code: 'P' + String(index + 1).padStart(5, '0'), title: 't', link: 'https://a.bc/' + index }));
   const started = performance.now();
   const catalog = buildCatalog({ version: 1, updatedAt: null, products });
   assert.ok(performance.now() - started < 1500);
@@ -247,6 +284,14 @@ test('shelfy é sempre feminina: a, da, na, pela, à', () => {
   for (const file of files) {
     const found = readFileSync(file, 'utf8').match(masculine);
     assert.equal(found, null, file + ': “' + found?.[0] + '”');
+  }
+});
+
+test('exemplos de código nas páginas usam 5 dígitos', () => {
+  const files = ['index.html', 'privacidade.html', 'termos.html', '404.html', 'opensearch.xml', 'dev/art/og.svg', ...readdirSync('js').map((file) => 'js/' + file)];
+  for (const file of files) {
+    const found = readFileSync(file, 'utf8').match(/(?<![A-Za-z0-9])[Pp][0-9]{1,4}(?![0-9])/g);
+    assert.equal(found, null, file + ' tem código de exemplo com menos de 5 dígitos: ' + found);
   }
 });
 

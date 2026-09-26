@@ -3,248 +3,253 @@
   "updatedAt": "2026-09-24T14:05:00Z",
   "products": [
     {
-      "code": "P0001",
+      "code": "P00001",
       "title": "<script>alert(\"xss\")</script> Garrafa térmica",
       "link": "https://loja.example.com/p/1"
     },
     {
-      "code": "P0002",
+      "code": "P00002",
       "title": "<img src=x onerror=alert(1)> Luminária",
       "link": "https://loja.example.com/p/2"
     },
     {
-      "code": "P0003",
+      "code": "P00003",
       "title": "\"><svg onload=alert(1)> Tapete",
       "link": "https://loja.example.com/p/3"
     },
     {
-      "code": "P0004",
+      "code": "P00004",
       "title": "&lt;b&gt;entidade&lt;/b&gt; &amp; &#x3C;script&#x3E; Organizador",
       "link": "https://loja.example.com/p/4"
     },
     {
-      "code": "P0005",
+      "code": "P00005",
       "title": "Fone com RLO ‮ossefrop olad oirártnoc",
       "link": "https://loja.example.com/p/5"
     },
     {
-      "code": "P0006",
+      "code": "P00006",
       "title": "Cha​leira com zero‍width‌ e ⁠ invisíveis",
       "link": "https://loja.example.com/p/6"
     },
     {
-      "code": "P0007",
+      "code": "P00007",
       "title": "Controle\u0000 com\u0007 caracteres de\u001b controle",
       "link": "https://loja.example.com/p/7"
     },
     {
-      "code": "P0008",
+      "code": "P00008",
       "title": "Bidi ⁦isolado⁩ e ‫embutido‬",
       "link": "https://loja.example.com/p/8"
     },
     {
-      "code": "P0009",
+      "code": "P00009",
       "title": "🔥🔥 Oferta relâmpago 🔥🔥 👨‍👩‍👧 família",
       "link": "https://loja.example.com/p/9"
     },
     {
-      "code": "P0010",
+      "code": "P00010",
       "title": "مصباح LED قابل لإعادة الشحن",
       "link": "https://loja.example.com/p/10"
     },
     {
-      "code": "P0011",
+      "code": "P00011",
       "title": "Z̴̡̛͓a̶̢͎l̷̙͝g̸̖̏o̵̲͂ combinando marcas",
       "link": "https://loja.example.com/p/11"
     },
     {
-      "code": "P0012",
+      "code": "P00012",
       "title": "Título enorme muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo muito longo ",
       "link": "https://loja.example.com/p/12"
     },
     {
-      "code": "P0013",
+      "code": "P00013",
       "title": "javascript:alert(1)",
       "link": "https://loja.example.com/p/13"
     },
     {
-      "code": "P0014",
+      "code": "P00014",
       "title": "   ",
       "link": "https://loja.example.com/p/14"
     },
     {
-      "code": "P0015",
-      "title": "Link hostil P0015",
+      "code": "P00015",
+      "title": "Link hostil P00015",
       "link": "javascript:alert(1)"
     },
     {
-      "code": "P0016",
-      "title": "Link hostil P0016",
+      "code": "P00016",
+      "title": "Link hostil P00016",
       "link": "JAVASCRIPT:alert(1)"
     },
     {
-      "code": "P0017",
-      "title": "Link hostil P0017",
+      "code": "P00017",
+      "title": "Link hostil P00017",
       "link": " javascript:alert(1)"
     },
     {
-      "code": "P0018",
-      "title": "Link hostil P0018",
+      "code": "P00018",
+      "title": "Link hostil P00018",
       "link": "java\tscript:alert(1)"
     },
     {
-      "code": "P0019",
-      "title": "Link hostil P0019",
+      "code": "P00019",
+      "title": "Link hostil P00019",
       "link": "jav&#x09;ascript:alert(1)"
     },
     {
-      "code": "P0020",
-      "title": "Link hostil P0020",
+      "code": "P00020",
+      "title": "Link hostil P00020",
       "link": "data:text/html,<script>alert(1)</script>"
     },
     {
-      "code": "P0021",
-      "title": "Link hostil P0021",
+      "code": "P00021",
+      "title": "Link hostil P00021",
       "link": "vbscript:msgbox(1)"
     },
     {
-      "code": "P0022",
-      "title": "Link hostil P0022",
+      "code": "P00022",
+      "title": "Link hostil P00022",
       "link": "http://loja.example.com/p/1"
     },
     {
-      "code": "P0023",
-      "title": "Link hostil P0023",
+      "code": "P00023",
+      "title": "Link hostil P00023",
       "link": "HTTPS://LOJA.EXAMPLE.COM/p/1"
     },
     {
-      "code": "P0024",
-      "title": "Link hostil P0024",
+      "code": "P00024",
+      "title": "Link hostil P00024",
       "link": "https://usuario:senha@loja.example.com/p/1"
     },
     {
-      "code": "P0025",
-      "title": "Link hostil P0025",
+      "code": "P00025",
+      "title": "Link hostil P00025",
       "link": "https://loja.example.com@evil.example/p/1"
     },
     {
-      "code": "P0026",
-      "title": "Link hostil P0026",
+      "code": "P00026",
+      "title": "Link hostil P00026",
       "link": "https://evil.example\\@loja.example.com/"
     },
     {
-      "code": "P0027",
-      "title": "Link hostil P0027",
+      "code": "P00027",
+      "title": "Link hostil P00027",
       "link": "https://127.0.0.1/p/1"
     },
     {
-      "code": "P0028",
-      "title": "Link hostil P0028",
+      "code": "P00028",
+      "title": "Link hostil P00028",
       "link": "https://[::1]/p/1"
     },
     {
-      "code": "P0029",
-      "title": "Link hostil P0029",
+      "code": "P00029",
+      "title": "Link hostil P00029",
       "link": "https://localhost/p/1"
     },
     {
-      "code": "P0030",
-      "title": "Link hostil P0030",
+      "code": "P00030",
+      "title": "Link hostil P00030",
       "link": "https://loja.example.com:8443/p/1"
     },
     {
-      "code": "P0031",
-      "title": "Link hostil P0031",
+      "code": "P00031",
+      "title": "Link hostil P00031",
       "link": "//loja.example.com/p/1"
     },
     {
-      "code": "P0032",
-      "title": "Link hostil P0032",
+      "code": "P00032",
+      "title": "Link hostil P00032",
       "link": "/p/1"
     },
     {
-      "code": "P0033",
-      "title": "Link hostil P0033",
+      "code": "P00033",
+      "title": "Link hostil P00033",
       "link": "https://loja.example.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     },
     {
-      "code": "P0034",
-      "title": "Link hostil P0034",
+      "code": "P00034",
+      "title": "Link hostil P00034",
       "link": "https://loja.example.com/‮lmth.exe"
     },
     {
-      "code": "P0035",
-      "title": "Link hostil P0035",
+      "code": "P00035",
+      "title": "Link hostil P00035",
       "link": "https://loja.example.com/ espaço"
     },
     {
-      "code": "P0036",
-      "title": "Link hostil P0036",
+      "code": "P00036",
+      "title": "Link hostil P00036",
       "link": "https://-loja.example.com/p/1"
     },
     {
-      "code": "P0037",
-      "title": "Link hostil P0037",
+      "code": "P00037",
+      "title": "Link hostil P00037",
       "link": "https://loja..example.com/p/1"
     },
     {
-      "code": "P0038",
-      "title": "Link hostil P0038",
+      "code": "P00038",
+      "title": "Link hostil P00038",
       "link": "https://loja.example.c0m/p/1"
     },
     {
-      "code": "P0039",
-      "title": "Link hostil P0039",
+      "code": "P00039",
+      "title": "Link hostil P00039",
       "link": "https://loja.example.com./p/1"
     },
     {
-      "code": "P0040",
-      "title": "Link hostil P0040",
+      "code": "P00040",
+      "title": "Link hostil P00040",
       "link": "https://xn--bcher-kva.example/p/1"
     },
     {
-      "code": "P0041",
-      "title": "Link hostil P0041",
+      "code": "P00041",
+      "title": "Link hostil P00041",
       "link": "https://loja.example.com/p/1?q=<script>alert(1)</script>"
     },
     {
-      "code": "P0042",
-      "title": "Link hostil P0042",
+      "code": "P00042",
+      "title": "Link hostil P00042",
       "link": 12345
     },
     {
-      "code": "P0043",
-      "title": "Link hostil P0043",
+      "code": "P00043",
+      "title": "Link hostil P00043",
       "link": null
     },
     {
-      "code": "P0044",
-      "title": "Link hostil P0044",
+      "code": "P00044",
+      "title": "Link hostil P00044",
       "link": [
         "https://loja.example.com/p/1"
       ]
     },
     {
-      "code": "P0045",
-      "title": "Link hostil P0045",
+      "code": "P00045",
+      "title": "Link hostil P00045",
       "link": {
         "href": "https://loja.example.com"
       }
     },
     {
       "code": "P0022",
-      "title": "Primeira versão (deve perder)",
+      "title": "Primeira versão, com 4 dígitos (deve perder)",
       "link": "https://loja.example.com/p/antigo"
     },
     {
-      "code": "P0022",
+      "code": "P00022",
       "title": "Versão mais nova (deve ganhar)",
       "link": "https://loja.example.com/p/novo"
     },
     {
-      "code": "P00023",
-      "title": "Código não canônico P00023 vira P0023",
+      "code": "P0023",
+      "title": "Código antigo de 4 dígitos P0023 vira P00023",
       "link": "https://loja.example.com/p/23"
+    },
+    {
+      "code": "P000300",
+      "title": "Zeros a mais: P000300 vira P00300",
+      "link": "https://loja.example.com/p/300"
     },
     null,
     "texto",
@@ -252,18 +257,18 @@
     [],
     {},
     {
-      "code": "P0200"
+      "code": "P00200"
     },
     {
       "title": "Sem código",
       "link": "https://loja.example.com/p/x"
     },
     {
-      "code": "P0201",
+      "code": "P00201",
       "title": "Sem link (indisponível)"
     },
     {
-      "code": "P0202",
+      "code": "P00202",
       "title": 42,
       "link": "https://loja.example.com/p/202"
     },
@@ -273,14 +278,19 @@
       "link": "https://loja.example.com/p/22"
     },
     {
-      "code": "p0203",
+      "code": "p00203",
       "title": "Código minúsculo",
       "link": "https://loja.example.com/p/203"
     },
     {
-      "code": "P-0204",
+      "code": "P-00204",
       "title": "Código com hífen",
       "link": "https://loja.example.com/p/204"
+    },
+    {
+      "code": "P022",
+      "title": "Código com 3 dígitos",
+      "link": "https://loja.example.com/p/3"
     },
     {
       "code": "P123456789",
@@ -298,7 +308,7 @@
       "link": "https://loja.example.com/p/s"
     },
     {
-      "code": "P0205",
+      "code": "P00205",
       "title": "Campos extras são ignorados",
       "link": "https://loja.example.com/p/205",
       "preco": 19.9,

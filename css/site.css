@@ -1993,7 +1993,7 @@
       }
 
       .art-typed {
-        animation: type steps(5, end) both;
+        animation: type steps(6, end) both;
         animation-timeline: view();
         animation-range: entry 60% cover 45%;
       }

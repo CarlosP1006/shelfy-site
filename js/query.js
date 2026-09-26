@@ -1,4 +1,4 @@
-import { formatCode } from './catalog.js';
+import { formatCode, CODE_DIGITS } from './catalog.js';
 
 export const MAX_QUERY_LENGTH = 4000;
 export const MAX_DEEP_LINK_LENGTH = 200;
@@ -44,7 +44,7 @@ function toDigits(run) {
 }
 
 function settleFor(run) {
-  if (run.length >= 4) return 'now';
+  if (run.length >= CODE_DIGITS) return 'now';
   return run[0] === '0' || run[0] === 'O' || run[0] === 'o' ? 'commit' : 'idle';
 }
 
@@ -121,7 +121,7 @@ function scanText(text) {
   }
 
   if (!codes.length) return null;
-  return { kind: 'codes', codes, source: 'text', settle: shortestRun >= 4 ? 'now' : 'idle' };
+  return { kind: 'codes', codes, source: 'text', settle: shortestRun >= CODE_DIGITS ? 'now' : 'idle' };
 }
 
 function suggestFromNumbers(text) {

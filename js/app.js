@@ -1,4 +1,4 @@
-import { parseCatalog, readProductLink, MAX_CATALOG_BYTES } from './catalog.js';
+import { parseCatalog, canonicalCode, readProductLink, MAX_CATALOG_BYTES } from './catalog.js';
 import { parseQuery, parseDeepLink, parseHash, MAX_QUERY_LENGTH, TEST_CODE } from './query.js';
 
 const CATALOG_URL = 'data/products.json';
@@ -8,7 +8,6 @@ const IDLE_SHORT_MS = 450;
 const IDLE_COMMIT_MS = 750;
 const RECENT_KEY = 'shelfy:recentes';
 const RECENT_LIMIT = 3;
-const RECENT_CODE_PATTERN = /^P[0-9]{4,8}$/;
 const DEV_CATALOG_PATTERN = /^[a-z0-9-]{1,40}$/;
 const LINE_BREAK_PATTERN = /[\r\n\t\u2028\u2029]+/g;
 
@@ -112,7 +111,7 @@ function readRecent() {
   try {
     const stored = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
     if (!Array.isArray(stored)) return [];
-    return stored.filter((code) => typeof code === 'string' && RECENT_CODE_PATTERN.test(code)).slice(0, RECENT_LIMIT);
+    return [...new Set(stored.map(canonicalCode).filter(Boolean))].slice(0, RECENT_LIMIT);
   } catch {
     return [];
   }
@@ -133,7 +132,7 @@ function rememberFound() {
   const found = state.query.codes.filter((code) => state.catalog.products.has(code));
   if (!found.length) return;
   const merged = [...found, ...state.recent.filter((code) => !found.includes(code))];
-  writeRecent(merged.filter((code) => RECENT_CODE_PATTERN.test(code)).slice(0, RECENT_LIMIT));
+  writeRecent(merged.filter(canonicalCode).slice(0, RECENT_LIMIT));
 }
 
 function cloneTemplate(id) {
@@ -338,7 +337,7 @@ function render() {
       showNotice('bad-link', {
         tone: 'invalid',
         title: 'O link aberto não tem um código válido',
-        text: 'Digite o código que aparece no post. Os códigos são assim: P0022.'
+        text: 'Digite o código que aparece no post. Os códigos são assim: P00022.'
       });
       return;
     }
@@ -351,7 +350,7 @@ function render() {
     showNotice('partial', {
       tone: 'invalid',
       title: 'Faltou o número',
-      text: 'Os códigos são assim: P0022. Digite o P seguido dos números, ou só os números.'
+      text: 'Os códigos são assim: P00022. Digite o P seguido dos números, ou só os números.'
     });
     return;
   }
@@ -363,8 +362,8 @@ function render() {
       tone: 'invalid',
       title: long ? 'Esse número é grande demais' : 'Não achamos um código aí',
       text: long
-        ? 'Os códigos têm um P e até 8 números, assim: P0022.'
-        : 'Os códigos são assim: P0022. A busca é só por código; o nome do produto não funciona aqui.'
+        ? 'Os códigos têm um P e até 8 números, assim: P00022.'
+        : 'Os códigos são assim: P00022. A busca é só por código; o nome do produto não funciona aqui.'
     });
     return;
   }
@@ -380,7 +379,7 @@ function render() {
     showNotice('suggest-' + query.code, {
       tone: 'suggest',
       title: 'Você quis dizer ' + query.code + '?',
-      text: 'Não achamos um código no formato P0022 no que você digitou, mas achamos um número.',
+      text: 'Não achamos um código no formato P00022 no que você digitou, mas achamos um número.',
       actions: [accept]
     });
     return;

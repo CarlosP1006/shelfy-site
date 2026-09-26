@@ -18,7 +18,7 @@ function random(seed) {
 
 const next = random(22);
 const pick = (list) => list[Math.floor(next() * list.length)];
-const code = (number) => 'P' + String(number).padStart(4, '0');
+const code = (number) => 'P' + String(number).padStart(5, '0');
 
 const items = ['Espremedor de frutas', 'Luminária de mesa', 'Garrafa térmica', 'Organizador de gavetas', 'Mini processador de alimentos',
   'Tapete antiderrapante', 'Suporte de celular', 'Kit de potes herméticos', 'Mochila impermeável', 'Fone de ouvido sem fio',
@@ -96,19 +96,21 @@ function buildHostile() {
     products.push({ code: code(number), title: 'Link hostil ' + code(number), link: typeof link === 'string' ? expand(link) : link });
     number += 1;
   }
-  products.push({ code: 'P0022', title: 'Primeira versão (deve perder)', link: 'https://loja.example.com/p/antigo' });
-  products.push({ code: 'P0022', title: 'Versão mais nova (deve ganhar)', link: 'https://loja.example.com/p/novo' });
-  products.push({ code: 'P00023', title: 'Código não canônico P00023 vira P0023', link: 'https://loja.example.com/p/23' });
-  products.push(null, 'texto', 42, [], {}, { code: 'P0200' }, { title: 'Sem código', link: 'https://loja.example.com/p/x' });
-  products.push({ code: 'P0201', title: 'Sem link (indisponível)' });
-  products.push({ code: 'P0202', title: 42, link: 'https://loja.example.com/p/202' });
+  products.push({ code: 'P0022', title: 'Primeira versão, com 4 dígitos (deve perder)', link: 'https://loja.example.com/p/antigo' });
+  products.push({ code: 'P00022', title: 'Versão mais nova (deve ganhar)', link: 'https://loja.example.com/p/novo' });
+  products.push({ code: 'P0023', title: 'Código antigo de 4 dígitos P0023 vira P00023', link: 'https://loja.example.com/p/23' });
+  products.push({ code: 'P000300', title: 'Zeros a mais: P000300 vira P00300', link: 'https://loja.example.com/p/300' });
+  products.push(null, 'texto', 42, [], {}, { code: 'P00200' }, { title: 'Sem código', link: 'https://loja.example.com/p/x' });
+  products.push({ code: 'P00201', title: 'Sem link (indisponível)' });
+  products.push({ code: 'P00202', title: 42, link: 'https://loja.example.com/p/202' });
   products.push({ code: 22, title: 'Código numérico', link: 'https://loja.example.com/p/22' });
-  products.push({ code: 'p0203', title: 'Código minúsculo', link: 'https://loja.example.com/p/203' });
-  products.push({ code: 'P-0204', title: 'Código com hífen', link: 'https://loja.example.com/p/204' });
+  products.push({ code: 'p00203', title: 'Código minúsculo', link: 'https://loja.example.com/p/203' });
+  products.push({ code: 'P-00204', title: 'Código com hífen', link: 'https://loja.example.com/p/204' });
+  products.push({ code: 'P022', title: 'Código com 3 dígitos', link: 'https://loja.example.com/p/3' });
   products.push({ code: 'P123456789', title: 'Código com 9 dígitos', link: 'https://loja.example.com/p/9' });
   products.push({ code: 'P' + '0'.repeat(30) + '5', title: 'Código gigante', link: 'https://loja.example.com/p/5' });
   products.push({ code: '<script>alert(1)</script>', title: 'Código com script', link: 'https://loja.example.com/p/s' });
-  products.push({ code: 'P0205', title: 'Campos extras são ignorados', link: 'https://loja.example.com/p/205', preco: 19.9, tags: ['a'], constructor: 'x' });
+  products.push({ code: 'P00205', title: 'Campos extras são ignorados', link: 'https://loja.example.com/p/205', preco: 19.9, tags: ['a'], constructor: 'x' });
   return { version: 1, updatedAt: '2026-09-24T14:05:00Z', products, extra: { ignorado: true }, firstHostileLink: firstLink };
 }
 
@@ -139,12 +141,20 @@ function write(path, value) {
 write(join(DEV, 'products.sample.json'), buildSample());
 write(join(FIXTURES, 'hostile.json'), buildHostile());
 write(join(FIXTURES, 'empty.json'), { version: 1, updatedAt: null, products: [] });
-write(join(FIXTURES, 'broken.json'), '{"version": 1, "updatedAt": null, "products": [{"code": "P0022", "title": "Quebrado"');
+write(join(FIXTURES, 'legado-4-digitos.json'), {
+  version: 1,
+  updatedAt: '2026-09-24T14:05:00Z',
+  products: [
+    { code: 'P0022', title: 'Produto gravado no formato antigo, com 4 dígitos', link: 'https://loja.example.com/p/legado-22' },
+    { code: 'P0137', title: 'Outro produto no formato antigo', link: 'https://loja.example.com/p/legado-137' }
+  ]
+});
+write(join(FIXTURES, 'broken.json'), '{"version": 1, "updatedAt": null, "products": [{"code": "P00022", "title": "Quebrado"');
 write(join(FIXTURES, 'version2.json'), { version: 2, updatedAt: null, products: [] });
 write(join(FIXTURES, 'version-string.json'), { version: '1', updatedAt: null, products: [] });
 write(join(FIXTURES, 'no-products.json'), { version: 1, updatedAt: null });
-write(join(FIXTURES, 'products-object.json'), { version: 1, updatedAt: null, products: { P0022: 'x' } });
-write(join(FIXTURES, 'array-root.json'), [{ code: 'P0022', title: 'Raiz errada', link: 'https://loja.example.com/p/22' }]);
+write(join(FIXTURES, 'products-object.json'), { version: 1, updatedAt: null, products: { P00022: 'x' } });
+write(join(FIXTURES, 'array-root.json'), [{ code: 'P00022', title: 'Raiz errada', link: 'https://loja.example.com/p/22' }]);
 write(join(FIXTURES, 'deep-nesting.json'), '{"version":1,"products":[' + '['.repeat(20000) + ']'.repeat(20000) + ']}');
 write(join(FIXTURES, 'gen-huge-5000.json'), buildHuge(5000));
 write(join(FIXTURES, 'gen-huge-12000.json'), buildHuge(12000));
