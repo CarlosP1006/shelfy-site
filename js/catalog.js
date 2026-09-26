@@ -3,6 +3,7 @@ export const MAX_CATALOG_BYTES = 5000000;
 export const MAX_PRODUCTS = 10000;
 export const MAX_CODE_LENGTH = 16;
 export const MAX_SIGNIFICANT_DIGITS = 8;
+export const CODE_DIGITS = 5;
 export const MAX_TITLE_LENGTH = 500;
 export const MIN_LINK_LENGTH = 12;
 export const MAX_LINK_LENGTH = 2048;
@@ -25,7 +26,7 @@ function isPlainObject(value) {
 export function formatCode(digits) {
   const significant = digits.replace(LEADING_ZEROS_PATTERN, '');
   if (significant.length > MAX_SIGNIFICANT_DIGITS) return null;
-  return 'P' + significant.padStart(4, '0');
+  return 'P' + significant.padStart(CODE_DIGITS, '0');
 }
 
 export function codeProblem(code) {
