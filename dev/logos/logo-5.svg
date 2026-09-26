@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#ffecd8"/>
+  <g class="carrinho">
+    <path d="M28 37h7l5.5 12q2 29 25.5 29t25.5-29" fill="none" stroke="#f2823d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="55" cy="91.5" r="6" fill="#b9491c"/>
+    <circle cx="77" cy="91.5" r="6" fill="#b9491c"/>
+    <g class="olhos" fill="#6f2817">
+      <circle cx="57" cy="56" r="6"/>
+      <circle cx="75" cy="56" r="6"/>
+    </g>
+  </g>
+</svg>

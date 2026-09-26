@@ -1,0 +1,289 @@
+/* Página de comparação das propostas de logo (dev/logos). Usa os tokens de ../../css/site.css. */
+
+.lp {
+  background: var(--cream);
+}
+
+.lp-pagina {
+  width: min(100% - 2rem, 82rem);
+  margin-inline: auto;
+  padding-block: 2rem 4rem;
+}
+
+.lp-h1 {
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.lp-h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.lp-texto {
+  max-width: 62ch;
+  margin-top: 0.4rem;
+  color: var(--text-soft);
+}
+
+.lp-animacao {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--terra-800);
+}
+
+.lp-numero {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--peach-100);
+  color: var(--terra-800);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.lp-rotulo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lp-secao {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--white);
+  box-shadow: var(--shadow-s);
+}
+
+.lp-claro {
+  background: #fff;
+  color: #141414;
+}
+
+.lp-escuro {
+  background: #000;
+  color: #f2f2f2;
+}
+
+.lp-foto {
+  display: block;
+  flex: none;
+  border-radius: 50%;
+}
+
+.lp-lado {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem 1.25rem;
+  border-radius: var(--radius-m);
+}
+
+.lp-lado-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.lp-lado-lista li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lp-lado .lp-numero {
+  position: absolute;
+  top: -0.25rem;
+  left: -0.25rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-size: 0.8125rem;
+  background: var(--peach-100);
+  color: var(--terra-800);
+  box-shadow: 0 0 0 2px currentColor;
+}
+
+.lp-escuro .lp-numero {
+  box-shadow: 0 0 0 2px #000;
+}
+
+.lp-claro .lp-numero {
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.lp-palco {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.lp-grande,
+.lp-topo {
+  margin: 0;
+}
+
+.lp-arte {
+  width: min(100%, 15rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-m);
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.lp-perfil {
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem 1.25rem;
+  border-radius: var(--radius-m);
+}
+
+.lp-linha {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lp-nome {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.lp-comentario {
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.18;
+}
+
+.lp-linha-pequena .lp-comentario {
+  max-width: 60%;
+}
+
+.lp-topo-palco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem 1rem 1.75rem;
+  border-radius: var(--radius-m);
+  text-align: center;
+  background:
+    radial-gradient(58% 48% at 50% 0%, oklch(92% 0.05 64 / 0.9), transparent 72%),
+    linear-gradient(to bottom, var(--peach-50), var(--white) 85%);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.lp-marca {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  border-radius: 0.95rem;
+  box-shadow: var(--shadow-m);
+}
+
+.lp-topo-palco .lp-titulo {
+  margin-top: 0;
+  font-size: 1.9rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-1 .olhos ellipse,
+  .logo-5 .olhos circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lp-piscar 4.2s infinite;
+  }
+
+  .logo-2 .rodas circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lp-rodar 1.4s linear infinite;
+  }
+
+  .logo-2 .carrinho {
+    animation: lp-sacolejar 0.35s ease-in-out infinite alternate;
+  }
+
+  .logo-3 .tigela {
+    transform-box: view-box;
+    transform-origin: 69px 96px;
+    animation: lp-balancar 1.8s ease-in-out infinite alternate;
+  }
+
+  .logo-4 .carrinho {
+    transform-box: view-box;
+    transform-origin: 62px 98px;
+    animation: lp-pulinho 3.2s var(--ease-out) infinite;
+  }
+
+  .logo-5 .olhos {
+    animation: lp-olhar 6s ease-in-out infinite;
+  }
+
+  .logo-5 .olhos circle {
+    animation-duration: 6s;
+    animation-delay: 3.4s;
+  }
+}
+
+@keyframes lp-piscar {
+  0%, 90%, 97%, 100% { transform: none; }
+  93.5% { transform: scaleY(0.12); }
+}
+
+@keyframes lp-rodar {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes lp-sacolejar {
+  to { transform: translateY(-1.4px); }
+}
+
+@keyframes lp-balancar {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
+@keyframes lp-pulinho {
+  0%, 40%, 100% { transform: none; }
+  10% { transform: translateY(-9px) rotate(-4deg); }
+  20% { transform: scale(1.05, 0.93); }
+  28% { transform: none; }
+}
+
+@keyframes lp-olhar {
+  0%, 12%, 88%, 100% { transform: none; }
+  22%, 42% { transform: translateX(3px); }
+  56%, 76% { transform: translateX(-3px); }
+}

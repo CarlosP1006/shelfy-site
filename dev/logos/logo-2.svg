@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#fddec3"/>
+  <g class="carrinho">
+    <path d="M37.5 48H98l-9 32H47z" fill="#fffdfa"/>
+    <path d="M27 36h8.5L47 80h42l9-32H37.5" fill="none" stroke="#97371a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="rosto" stroke="#97371a" stroke-linecap="round" fill="none">
+      <path class="olho" d="M57.5 56v6" stroke-width="7"/>
+      <path class="olho" d="M78.5 56v6" stroke-width="7"/>
+      <path d="M61.5 70q6.5 5 13 0" stroke-width="5.5"/>
+    </g>
+  </g>
+  <g class="rodas" fill="none" stroke="#97371a" stroke-width="6" stroke-linecap="round">
+    <circle cx="53.5" cy="90" r="5.5" stroke-dasharray="30.6 4"/>
+    <circle cx="82.5" cy="90" r="5.5" stroke-dasharray="30.6 4"/>
+  </g>
+</svg>

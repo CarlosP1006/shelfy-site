@@ -7,6 +7,7 @@ import {
   MAX_PRODUCTS, MAX_TITLE_LENGTH, CODE_DIGITS
 } from '../js/catalog.js';
 import { validateCatalogText, readUpdatedAt } from './validate-catalog.mjs';
+import { montarPagina, PROPOSTAS } from './logos/gerar.mjs';
 
 const char = (...points) => String.fromCodePoint(...points);
 const codesOf = (input) => {
@@ -324,4 +325,27 @@ test('HTML: CSP idêntica, nada inline, nada de outro domínio', () => {
     assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, page + ': precisa de exatamente um h1');
   }
   assert.equal(policies.size, 1, 'CSP diferente entre as páginas');
+});
+
+test('propostas de logo: SVG limpo, paleta do site, página em dia e fora do site público', () => {
+  const palette = new Set(['#fffdfa', '#fff9f2', '#fff4e8', '#ffecd8', '#fddec3', '#fdc8a0', '#fda96e', '#f2823d', '#d96226', '#b9491c',
+    '#97371a', '#6f2817', '#2d1d16', '#ffa566', '#d45a1f', '#f08a4b']);
+  assert.equal(PROPOSTAS.length, 5);
+  for (let number = 1; number <= 5; number += 1) {
+    const svg = readFileSync('dev/logos/logo-' + number + '.svg', 'utf8');
+    assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 120 120">/, 'logo-' + number);
+    assert.ok(!/<(text|image|foreignObject|script|style|use|a)[\s>]|font|href|url\(|@import|<!\[CDATA\[|\son[a-z]+=/i.test(svg), 'logo-' + number + ' tem texto, fonte, imagem ou referência externa');
+    for (const color of svg.match(/#[0-9a-f]{3,8}\b/gi) || []) assert.ok(palette.has(color.toLowerCase()), 'logo-' + number + ': cor fora da paleta ' + color);
+    assert.ok(!/(rgb|hsl|oklch)\(/i.test(svg), 'logo-' + number + ': cor fora da paleta');
+  }
+  const page = readFileSync('dev/logos/index.html', 'utf8');
+  assert.equal(page, montarPagina(), 'dev/logos/index.html desatualizada: rode node dev/logos/gerar.mjs');
+  const csp = (html) => html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)[1];
+  assert.equal(csp(page), csp(readFileSync('index.html', 'utf8')), 'mesma CSP do site');
+  assert.ok(!/\sstyle="|<style[\s>]|<script[\s>]|\son[a-z]+=/i.test(page), 'nada inline na página de comparação');
+  assert.ok(!/(?:src|href)="(?:[a-z]+:)?\/\//i.test(page), 'nenhum recurso de outro domínio');
+  assert.match(page, /<meta name="robots" content="noindex, nofollow">/);
+  for (const file of ['index.html', 'privacidade.html', 'termos.html', '404.html', 'css/site.css', ...readdirSync('js').map((name) => 'js/' + name)]) {
+    assert.ok(!readFileSync(file, 'utf8').includes('logos/'), file + ' aponta para as propostas de logo');
+  }
 });
