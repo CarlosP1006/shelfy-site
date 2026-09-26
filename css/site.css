@@ -374,19 +374,24 @@
   }
 
   .brand-mark {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 2.5rem;
     height: 2.5rem;
     flex: none;
+    overflow: hidden;
     border-radius: 0.85rem;
-    background: linear-gradient(150deg, var(--orange-400), var(--orange-600) 80%);
-    box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.5), inset 0 -3px 6px oklch(47% 0.135 37 / 0.22), 0 8px 16px -8px oklch(63.5% 0.165 44 / 0.8);
+    background: var(--orange-400);
+    box-shadow: 0 8px 16px -8px oklch(63.5% 0.165 44 / 0.8);
   }
 
   .brand-mark svg {
-    width: 1.625rem;
-    height: 1.625rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .brand-mark .carrinho {
+    transform-box: view-box;
+    transform-origin: 62px 98px;
   }
 
   .brand-name {
@@ -402,11 +407,6 @@
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 0.95rem;
-  }
-
-  .brand-solo .brand-mark svg {
-    width: 1.8rem;
-    height: 1.8rem;
   }
 
   .header-link {
@@ -1327,11 +1327,6 @@
     border-radius: 1.1rem;
   }
 
-  .about-avatar svg {
-    width: 2.1rem;
-    height: 2.1rem;
-  }
-
   .about-bubble {
     position: relative;
     max-width: 40rem;
@@ -1819,8 +1814,7 @@
       display: none;
     }
   }
-  .shelf-ghosts > *,
-  .brand-mark svg > * {
+  .shelf-ghosts > * {
     transform-box: fill-box;
     transform-origin: 50% 100%;
   }
@@ -1884,22 +1878,12 @@
       animation: print 0.75s steps(7, end) 0.35s both;
     }
 
-    .brand-solo .brand-mark svg > :not(:last-child) {
-      animation: bounce 4.2s var(--ease-out) 0.8s infinite;
+    .brand-solo .carrinho {
+      animation: pulinho 3.2s var(--ease-out) 0.6s infinite;
     }
 
-    .brand-solo .brand-mark svg > :nth-child(2),
-    .brand-solo .brand-mark svg > :nth-child(3) {
-      animation-delay: 1s;
-    }
-
-    .brand:hover .brand-mark svg > :not(:last-child) {
-      animation: hop 0.35s var(--ease-out) 2 alternate;
-    }
-
-    .brand:hover .brand-mark svg > :nth-child(2),
-    .brand:hover .brand-mark svg > :nth-child(3) {
-      animation-delay: 0.08s;
+    .brand:hover .carrinho {
+      animation: pulinho 3.2s var(--ease-out);
     }
   }
 
@@ -1949,10 +1933,11 @@
     to { transform: translateY(-0.28rem); }
   }
 
-  @keyframes bounce {
-    0%, 22%, 100% { transform: none; }
-    7% { transform: translateY(-0.26rem) scaleY(1.05); }
-    14% { transform: scaleY(0.9); }
+  @keyframes pulinho {
+    0%, 40%, 100% { transform: none; }
+    10% { transform: translateY(-9px) rotate(-4deg); }
+    20% { transform: scale(1.05, 0.93); }
+    28% { transform: none; }
   }
 
   @keyframes settle {
