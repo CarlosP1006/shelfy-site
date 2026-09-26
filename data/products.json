@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-26T13:35:08.346Z",
+  "updatedAt": "2026-09-26T13:55:32.620Z",
   "products": [
     {
       "code": "P00001",
@@ -246,6 +246,21 @@
       "code": "P00049",
       "title": "Massageador elétrico portátil pescoço calmante intensidade de 3 velocidades + aquecimento infravermelho",
       "link": "https://s.shopee.com.br/9V1d65bb4R"
+    },
+    {
+      "code": "P00050",
+      "title": "Bike Ergométrica 8kg Fitness Treino musculação Academia 120kg com Painel Digital Squeeze",
+      "link": "https://s.shopee.com.br/5LC48QrSWk"
+    },
+    {
+      "code": "P00051",
+      "title": "Lavadora Alta Pressão Lav1600 Vonder",
+      "link": "https://s.shopee.com.br/5q8KjLpYVp"
+    },
+    {
+      "code": "P00052",
+      "title": "Fritadeira Air Fryer Oven Forno Elétrico Digital Extream 17L / 10L",
+      "link": "https://s.shopee.com.br/6AlB7xoHpr"
     }
   ]
 }
