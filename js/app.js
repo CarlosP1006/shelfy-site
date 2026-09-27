@@ -268,7 +268,10 @@ function missingNotice(code) {
 }
 
 function view(key, nodes, message) {
-  if (key === state.view) return;
+  if (key === state.view) {
+    resultsBody.classList.remove('is-stale');
+    return;
+  }
   const reveal = state.revealPending && key !== 'loading';
   if (reveal) state.revealPending = false;
   const swap = () => {
