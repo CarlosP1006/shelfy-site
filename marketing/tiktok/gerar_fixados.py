@@ -2,7 +2,7 @@
 
 Uso: python3 gerar_fixados.py <pasta_fontes>
 Fontes esperadas: Poppins-Bold.ttf, Poppins-Black.ttf, NotoEmoji.ttf (monocromático).
-Saída: fixado-black.mp4, fixado-white.mp4 e os PNGs de cada quadro em ./quadros/.
+Saída: black.mp4, white.mp4 e os PNGs de cada quadro em ./quadros/.
 """
 import os
 import subprocess
@@ -123,7 +123,7 @@ def build(name, handle, bg, fg):
     cmd += ["-filter_complex", f"{concat}concat=n={len(pngs)}:v=1:a=0,format=yuv420p[v]",
             "-map", "[v]", "-r", "30", "-c:v", "libx264", "-profile:v", "high",
             "-preset", "slow", "-crf", "16", "-tune", "stillimage", "-an",
-            "-movflags", "+faststart", os.path.join(HERE, f"{name}.mp4")]
+            "-movflags", "+faststart", os.path.join(HERE, f"{name.removeprefix('fixado-')}.mp4")]
     subprocess.run(cmd, check=True)
 
 
