@@ -1,5 +1,11 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "products": []
+  "updatedAt": "2026-10-04T22:20:11.141Z",
+  "products": [
+    {
+      "code": "P00001",
+      "title": "Bicicleta Elétrica Scooter Mova Way 4.0 500w 48v Lítio",
+      "link": "https://s.shopee.com.br/60S7HPsTcL"
+    }
+  ]
 }
