@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T14:00:00.025Z",
+  "updatedAt": "2026-10-05T14:14:58.615Z",
   "products": [
     {
       "code": "P00001",
@@ -51,6 +51,11 @@
       "code": "P00010",
       "title": "Marmita Elétrica Veicular Bivolt P/ Carro Casa Taxi Uber Caminhão 12V 24V 110V 220V C",
       "link": "https://s.shopee.com.br/9zyGv57Oqr"
+    },
+    {
+      "code": "P00011",
+      "title": "Cadeira de jogo profissional Ergonomia Altura ajustável Cadeira de esportes eletrônicos F19",
+      "link": "https://s.shopee.com.br/AUuXW05Upy"
     }
   ]
 }
