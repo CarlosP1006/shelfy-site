@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T20:57:05.803Z",
+  "updatedAt": "2026-10-05T21:18:53.755Z",
   "products": [
     {
       "code": "P00001",
@@ -216,6 +216,11 @@
       "code": "P00043",
       "title": "Fritadeira Sem Óleo Elétrica Air Fryer Asus 3,5 Litros 1400w Airfryer",
       "link": "https://s.shopee.com.br/8pmJWwBqEn"
+    },
+    {
+      "code": "P00044",
+      "title": "Patinete Elétrico Scooter Para Adultos 550W Capacidade de Carga de 150KG",
+      "link": "https://s.shopee.com.br/7Ae5XsIBbW"
     }
   ]
 }
