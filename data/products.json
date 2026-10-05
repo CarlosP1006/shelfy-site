@@ -1,5 +1,46 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "products": []
+  "updatedAt": "2026-10-05T13:35:03.819Z",
+  "products": [
+    {
+      "code": "P00001",
+      "title": "Kit Café Manhã Chaleira Elétrica + Sanduicheira 127v ou 220v - Kian",
+      "link": "https://s.shopee.com.br/2VsFzIZx4A"
+    },
+    {
+      "code": "P00002",
+      "title": "Vestido Indiano longo ESTAMPADO LONGO FRENTE Única e costa Nua, ELEGANTE",
+      "link": "https://s.shopee.com.br/W7BbchZ7q"
+    },
+    {
+      "code": "P00003",
+      "title": "Console Portátil R36S + de 15.000 Jogos Vídeo Game 64g Linux Tela IPS 3.5 Polegadas",
+      "link": "https://s.shopee.com.br/qk20EgIRw"
+    },
+    {
+      "code": "P00004",
+      "title": "Trator Cortador de Grama Dirigivel a Gasolina 7,5L 14,5HP OM 99 L/14.5 K 7,5L Oleo Mac",
+      "link": "https://s.shopee.com.br/1BMsOqf1m2"
+    },
+    {
+      "code": "P00005",
+      "title": "Siàge Ultra Bond Reset: Reconstrução Profunda",
+      "link": "https://s.shopee.com.br/gQbnvgvmv"
+    },
+    {
+      "code": "P00006",
+      "title": "Fritadeira Air Fryer Oven Forno Elétrico Digital Extream 17L / 10L",
+      "link": "https://s.shopee.com.br/113SCXff71"
+    },
+    {
+      "code": "P00007",
+      "title": "Mesa de Jantar 4 Lugares Los Angeles",
+      "link": "https://s.shopee.com.br/9V20KA9Irg"
+    },
+    {
+      "code": "P00008",
+      "title": "Tênis de Corrida Masculino e Feminino Sapato de Moda Academia Caminhada Confortável do 33 ao 44",
+      "link": "https://s.shopee.com.br/20vzONbr53"
+    }
+  ]
 }
