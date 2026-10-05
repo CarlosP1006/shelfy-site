@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T14:34:57.633Z",
+  "updatedAt": "2026-10-05T14:50:09.299Z",
   "products": [
     {
       "code": "P00001",
@@ -66,6 +66,11 @@
       "code": "P00013",
       "title": "Bicicleta Elétrica Scooter Mova Way 4.0 500w 48v Lítio",
       "link": "https://s.shopee.com.br/8AWcjiENZY"
+    },
+    {
+      "code": "P00014",
+      "title": "Vestido Vermelho Feminino Princesa Regata Curto Rodado Boneca de Alça",
+      "link": "https://s.shopee.com.br/8V9T8KD6te"
     }
   ]
 }
