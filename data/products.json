@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:15:41.425Z",
+  "updatedAt": "2026-10-05T15:25:39.993Z",
   "products": [
     {
       "code": "P00001",
@@ -81,6 +81,11 @@
       "code": "P00016",
       "title": "Cadeira Gamer Profissional Escritório Ergonômica Reclinável Confortável Com Rodinha E Apoio Para Pés",
       "link": "https://s.shopee.com.br/8pmJWwBqDk"
+    },
+    {
+      "code": "P00017",
+      "title": "Kit 02 Poltronas para Sala Decorativa Nina com Almofada e Puff Redondo Pés Palito Suede Aninha Decor",
+      "link": "https://s.shopee.com.br/2LYpmzaaP9"
     }
   ]
 }
