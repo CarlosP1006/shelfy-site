@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T17:11:35.051Z",
+  "updatedAt": "2026-10-05T17:27:08.451Z",
   "products": [
     {
       "code": "P00001",
@@ -121,6 +121,11 @@
       "code": "P00024",
       "title": "Playstation 2 PS2 Slim 60 jogos opl 2 controles",
       "link": "https://s.shopee.com.br/2VsFzIZx5D"
+    },
+    {
+      "code": "P00025",
+      "title": "CONTROLE SUPER NITENDO USB PC SNES JOYSTICK",
+      "link": "https://s.shopee.com.br/LnlPJiCTq"
     }
   ]
 }
