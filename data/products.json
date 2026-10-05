@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T20:36:22.637Z",
+  "updatedAt": "2026-10-05T20:46:21.539Z",
   "products": [
     {
       "code": "P00001",
@@ -206,6 +206,11 @@
       "code": "P00041",
       "title": "Marmita Elétrica Térmica Bivolt Portátil 1,5L Ideal Para Trabalho e Viagem Quentinho Sempre",
       "link": "https://s.shopee.com.br/8AWcjiENab"
+    },
+    {
+      "code": "P00042",
+      "title": "Conjunto Cortador De Legumes 14/15/16 Em 1 Multifuncional Fatiador De Vegetais",
+      "link": "https://s.shopee.com.br/8V9T8KD6uh"
     }
   ]
 }
