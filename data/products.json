@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T20:46:21.539Z",
+  "updatedAt": "2026-10-05T20:57:05.803Z",
   "products": [
     {
       "code": "P00001",
@@ -211,6 +211,11 @@
       "code": "P00042",
       "title": "Conjunto Cortador De Legumes 14/15/16 Em 1 Multifuncional Fatiador De Vegetais",
       "link": "https://s.shopee.com.br/8V9T8KD6uh"
+    },
+    {
+      "code": "P00043",
+      "title": "Fritadeira Sem Óleo Elétrica Air Fryer Asus 3,5 Litros 1400w Airfryer",
+      "link": "https://s.shopee.com.br/8pmJWwBqEn"
     }
   ]
 }
