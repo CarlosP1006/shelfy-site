@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T14:14:58.615Z",
+  "updatedAt": "2026-10-05T14:24:57.484Z",
   "products": [
     {
       "code": "P00001",
@@ -56,6 +56,11 @@
       "code": "P00011",
       "title": "Cadeira de jogo profissional Ergonomia Altura ajustável Cadeira de esportes eletrônicos F19",
       "link": "https://s.shopee.com.br/AUuXW05Upy"
+    },
+    {
+      "code": "P00012",
+      "title": "Tênis De Placa De Carbono Masculino Feminino Correndo Maratona Leve Respirável 33 – 44",
+      "link": "https://s.shopee.com.br/AKb7Jh68Ax"
     }
   ]
 }
