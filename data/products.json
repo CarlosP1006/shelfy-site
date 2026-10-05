@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T20:21:21.169Z",
+  "updatedAt": "2026-10-05T20:36:22.637Z",
   "products": [
     {
       "code": "P00001",
@@ -201,6 +201,11 @@
       "code": "P00040",
       "title": "Kit Click Cadence - Sanduicheira e Cafeteira Single Up",
       "link": "https://s.shopee.com.br/2BFPagbDl7"
+    },
+    {
+      "code": "P00041",
+      "title": "Marmita Elétrica Térmica Bivolt Portátil 1,5L Ideal Para Trabalho e Viagem Quentinho Sempre",
+      "link": "https://s.shopee.com.br/8AWcjiENab"
     }
   ]
 }
