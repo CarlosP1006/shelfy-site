@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T13:35:03.819Z",
+  "updatedAt": "2026-10-05T13:44:48.110Z",
   "products": [
     {
       "code": "P00001",
@@ -41,6 +41,11 @@
       "code": "P00008",
       "title": "Tênis de Corrida Masculino e Feminino Sapato de Moda Academia Caminhada Confortável do 33 ao 44",
       "link": "https://s.shopee.com.br/20vzONbr53"
+    },
+    {
+      "code": "P00009",
+      "title": "Jogo de Panelas 6 Peças Antiaderentes com Tampa de Vidro Temperada com 4 Utensílios de Cozinha",
+      "link": "https://s.shopee.com.br/9Kia7r9wCf"
     }
   ]
 }
