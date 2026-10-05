@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T13:44:48.110Z",
+  "updatedAt": "2026-10-05T14:00:00.025Z",
   "products": [
     {
       "code": "P00001",
@@ -46,6 +46,11 @@
       "code": "P00009",
       "title": "Jogo de Panelas 6 Peças Antiaderentes com Tampa de Vidro Temperada com 4 Utensílios de Cozinha",
       "link": "https://s.shopee.com.br/9Kia7r9wCf"
+    },
+    {
+      "code": "P00010",
+      "title": "Marmita Elétrica Veicular Bivolt P/ Carro Casa Taxi Uber Caminhão 12V 24V 110V 220V C",
+      "link": "https://s.shopee.com.br/9zyGv57Oqr"
     }
   ]
 }
