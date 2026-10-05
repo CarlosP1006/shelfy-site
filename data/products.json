@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:25:39.993Z",
+  "updatedAt": "2026-10-05T15:56:38.520Z",
   "products": [
     {
       "code": "P00001",
@@ -86,6 +86,11 @@
       "code": "P00017",
       "title": "Kit 02 Poltronas para Sala Decorativa Nina com Almofada e Puff Redondo Pés Palito Suede Aninha Decor",
       "link": "https://s.shopee.com.br/2LYpmzaaP9"
+    },
+    {
+      "code": "P00018",
+      "title": "JOYSTICK CONTROLE USB JOGOS PC NOTEBOOK COMPUTADOR GAMER DUALSHOCK",
+      "link": "https://s.shopee.com.br/50ZaxtQR0Q"
     }
   ]
 }
