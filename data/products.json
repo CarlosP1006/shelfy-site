@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T18:23:21.633Z",
+  "updatedAt": "2026-10-05T18:33:20.748Z",
   "products": [
     {
       "code": "P00001",
@@ -151,6 +151,11 @@
       "code": "P00030",
       "title": "Caixa de Som Bluetooth 5.3 com Luminária LED RGB Relógio Despertador e Carregador Sem Fio 10W",
       "link": "https://s.shopee.com.br/6q1F9GJSIT"
+    },
+    {
+      "code": "P00031",
+      "title": "Kit Fitness 6 em 1 Roda Abdominal Flexão Corda Elástico Hand Grip Tapete Treino em Casa",
+      "link": "https://s.shopee.com.br/7Ae5XsIBcZ"
     }
   ]
 }
