@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T16:06:35.874Z",
+  "updatedAt": "2026-10-05T16:22:00.274Z",
   "products": [
     {
       "code": "P00001",
@@ -96,6 +96,11 @@
       "code": "P00019",
       "title": "Air Fryer Fritadeira Elétrica Extream 5,5L",
       "link": "https://s.shopee.com.br/3B7wmWXPj9"
+    },
+    {
+      "code": "P00020",
+      "title": "Controle Usb Para Computador TV Box Snes Super Nintendo Para Pc Raspberry Mac Linux",
+      "link": "https://s.shopee.com.br/3g4DNRVViI"
     }
   ]
 }
