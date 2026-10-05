@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T17:32:15.422Z",
+  "updatedAt": "2026-10-05T17:43:23.083Z",
   "products": [
     {
       "code": "P00001",
@@ -131,6 +131,11 @@
       "code": "P00026",
       "title": "VESTIDO LONGO JEANS COM ALCINHA EM REGULAGEM E LASTEX NAS COSTAS",
       "link": "https://s.shopee.com.br/gQbnvgvnw"
+    },
+    {
+      "code": "P00027",
+      "title": "Controle Super Nintendo USB 2.0 Pc Snes Joystick Universal Windows iOS Mac OS",
+      "link": "https://s.shopee.com.br/113SCXff82"
     }
   ]
 }
