@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T15:56:38.520Z",
+  "updatedAt": "2026-10-05T16:06:35.874Z",
   "products": [
     {
       "code": "P00001",
@@ -91,6 +91,11 @@
       "code": "P00018",
       "title": "JOYSTICK CONTROLE USB JOGOS PC NOTEBOOK COMPUTADOR GAMER DUALSHOCK",
       "link": "https://s.shopee.com.br/50ZaxtQR0Q"
+    },
+    {
+      "code": "P00019",
+      "title": "Air Fryer Fritadeira Elétrica Extream 5,5L",
+      "link": "https://s.shopee.com.br/3B7wmWXPj9"
     }
   ]
 }
