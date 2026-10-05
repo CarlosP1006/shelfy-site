@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T23:45:59.939Z",
+  "updatedAt": "2026-10-05T23:50:45.842Z",
   "products": [
     {
       "code": "P00001",
@@ -286,6 +286,11 @@
       "code": "P00057",
       "title": "Robô Aspirador 3 em 1 Varre, Aspira e limpar - Limpeza Automática Inteligente e Silenciosa",
       "link": "https://s.shopee.com.br/5LCRMVPALI"
+    },
+    {
+      "code": "P00058",
+      "title": "Kit 6 Potes Hermético 1,1 Litro Armazenar Alimento Organizar",
+      "link": "https://s.shopee.com.br/AAHh7O6lWv"
     }
   ]
 }
