@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T19:03:23.638Z",
+  "updatedAt": "2026-10-05T19:18:43.327Z",
   "products": [
     {
       "code": "P00001",
@@ -166,6 +166,11 @@
       "code": "P00033",
       "title": "Air Fryer Fritadeira Elétrica Digital Extream 4,3L",
       "link": "https://s.shopee.com.br/LnlPJiCSp"
+    },
+    {
+      "code": "P00034",
+      "title": "Eudora Siàge Pro Cronology",
+      "link": "https://s.shopee.com.br/7ptmL6FeGl"
     }
   ]
 }
