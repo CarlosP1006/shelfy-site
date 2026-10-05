@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T22:23:06.806Z",
+  "updatedAt": "2026-10-05T22:44:17.275Z",
   "products": [
     {
       "code": "P00001",
@@ -251,6 +251,16 @@
       "code": "P00050",
       "title": "Kit Jogo Panelas Em Cerâmica Tampa De Vidro Frigideira 5 Pçs",
       "link": "https://s.shopee.com.br/4VdKMySL1H"
+    },
+    {
+      "code": "P00051",
+      "title": "Bicicleta Elétrica Bikelete V8 1000w 48v Preto 50km/h Lítio Com seguro",
+      "link": "https://s.shopee.com.br/2qV6NuYgP3"
+    },
+    {
+      "code": "P00052",
+      "title": "Espremedor Elétrico Laranja Limão Frutas Fazer Sucos Recarregável Usb Cozinha",
+      "link": "https://s.shopee.com.br/80DCXPF0uX"
     }
   ]
 }
