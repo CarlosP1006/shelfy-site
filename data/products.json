@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T21:27:05.988Z",
+  "updatedAt": "2026-10-05T21:42:27.099Z",
   "products": [
     {
       "code": "P00001",
@@ -226,6 +226,11 @@
       "code": "P00045",
       "title": "Climatizador Digital de Ar CP04D Praxis",
       "link": "https://s.shopee.com.br/7KxVkBHYGb"
+    },
+    {
+      "code": "P00046",
+      "title": "Parafusadeira Furadeira 25V Nakasaki Sem Fio a Bateria Profissional Kit Completo com Maleta",
+      "link": "https://s.shopee.com.br/7ptmL6FeFi"
     }
   ]
 }
