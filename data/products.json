@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T14:50:09.299Z",
+  "updatedAt": "2026-10-05T15:05:10.475Z",
   "products": [
     {
       "code": "P00001",
@@ -71,6 +71,11 @@
       "code": "P00014",
       "title": "Vestido Vermelho Feminino Princesa Regata Curto Rodado Boneca de Alça",
       "link": "https://s.shopee.com.br/8V9T8KD6te"
+    },
+    {
+      "code": "P00015",
+      "title": "Jogo De Panelas Induçao Antiaderente Cerâmica 10 Peças Ppg Pfoa Free Vanila Premium",
+      "link": "https://s.shopee.com.br/8Kq2w1DkEd"
     }
   ]
 }
