@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T19:34:52.592Z",
+  "updatedAt": "2026-10-05T19:45:33.854Z",
   "products": [
     {
       "code": "P00001",
@@ -181,6 +181,11 @@
       "code": "P00036",
       "title": "Controle Usb Dual Shock Analogico Pc Computador Windows",
       "link": "https://s.shopee.com.br/7faM8nGHbi"
+    },
+    {
+      "code": "P00037",
+      "title": "controle gamer usb computador sem analogico",
+      "link": "https://s.shopee.com.br/AKb7Jh68By"
     }
   ]
 }
