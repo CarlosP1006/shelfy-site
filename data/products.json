@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T18:18:55.714Z",
+  "updatedAt": "2026-10-05T18:23:21.633Z",
   "products": [
     {
       "code": "P00001",
@@ -146,6 +146,11 @@
       "code": "P00029",
       "title": "Vestido longo moda cristã feminino em Viscose/Viscolinho casual de alça Muito Lindo com elástico.",
       "link": "https://s.shopee.com.br/6fhowxK5dQ"
+    },
+    {
+      "code": "P00030",
+      "title": "Caixa de Som Bluetooth 5.3 com Luminária LED RGB Relógio Despertador e Carregador Sem Fio 10W",
+      "link": "https://s.shopee.com.br/6q1F9GJSIT"
     }
   ]
 }
