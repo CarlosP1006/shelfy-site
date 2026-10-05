@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T18:33:20.748Z",
+  "updatedAt": "2026-10-05T19:03:23.638Z",
   "products": [
     {
       "code": "P00001",
@@ -156,6 +156,16 @@
       "code": "P00031",
       "title": "Kit Fitness 6 em 1 Roda Abdominal Flexão Corda Elástico Hand Grip Tapete Treino em Casa",
       "link": "https://s.shopee.com.br/7Ae5XsIBcZ"
+    },
+    {
+      "code": "P00032",
+      "title": "Kit Estética Automotiva Vonixx V-Floc Tok Final Intense 240ml Pneu Pretinho Pano Pincel E Aplicador",
+      "link": "https://s.shopee.com.br/9V20KA9Isj"
+    },
+    {
+      "code": "P00033",
+      "title": "Air Fryer Fritadeira Elétrica Digital Extream 4,3L",
+      "link": "https://s.shopee.com.br/LnlPJiCSp"
     }
   ]
 }
