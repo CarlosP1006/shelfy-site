@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T19:18:43.327Z",
+  "updatedAt": "2026-10-05T19:24:55.445Z",
   "products": [
     {
       "code": "P00001",
@@ -171,6 +171,11 @@
       "code": "P00034",
       "title": "Eudora Siàge Pro Cronology",
       "link": "https://s.shopee.com.br/7ptmL6FeGl"
+    },
+    {
+      "code": "P00035",
+      "title": "Frigideira Grill Antiaderente 3 em 1 com Divisórias para Ovos Hambúrguer Panqueca e Lanches",
+      "link": "https://s.shopee.com.br/7KxVkBHYHc"
     }
   ]
 }
