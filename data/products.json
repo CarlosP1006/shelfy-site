@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T16:26:35.338Z",
+  "updatedAt": "2026-10-05T16:36:35.326Z",
   "products": [
     {
       "code": "P00001",
@@ -106,6 +106,11 @@
       "code": "P00021",
       "title": "Prateleira De Canto Reto Branco Estante Livros Nicho 80 Preta",
       "link": "https://s.shopee.com.br/7faM8nGHah"
+    },
+    {
+      "code": "P00022",
+      "title": "Jogo De Panelas Antiaderente 10 Peças Bianco Conjunto Kit Teflon Com Tampa De Vidro Temperado Cozinha",
+      "link": "https://s.shopee.com.br/3qNdZkUsNL"
     }
   ]
 }
