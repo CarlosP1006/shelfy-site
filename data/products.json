@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T14:24:57.484Z",
+  "updatedAt": "2026-10-05T14:34:57.633Z",
   "products": [
     {
       "code": "P00001",
@@ -61,6 +61,11 @@
       "code": "P00012",
       "title": "Tênis De Placa De Carbono Masculino Feminino Correndo Maratona Leve Respirável 33 – 44",
       "link": "https://s.shopee.com.br/AKb7Jh68Ax"
+    },
+    {
+      "code": "P00013",
+      "title": "Bicicleta Elétrica Scooter Mova Way 4.0 500w 48v Lítio",
+      "link": "https://s.shopee.com.br/8AWcjiENZY"
     }
   ]
 }
