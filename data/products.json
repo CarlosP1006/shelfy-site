@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T00:31:08.454Z",
+  "updatedAt": "2026-10-06T00:42:45.925Z",
   "products": [
     {
       "code": "P00001",
@@ -306,6 +306,11 @@
       "code": "P00061",
       "title": "Bicicleta Aro 29 GT Sprint MX7 24V index Freio Disco Alumínio Suspensão Aero MTB",
       "link": "https://s.shopee.com.br/4B0TyMTbhB"
+    },
+    {
+      "code": "P00062",
+      "title": "Kit 2 Shorts Masculino Kong 2 em 1 com Compressão, Bolso para Celular e Tecido Dry Fit",
+      "link": "https://s.shopee.com.br/8fStKdCTYj"
     }
   ]
 }
