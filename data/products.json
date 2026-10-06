@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T00:57:44.381Z",
+  "updatedAt": "2026-10-06T01:14:25.800Z",
   "products": [
     {
       "code": "P00001",
@@ -316,6 +316,16 @@
       "code": "P00063",
       "title": "Vestido longo feminino regata festa malha casual elegante dia a dia",
       "link": "https://s.shopee.com.br/3LRMypWmOC"
+    },
+    {
+      "code": "P00064",
+      "title": "Controle USB Univesal Para PC",
+      "link": "https://s.shopee.com.br/2LYpmzaaQA"
+    },
+    {
+      "code": "P00065",
+      "title": "Cabo AV RCA Super Nintendo Tipo Snes Áudio Vídeo oferta",
+      "link": "https://s.shopee.com.br/70KfLZIoxW"
     }
   ]
 }
