@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T01:35:50.808Z",
+  "updatedAt": "2026-10-06T01:50:50.820Z",
   "products": [
     {
       "code": "P00001",
@@ -336,6 +336,11 @@
       "code": "P00067",
       "title": "Controle Analógico Joystick Para Pc Note Usb",
       "link": "https://s.shopee.com.br/8Kq2w1DkFe"
+    },
+    {
+      "code": "P00068",
+      "title": "Tênis De Corrida Profissional Para Maratona Flying Burn 3 , Palma Completa , Placa De Carbono , PB IZHC NOKS",
+      "link": "https://s.shopee.com.br/5LCRMVPAKH"
     }
   ]
 }
