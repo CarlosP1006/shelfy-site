@@ -1692,12 +1692,13 @@
 
   .sad-cart .carrinho {
     transform-box: view-box;
-    transform-origin: 62px 98px;
+    transform-origin: 60px 94px;
   }
 
   .sad-cart .lagrima {
     transform-box: fill-box;
     transform-origin: top;
+    filter: drop-shadow(0 0 1.5px #7fd4ff);
   }
 
   .notice[data-tone="error"] .notice-icon,
