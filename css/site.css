@@ -1656,6 +1656,51 @@
   .notice[data-tone="framed"] { --icon: var(--icon-shield); }
   .notice[data-tone="loading"] { --icon: var(--icon-clock); }
 
+  .notice[data-tone="gone"] {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 1.5rem 1.25rem 1.375rem;
+    text-align: center;
+  }
+
+  .notice[data-tone="gone"] .notice-icon {
+    width: 5.5rem;
+    height: 5.5rem;
+    overflow: hidden;
+    border-radius: 1.6rem;
+    background: var(--orange-400);
+    box-shadow: 0 12px 22px -12px oklch(63.5% 0.165 44 / 0.8);
+  }
+
+  .notice[data-tone="gone"] .notice-icon::before {
+    content: none;
+  }
+
+  .notice[data-tone="gone"] .notice-title {
+    font-size: 1.125rem;
+  }
+
+  .notice[data-tone="gone"] .notice-text {
+    max-width: 28ch;
+    margin-inline: auto;
+  }
+
+  .sad-cart {
+    width: 100%;
+    height: 100%;
+  }
+
+  .sad-cart .carrinho {
+    transform-box: view-box;
+    transform-origin: 60px 94px;
+  }
+
+  .sad-cart .lagrima {
+    transform-box: fill-box;
+    transform-origin: top;
+    filter: drop-shadow(0 0 2px #3fb0ff);
+  }
+
   .notice[data-tone="error"] .notice-icon,
   .notice[data-tone="framed"] .notice-icon {
     background: var(--peach-200);
@@ -1920,6 +1965,7 @@
     }
 
     .brand-mark,
+    .sad-cart,
     .notice-icon::before,
     .check-list li::after {
       forced-color-adjust: none;
@@ -2428,6 +2474,50 @@
     .about-avatar:hover .brilhos path {
       animation: brilhar 1.4s var(--ease-out) var(--atraso, 0s) infinite both;
     }
+
+    .sad-cart .carrinho {
+      animation: suspiro 3.6s ease-in-out 0.5s infinite;
+    }
+
+    .sad-cart .lagrima {
+      animation: lagrima 3.6s ease-in 0.5s infinite both;
+    }
+  }
+}
+
+@keyframes suspiro {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  30% {
+    translate: 0 1.5px;
+    rotate: 2deg;
+  }
+}
+
+@keyframes lagrima {
+  0% {
+    scale: 0.3;
+    translate: 0 0;
+    opacity: 0;
+  }
+
+  20%,
+  55% {
+    scale: 1;
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  85%,
+  100% {
+    scale: 0.8;
+    translate: 0 14px;
+    opacity: 0;
   }
 }
 

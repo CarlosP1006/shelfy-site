@@ -158,9 +158,10 @@ function makeButton(label, onClick, className = 'button button-secondary') {
   return button;
 }
 
-function buildNotice({ tone, title, text = '', actions = [] }) {
+function buildNotice({ tone, title, text = '', actions = [], art = '' }) {
   const notice = cloneTemplate('tpl-notice');
   notice.dataset.tone = tone;
+  if (art) notice.querySelector('.notice-icon').append(cloneTemplate(art));
   slot(notice, 'title').textContent = title;
   slot(notice, 'text').textContent = text;
   const actionBox = slot(notice, 'actions');
@@ -252,12 +253,21 @@ function catalogErrorNotice() {
 }
 
 function missingNotice(code) {
-  if (Number(code.slice(1)) > state.catalog.highestNumber) {
+  const number = Number(code.slice(1));
+  if (number > state.catalog.highestNumber) {
     return {
       tone: 'fresh',
       title: 'O ' + code + ' ainda não chegou aqui',
       text: 'Se o post acabou de sair, o produto pode levar alguns minutos para aparecer aqui.',
       actions: [retryButton()]
+    };
+  }
+  if (number >= 1) {
+    return {
+      tone: 'gone',
+      art: 'tpl-sad-cart',
+      title: 'O ' + code + ' não está mais disponível',
+      text: 'Esse produto não está mais na vitrine. Mas a prateleira não para: fique de olho nos próximos posts.'
     };
   }
   return {
