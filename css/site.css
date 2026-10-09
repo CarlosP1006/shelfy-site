@@ -366,6 +366,7 @@
     min-height: calc(100vh - 4.5rem);
     min-height: calc(100svh - 4.5rem);
     padding-top: clamp(0rem, 1.2vw - 0.25rem, 1.25rem);
+    clip-path: inset(-4.5rem 0 0);
   }
 
   .hero::before {
