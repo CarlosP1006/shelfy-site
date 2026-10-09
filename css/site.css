@@ -1698,7 +1698,7 @@
   .sad-cart .lagrima {
     transform-box: fill-box;
     transform-origin: top;
-    filter: drop-shadow(0 0 1.5px #7fd4ff);
+    filter: drop-shadow(0 0 2px #3fb0ff);
   }
 
   .notice[data-tone="error"] .notice-icon,

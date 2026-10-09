@@ -262,13 +262,12 @@ function missingNotice(code) {
       actions: [retryButton()]
     };
   }
-  // Os códigos são sequenciais: um buraco abaixo do maior código é um produto que saiu do ar.
   if (number >= 1) {
     return {
       tone: 'gone',
       art: 'tpl-sad-cart',
       title: 'O ' + code + ' não está mais disponível',
-      text: 'Esse produto saiu do ar na Shopee. Mas a prateleira não para: fique de olho nos próximos posts.'
+      text: 'Esse produto não está mais na vitrine. Mas a prateleira não para: fique de olho nos próximos posts.'
     };
   }
   return {

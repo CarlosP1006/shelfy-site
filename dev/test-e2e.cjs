@@ -229,7 +229,7 @@ it('jornada (g): produto que saiu do ar e código novo demais', async (browser) 
   await page.press('#codigo', 'Enter');
   await page.waitForSelector('[data-results] .notice');
   await expectNotice(page, 'O ' + missing + ' não está mais disponível');
-  assert.match(await page.textContent('[data-results]'), /saiu do ar na Shopee/);
+  assert.match(await page.textContent('[data-results]'), /não está mais na vitrine/);
   assert.ok(await page.$('[data-results] .notice[data-tone="gone"] .sad-cart'));
   await typeCode(page, 'P20000');
   await page.press('#codigo', 'Enter');
