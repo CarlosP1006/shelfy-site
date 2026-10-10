@@ -1501,7 +1501,7 @@
     margin-bottom: 0.75rem;
   }
 
-  @media (min-width: 34rem) {
+  @media (min-width: 38rem) {
     .footer-social {
       grid-template-columns: repeat(2, 1fr);
     }
