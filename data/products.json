@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-11T19:17:54.636Z",
+  "updatedAt": "2026-10-11T20:38:02.216Z",
   "products": [
     {
       "code": "P00001",
@@ -691,6 +691,26 @@
       "code": "P00260",
       "title": "Omeleteira Agratto Mr Cheff Inox Redonda 127v / 220v",
       "link": "https://s.shopee.com.br/60SHTfWFiL"
+    },
+    {
+      "code": "P00261",
+      "title": "Patinete Elétrico Adulto 350W – Alta Velocidade, Bateria Longa e Suporta Até 150kg",
+      "link": "https://s.shopee.com.br/7AeEroRoLW"
+    },
+    {
+      "code": "P00262",
+      "title": "Caixa Caixinha De Som Bluetooth Potente Pendrive Fm Sd Portátil Ipx6",
+      "link": "https://s.shopee.com.br/50ZkHpa3jn"
+    },
+    {
+      "code": "P00263",
+      "title": "Lavadora De Alta Pressão Vonder Lav1300",
+      "link": "https://s.shopee.com.br/qkBKApvBo"
+    },
+    {
+      "code": "P00264",
+      "title": "Kit Whey Protein Fusion + Bcaa + Creatina + Shaker - Espartanos",
+      "link": "https://s.shopee.com.br/6L57sHUz2R"
     }
   ]
 }
