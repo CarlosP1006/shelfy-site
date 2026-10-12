@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T18:04:17.447Z",
+  "updatedAt": "2026-10-12T19:34:53.249Z",
   "products": [
     {
       "code": "P00001",
@@ -951,6 +951,26 @@
       "code": "P00312",
       "title": "Caixa de Som Bluetooth Aiwa Boombox BS-01B 200W IP66",
       "link": "https://s.shopee.com.br/8AWnMRSpfO"
+    },
+    {
+      "code": "P00313",
+      "title": "Bicicleta Elétrica Scooter Mova Way 5.0 1000w 48v Litio",
+      "link": "https://s.shopee.com.br/2gBq70uufV"
+    },
+    {
+      "code": "P00314",
+      "title": "Empilhadeira Semi Elétrica Capacidade 2000KG e Elevação 3.5 Metros Xtrong XES-2035",
+      "link": "https://s.shopee.com.br/2qVHGApi3e"
+    },
+    {
+      "code": "P00315",
+      "title": "Vestido Princesa Amarelo Curto Feminino Rodado Boneca de Alça",
+      "link": "https://s.shopee.com.br/4B0e3WVL0s"
+    },
+    {
+      "code": "P00316",
+      "title": "Bicicleta Freeride GTS Aro 26 Freio Hidráulico 7 Marchas Gtsm1 Freeride",
+      "link": "https://s.shopee.com.br/1gJJs1u9Q1"
     }
   ]
 }
